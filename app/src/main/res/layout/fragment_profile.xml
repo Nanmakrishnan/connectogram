@@ -131,11 +131,14 @@
 
         </LinearLayout> <!-- End of Inner LinearLayout -->
 
-        <androidx.recyclerview.widget.RecyclerView
-            android:layout_width="match_parent"
-            android:layout_below="@+id/linearLayout"
-            android:id="@+id/recycleview_posts"
-            android:layout_height="wrap_content"/>
+
+
+            <androidx.recyclerview.widget.RecyclerView
+                android:layout_width="match_parent"
+                android:layout_below="@+id/linearLayout"
+                android:id="@+id/recycleview_posts"
+                android:layout_height="wrap_content"/>
+
 
 
     </RelativeLayout>

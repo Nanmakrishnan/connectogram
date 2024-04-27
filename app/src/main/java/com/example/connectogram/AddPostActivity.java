@@ -36,6 +36,7 @@ import android.widget.ProgressBar;
 import android.widget.Toast;
 
 import com.android.volley.AuthFailureError;
+import com.android.volley.Request;
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.JsonObjectRequest;
@@ -452,7 +453,8 @@ else {
                                 imageuri=null;
 
                                 //send notficaton
-                                prepareNotification(""+timestamp,""+name+"added new post",""+title+"\n"+desc,"PostNotification","POST");
+                                prepareNotification(""+timestamp,""+name+" added new post",""+title+"\n"+desc,"PostNotification","POST");
+                                startActivity(new Intent(AddPostActivity.this,ProfileActivity.class));
 
                             }
                         }).addOnFailureListener(new OnFailureListener() {
@@ -502,7 +504,7 @@ else {
                     pImageIv.setImageURI(null);
                     imageuri=null;
                     prepareNotification(""+timestamp,""+name+"added new post",""+title+"\n"+desc,"PostNotification","POST");
-
+                    startActivity(new Intent(AddPostActivity.this,ProfileActivity.class));
 
                 }
             }).addOnFailureListener(new OnFailureListener() {
@@ -609,6 +611,7 @@ try {
     notificatoinBody.put("to",NOTIFICATION_TOPIC);
 
     notificationjo.put("data",notificatoinBody);
+    notificationjo.put("to",NOTIFICATION_TOPIC);
 
 
 }
@@ -624,25 +627,27 @@ sendPostNotification(notificationjo);
 
     private void sendPostNotification(JSONObject notificationjo) {
 
-        JsonObjectRequest jsonObjectRequest=new JsonObjectRequest("https://fcm.googleapis.com/fcm/send", notificationjo, new Response.Listener<JSONObject>() {
+        JsonObjectRequest jsonObjectRequest=new JsonObjectRequest(Request.Method.POST,"https://fcm.googleapis.com/fcm/send",
+                notificationjo,
+                new Response.Listener<JSONObject>() {
             @Override
             public void onResponse(JSONObject jsonObject) {
                 Log.d("FCM_RESPONSE","onResponse :"+jsonObject.toString());
 
             }
-        }, new Response.ErrorListener() {
+        },
+                new Response.ErrorListener() {
             @Override
             public void onErrorResponse(VolleyError volleyError) {
-Toast.makeText(AddPostActivity.this,""+volleyError.getMessage(),Toast.LENGTH_SHORT).show();;
+Toast.makeText(AddPostActivity.this," error is"+volleyError.getMessage(),Toast.LENGTH_SHORT).show();;
             }
         }){
             @Override
             public Map<String, String> getHeaders() throws AuthFailureError {
-                Map<String,String>header=new HashMap<>();
-                header.put("Content-Type","application/json");
-                header.put("Authorization","key=AAAAenyNnco:APA91bElB1Mr3OvgkWme4uMYLUrkPbllU0kle1z8lIQUQrXP0v_3x1_-DD6blJAc4pASjFvmI7GOvovcbIHMF8XeU40rxNdqd9RPCagQu61o-HnsXnzJBOlnnv8Kqz07mquPpNMjCpwM");
-
-                return super.getHeaders();
+                Map<String, String> headers = new HashMap<>();
+                headers.put("Content-Type", "application/json");
+                headers.put("Authorization","key=AAAAenyNnco:APA91bElB1Mr3OvgkWme4uMYLUrkPbllU0kle1z8lIQUQrXP0v_3x1_-DD6blJAc4pASjFvmI7GOvovcbIHMF8XeU40rxNdqd9RPCagQu61o-HnsXnzJBOlnnv8Kqz07mquPpNMjCpwM");
+                return headers;
             }
         };
         Volley.newRequestQueue(this).add(jsonObjectRequest);

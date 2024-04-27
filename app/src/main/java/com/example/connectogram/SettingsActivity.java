@@ -57,7 +57,7 @@ public class SettingsActivity extends AppCompatActivity {
                     subscribePostNotification();
 
                 } else {
-                    unSubscribePostNotificaton();
+                   unsubscribePostNotification();
                 }
 
             }
@@ -68,34 +68,28 @@ public class SettingsActivity extends AppCompatActivity {
             return insets;
         });
     }
-
-    private void unSubscribePostNotificaton() {
-        FirebaseMessaging.getInstance().unsubscribeFromTopic("" + TOPIC_POST_NOTIFICATION).addOnCompleteListener(new OnCompleteListener<Void>() {
+    private void unsubscribePostNotification() {
+        FirebaseMessaging.getInstance().unsubscribeFromTopic(TOPIC_POST_NOTIFICATION).addOnCompleteListener(new OnCompleteListener<Void>() {
             @Override
             public void onComplete(@NonNull Task<Void> task) {
-                String msg = "DISABLED POST NOTIFICATOIN";
+                String msg = "DISABLED POST NOTIFICATION";
                 if (!task.isSuccessful()) {
-                    msg = " un subscription failed";
-
+                    msg = "Unsubscription failed";
                 }
                 Toast.makeText(SettingsActivity.this, msg, Toast.LENGTH_SHORT).show();
-                ;
             }
         });
-
     }
 
     private void subscribePostNotification() {
-        FirebaseMessaging.getInstance().subscribeToTopic("" + TOPIC_POST_NOTIFICATION).addOnCompleteListener(new OnCompleteListener<Void>() {
+        FirebaseMessaging.getInstance().subscribeToTopic(TOPIC_POST_NOTIFICATION).addOnCompleteListener(new OnCompleteListener<Void>() {
             @Override
             public void onComplete(@NonNull Task<Void> task) {
-                String msg = "ENABLED POST NOTIFICATOIN";
+                String msg = "ENABLED POST NOTIFICATION";
                 if (!task.isSuccessful()) {
-                    msg = "subscription failed";
-
+                    msg = "Subscription failed";
                 }
                 Toast.makeText(SettingsActivity.this, msg, Toast.LENGTH_SHORT).show();
-                ;
             }
         });
     }

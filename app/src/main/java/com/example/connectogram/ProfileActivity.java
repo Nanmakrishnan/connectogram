@@ -152,7 +152,20 @@ private  BottomNavigationView.OnNavigationItemReselectedListener selectedlistene
             FragmentTransaction ft=getSupportFragmentManager().beginTransaction();
             ft.replace(R.id.container,d,"");
             ft.commit();
-            toolbar.setTitle("Discover");
+            toolbar.setTitle("Chats");
+        }
+        else if (itemid==R.id.nav_announcement)
+        {
+            //if user presses the anoucements title
+            AnnouncementFragment announcementFragment=new AnnouncementFragment();
+            FragmentTransaction ft=getSupportFragmentManager().beginTransaction();
+            ft.replace(R.id.container,announcementFragment,"");
+            ft.commit();
+            toolbar.setTitle("Announcements");
+
+
+
+
         }
     }
 };
