@@ -38,19 +38,12 @@
             android:scaleType="fitCenter"
             android:src="@drawable/ic_image_black"
             android:background="@drawable/bg_receiver"/>
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:id="@+id/timeTv"
-            android:text="12/12/12/ 5:32 am"
-            android:textSize="12sp"
-            android:textColor="@color/black"/>
 
 
     </LinearLayout>
     <TextView
 
-        android:layout_width="match_parent"
+        android:layout_width="300dp"
         android:layout_height="wrap_content"
         android:id="@+id/isSeenTv"
         android:layout_gravity="end"
@@ -58,6 +51,14 @@
         android:visibility="gone"
         android:text="deliverd"
        />
+
+    <TextView
+        android:id="@+id/timeTv"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="5:32 am"
+        android:textColor="@color/black"
+        android:textSize="12sp" />
 
 
 </LinearLayout>

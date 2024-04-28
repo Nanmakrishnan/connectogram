@@ -1,29 +1,56 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
-    android:id="@+id/main"
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+xmlns:app="http://schemas.android.com/apk/res-auto"
+xmlns:tools="http://schemas.android.com/tools"
+android:id="@+id/main"
+android:layout_width="match_parent"
+android:layout_height="match_parent"
+    android:background="@drawable/activitypage"
+tools:context=".MainActivity">
+
+
+<LinearLayout
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".MainActivity">
+    android:background="#3fff"
+    android:gravity="center"
+    android:orientation="vertical"
+    android:padding="20dp"
+    tools:layout_editor_absoluteX="172dp"
+    tools:layout_editor_absoluteY="39dp">
+
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="99dp"
+        android:fontFamily="@font/berkshire_swash"
+        android:gravity="center"
+        android:text="Connectogram"
+        android:textColor="#ffffff"
+        android:textSize="30sp" />
 
     <Button
         android:id="@+id/register_btn_main"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_centerHorizontal="true"
+        android:layout_width="150dp"
+        android:layout_height="40dp"
+        android:layout_marginTop="50dp"
+        android:background="@drawable/custombutton2"
         android:text="Register"
-        android:layout_marginTop="400dp"
-        style="@style/Widget.AppCompat.Button.Colored"
-/>
-
+        android:textAllCaps="false"
+        android:textColor="#FFFBF6" />
     <Button
         android:id="@+id/login_btn"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_centerHorizontal="true"
+        android:layout_width="150dp"
+        android:layout_height="40dp"
+        android:layout_marginTop="50dp"
+        android:background="@drawable/custombutton2"
         android:text="Login"
-        android:layout_marginTop="500dp"
-        style="@style/Widget.AppCompat.Button.Colored"
-        />
-</RelativeLayout>
+        android:textAllCaps="false"
+        android:textColor="#FFFBF6" />
+
+
+
+</LinearLayout>
+
+
+</androidx.constraintlayout.widget.ConstraintLayout>

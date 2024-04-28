@@ -13,16 +13,8 @@
         android:orientation="horizontal">
 
         <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:id="@+id/timeTv"
-            android:text="12/12/12/ 5:32 am"
-            android:textSize="12sp"
-            android:textColor="@color/black"/>
-
-        <TextView
             android:id="@+id/messageTv"
-            android:layout_width="match_parent"
+            android:layout_width="300dp"
             android:layout_height="wrap_content"
             android:textColor="@color/black"
             android:padding="15dp"
@@ -30,7 +22,6 @@
             android:text="my message"
             android:background="@drawable/bg_sender"
             android:layout_alignParentEnd="true"
-            android:layout_toEndOf="@id/timeTv"
             android:layout_weight="1"/>
         <ImageView
             android:layout_width="200dp"
@@ -47,6 +38,16 @@
 
 
     </RelativeLayout>
+
+    <TextView
+        android:id="@+id/timeTv"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="right"
+        android:text="5:32 am"
+        android:textColor="@color/black"
+        android:textSize="12sp" />
+
     <TextView
 
         android:layout_width="match_parent"

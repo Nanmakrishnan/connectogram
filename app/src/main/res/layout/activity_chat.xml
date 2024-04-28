@@ -6,47 +6,53 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="#F1EDED"
-
     tools:context=".ChatActivity">
-  <androidx.appcompat.widget.Toolbar
-      android:layout_width="match_parent"
-      android:id="@+id/toolbar_chat"
-      android:layout_height="?android:attr/actionBarSize"
-      android:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar"
-      android:background="@color/colorPrimaryDark">
-    
-    <com.mikhaellopez.circularimageview.CircularImageView
-        android:layout_width="35dp"
-        android:layout_height="35dp"
-        android:scaleType="centerCrop"
-        android:src="@drawable/ic_profile"
-        android:id="@+id/profileIv"/>
-<LinearLayout
-    android:layout_width="match_parent"
-    android:orientation="vertical"
-    android:gravity="center"
-    android:layout_height="wrap_content">
-<TextView
-    android:layout_width="match_parent"
-    android:layout_height="wrap_content"
-    android:textColor="@color/white"
-    android:id="@+id/nameTv"
-    android:text="name"/>
-    <TextView
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:textColor="@color/white"
-        android:id="@+id/statusTv"
-        android:textSize="10sp"
-        android:text="status"/>
 
-    </LinearLayout>
-  </androidx.appcompat.widget.Toolbar>
+    <androidx.appcompat.widget.Toolbar
+        android:layout_width="match_parent"
+        android:id="@+id/toolbar_chat"
+        android:layout_height="?android:attr/actionBarSize"
+        android:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar"
+        android:background="@color/colorPrimaryDark">
+
+        <com.mikhaellopez.circularimageview.CircularImageView
+            android:layout_width="35dp"
+            android:layout_height="35dp"
+            android:scaleType="centerCrop"
+            android:src="@drawable/ic_profile"
+            android:id="@+id/profileIv"/>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:orientation="vertical"
+            android:gravity="center"
+            android:layout_height="wrap_content">
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:textColor="@color/white"
+                android:id="@+id/nameTv"
+                android:text="name"/>
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:textColor="@color/white"
+                android:id="@+id/statusTv"
+                android:textSize="10sp"
+                android:text="status"/>
+
+        </LinearLayout>
+    </androidx.appcompat.widget.Toolbar>
+
     <androidx.recyclerview.widget.RecyclerView
         android:layout_width="match_parent"
         android:id="@+id/chat_recycleView"
-        android:layout_height="wrap_content"
-        android:layout_below="@+id/toolbar_chat"/>
+        android:layout_height="match_parent"
+        android:layout_below="@+id/toolbar_chat"
+        android:layout_above="@+id/chatLayout"/>
+
     <LinearLayout
         android:id="@+id/chatLayout"
         android:orientation="horizontal"
@@ -54,30 +60,31 @@
         android:layout_height="wrap_content"
         android:layout_alignParentBottom="true"
         android:gravity="center">
+
         <ImageButton
             android:layout_width="50dp"
             android:id="@+id/attachBtn"
-            android:background="@null"
             android:src="@drawable/ic_attach"
-
+            android:background="@drawable/custombutton"
             android:layout_height="50dp"/>
+
         <EditText
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_weight="1"
             android:hint="start typing "
-            android:background="@null"
             android:textAlignment="center"
             android:inputType="textCapSentences|textMultiLine"
             android:padding="15dp"
+            android:background="@drawable/btn_background_1"
             android:id="@+id/messageEt"/>
+
         <ImageButton
             android:minHeight="40dp"
             android:id="@+id/send_btn"
             android:minWidth="40dp"
             android:layout_width="wrap_content"
-            android:background="@null"
-
+            android:background="@drawable/custombutton"
             android:layout_height="wrap_content"
             android:src="@drawable/ic_send"/>
 
