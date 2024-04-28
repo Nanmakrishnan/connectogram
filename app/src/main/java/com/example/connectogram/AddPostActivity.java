@@ -761,23 +761,16 @@ Toast.makeText(AddPostActivity.this," error is"+volleyError.getMessage(),Toast.L
     protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
 
-        if(resultCode==RESULT_OK)
-        {
-            if(requestCode==IMAGE_PICK_CAMERA_CODE)
-            {
-               // imageuri=data.getData();
-
-                System.out.println("cliede image is"+imageuri);
-              pImageIv.setImageURI(imageuri);
-            }
-          else   if(requestCode==IMAGE_PICK_GALLERY_CODE)
-            {
-                imageuri=data.getData();
-                System.out.println("pOCIED FROM GALLERY URL IS"+imageuri);
-            pImageIv.setImageURI(imageuri);
+        if(resultCode == RESULT_OK) {
+            if(requestCode == IMAGE_PICK_CAMERA_CODE) {
+                // Image captured from camera, set imageuri to the captured image URI
+                pImageIv.setImageURI(imageuri);
+            } else if(requestCode == IMAGE_PICK_GALLERY_CODE && data != null && data.getData() != null) {
+                // Image picked from gallery, set imageuri to the selected image URI from data
+                imageuri = data.getData();
+                pImageIv.setImageURI(imageuri);
             }
         }
-
-
     }
+
 }

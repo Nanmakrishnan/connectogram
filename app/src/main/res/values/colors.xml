@@ -50,4 +50,6 @@
     <color name="limeGreen">#32CD32</color>
     <color name="deepSkyBlue">#00BFFF</color>
     <color name="lightCoral">#F08080</color>
+    <color name="navigationBarColor">#c1d8f0</color>
+
 </resources>
