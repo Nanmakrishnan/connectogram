@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     app:cardCornerRadius="3dp"
@@ -39,7 +40,7 @@
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="time"
+                    android:text="atimeTv"
                     android:id="@+id/pTimeTv"
                     android:textSize="20dp"/>
             </LinearLayout>
@@ -53,7 +54,7 @@
 
         <TextView
             android:layout_width="match_parent"
-            android:id="@+id/pTitleTv"
+            android:id="@+id/aTitleTv"
             android:textSize="16sp"
             android:textStyle="bold"
             android:text="title"
@@ -61,83 +62,57 @@
             android:layout_height="wrap_content"/>
         <TextView
             android:layout_width="match_parent"
-            android:id="@+id/pDescTv"
+            android:id="@+id/aDescTv"
             android:textSize="16sp"
             android:text="Descriptison"
             android:autoLink="all"
             android:layout_height="wrap_content"/>
-        <com.github.chrisbanes.photoview.PhotoView
+
+<com.github.chrisbanes.photoview.PhotoView
+    android:layout_width="match_parent"
+    android:layout_height="300dp"
+    android:id="@+id/sendImg"
+    android:visibility="gone"
+    />
+        <VideoView
             android:layout_width="match_parent"
-            android:id="@+id/pImageIv"
-            android:layout_height="200dp"
-            android:background="@color/white"/>
-        <LinearLayout
+            android:layout_height="300dp"
+            android:visibility="gone"
+            android:background="@color/pink"
+            android:id="@+id/sendVdo"
+            />
+        <WebView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="horizontal">
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:id="@+id/pLikeTv"
-                android:textColor="@color/black"
-                android:layout_weight="1"
-                android:text="1.3k likes"/>
+            android:visibility="gone"
+            android:id="@+id/sendWeb"
+            tools:ignore="WebViewLayout" />
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/sendTxt"
+            android:visibility="gone"/>
 
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:id="@+id/pCommentTv"
-                android:textColor="@color/black"
-                android:layout_weight="1"
-                android:textAlignment="textEnd"
-                android:text="1.3k comments"/>
-
-        </LinearLayout>
-
+        <com.github.barteksc.pdfviewer.PDFView
+            android:id="@+id/sendPdf"
+            android:layout_width="match_parent"
+            android:visibility="gone"
+            android:layout_height="250dp"/>
+<ImageView
+    android:layout_width="match_parent"
+    android:layout_height="100dp"
+    android:id="@+id/iconIv"
+    android:visibility="gone"
+    android:scaleType="center"
+    />
 
         <View
-                android:layout_width="match_parent"
-                android:layout_height="1dp"
-                android:background="#F5f0F0"
-                />
-        <LinearLayout
             android:layout_width="match_parent"
-            android:orientation="horizontal"
-            android:layout_height="wrap_content">
-
-            <Button
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:id="@+id/likeBtn"
-                android:backgroundTint="@android:color/white"
-                android:textColor="@color/black"
-                android:drawableLeft="@drawable/ic_notliked"
-                android:text=""/>
-            <Button
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:id="@+id/commentBtn"
-                android:drawableLeft="@drawable/ic_comment"
-                android:backgroundTint="@android:color/white"
-                android:textColor="@color/black"
-                android:textAlignment="center"
-
-                android:text=""/>
-
-            <Button
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:id="@+id/shareBtn"
-                android:backgroundTint="@android:color/white"
-                android:textColor="@color/black"
-                android:drawableLeft="@drawable/ic_share"
-                android:text=""/>
+            android:layout_height="1dp"
+            android:background="#F5f0F0"
+            />
 
 
-        </LinearLayout>
 
     </LinearLayout>
 

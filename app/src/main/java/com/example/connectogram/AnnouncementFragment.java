@@ -13,6 +13,19 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
  import androidx.appcompat.widget.Toolbar;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
+
+import com.example.connectogram.adapters.AdapterAnnouncement;
+import com.example.connectogram.models.ModelAnnounce;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
+
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -30,6 +43,10 @@ public class AnnouncementFragment extends Fragment {
     private String mParam1;
     private String mParam2;
 
+    RecyclerView recyclerView;
+    AdapterAnnouncement adapterAnnouncement;
+
+    List<ModelAnnounce> modelAnnounceList;
     public AnnouncementFragment() {
         // Required empty public constructor
     }
@@ -70,6 +87,15 @@ public class AnnouncementFragment extends Fragment {
         View view=inflater.inflate(R.layout.fragment_announcement, container, false);
 
 setHasOptionsMenu(true);
+        recyclerView = view.findViewById(R.id.recyclerView);
+        modelAnnounceList=new ArrayList<>();
+        // Replace recyclerView with your RecyclerView ID
+        recyclerView.setHasFixedSize(true);
+        recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
+
+        // Call a method to retrieve announcements from Firebase or any other source
+        // For example:
+        retrieveAnnouncementsFromFirebase();
 
 
 
@@ -98,5 +124,28 @@ setHasOptionsMenu(true);
         }
 
         return super.onOptionsItemSelected(item);
+    }
+    private void retrieveAnnouncementsFromFirebase() {
+        // Assuming you have a DatabaseReference initialized to "Announcements" node in Firebase
+        DatabaseReference announcementsRef = FirebaseDatabase.getInstance().getReference("Announcements");
+        announcementsRef.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                modelAnnounceList.clear(); // Clear the list before adding new data
+                for (DataSnapshot dataSnapshot : snapshot.getChildren()) {
+                    ModelAnnounce announcement = dataSnapshot.getValue(ModelAnnounce.class);
+                    modelAnnounceList.add(announcement);
+                }
+                // Create an instance of your AdapterAnnouncement class
+                adapterAnnouncement = new AdapterAnnouncement(getContext(), modelAnnounceList);
+                // Set the adapter to your RecyclerView
+                recyclerView.setAdapter(adapterAnnouncement);
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+                // Handle onCancelled event
+            }
+        });
     }
 }

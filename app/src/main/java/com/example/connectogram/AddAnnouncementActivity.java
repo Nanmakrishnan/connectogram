@@ -1,5 +1,6 @@
 package com.example.connectogram;
 
+import android.app.ProgressDialog;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
@@ -12,17 +13,35 @@ import org.apache.commons.io.FileUtils;
 
 
 import androidx.activity.EdgeToEdge;
+import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.graphics.Insets;
 import androidx.core.view.ViewCompat;
 import androidx.core.view.WindowInsetsCompat;
 
+import com.example.connectogram.models.ModelAnnounce;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.Query;
+import com.google.firebase.database.ValueEventListener;
+import com.google.firebase.storage.FirebaseStorage;
+import com.google.firebase.storage.StorageReference;
+import com.google.firebase.storage.UploadTask;
+
+import java.io.InputStream;
+
 public class AddAnnouncementActivity extends AppCompatActivity {
     private static final int PICK_FILE_REQUEST_CODE =300 ;
     Button publish,file;
 EditText titleEt,descEt;
     Uri fileuri=null;
+    String uName;
+    String uDp;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -106,14 +125,161 @@ EditText titleEt,descEt;
 
     private void uploadDataToFirebase(String title, String desc, Uri filePath) {
 
-        if(filePath==null)
+        if(filePath!=null)
         {
-            Toast.makeText(this,"no file",Toast.LENGTH_SHORT).show();
+           uploadWithFile();
+           
 
         }
-        Toast.makeText(this,"ther is file file",Toast.LENGTH_SHORT).show();
+        else {
+
+            uploadWithoutFile();
+        }
 
     }
+
+    private void uploadWithoutFile() {
+
+        long timestamp = System.currentTimeMillis();
+        Toast.makeText(AddAnnouncementActivity.this,""+"withoud file",Toast.LENGTH_SHORT).show();;
+
+
+        // If no file URI is available, proceed with uploading data to Firebase without a file
+        // Implement the logic to upload title, description, timestamp, and UID to Firebase without the file
+        // For example:
+        DatabaseReference ref = FirebaseDatabase.getInstance().getReference("Announcements");
+        String announcementId = String.valueOf(timestamp); // Set announcement ID as current timestamp
+       String uid= FirebaseAuth.getInstance().getCurrentUser().getUid();
+       String email=FirebaseAuth.getInstance().getCurrentUser().getEmail();
+
+
+     DatabaseReference   userDb=FirebaseDatabase.getInstance().getReference("Users");
+        Query q=userDb.orderByChild("email").equalTo(email);
+     ProgressDialog   progreess=new ProgressDialog(this);
+        q.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+
+                for(DataSnapshot ds:snapshot.getChildren())
+                {
+                    uName=""+ds.child("name").getValue();
+                    uDp=""+ds.child("image").getValue();
+                }
+
+
+                ModelAnnounce announce= new ModelAnnounce(announcementId,uid,uName,email,titleEt.getText().toString(),descEt.getText().toString(),announcementId,uDp,"null"); // Pass null for fileUrl
+                ref.child(announcementId).setValue(announce);
+
+                // Show a success message to the user
+                //Toast.makeText(AddAnnouncementActivity.this, "Data uploaded successfully without file", Toast.LENGTH_SHORT).show();
+
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+
+            }
+        });
+
+    }
+
+    private void uploadWithFile() {
+        // Get the current timestamp
+        int fsize=0;
+        try {
+            InputStream inputStream = getContentResolver().openInputStream(fileuri);
+             fsize = inputStream.available();
+          //  Toast.makeText(this, "File siz"+fsize, Toast.LENGTH_SHORT).show();
+        }
+            catch(Exception e)
+            {
+                return;
+            }
+
+
+        if (fileuri != null &&fsize <= (5 * 1024 * 1024)&&fsize>0) {
+
+            long timestamp = System.currentTimeMillis();
+            ProgressDialog progress = new ProgressDialog(this);
+            progress.setMessage("Uploading file...");
+            progress.show();
+
+            // Get the Firebase Storage reference
+            StorageReference storageRef = FirebaseStorage.getInstance().getReference();
+
+            // Create a reference to the file location in Firebase Storage
+            StorageReference fileRef = storageRef.child("AnnouncementFiles").child("file_" + timestamp);
+
+            // Upload file to Firebase Storage
+            UploadTask uploadTask = fileRef.putFile(fileuri);
+
+            // Register observers to listen for when the upload is done or if it fails
+            uploadTask.addOnSuccessListener(taskSnapshot -> {
+                // File uploaded successfully
+                progress.dismiss();
+                // Get the download URL of the uploaded file
+                fileRef.getDownloadUrl().addOnSuccessListener(uri -> {
+                    String fileUrl = uri.toString();
+                    // Proceed to upload announcement data with file URL
+                    uploadAnnouncementData(timestamp, fileUrl);
+                }).addOnFailureListener(e -> {
+                    // Handle any errors retrieving the download URL
+                    progress.dismiss();
+                    Toast.makeText(AddAnnouncementActivity.this, "Failed to get file URL: " + e.getMessage(), Toast.LENGTH_SHORT).show();
+                });
+            }).addOnFailureListener(e -> {
+                // Handle unsuccessful uploads
+                progress.dismiss();
+                Toast.makeText(AddAnnouncementActivity.this, "Failed to upload file: " + e.getMessage(), Toast.LENGTH_SHORT).show();
+            });
+        }
+        else
+        {
+            Toast.makeText(this, "File size exceeds 5 MB limit", Toast.LENGTH_SHORT).show();
+
+        }
+    }
+
+    private void uploadAnnouncementData(long timestamp, String fileUrl) {
+        DatabaseReference ref = FirebaseDatabase.getInstance().getReference("Announcements");
+        String announcementId = String.valueOf(timestamp); // Set announcement ID as current timestamp
+        String uid = FirebaseAuth.getInstance().getCurrentUser().getUid();
+        String email = FirebaseAuth.getInstance().getCurrentUser().getEmail();
+
+        DatabaseReference userDb = FirebaseDatabase.getInstance().getReference("Users");
+        Query q = userDb.orderByChild("email").equalTo(email);
+        ProgressDialog progress = new ProgressDialog(this);
+        progress.setMessage("Uploading announcement data...");
+        progress.show();
+        q.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                for (DataSnapshot ds : snapshot.getChildren()) {
+                    uName = "" + ds.child("name").getValue();
+                    uDp = "" + ds.child("image").getValue();
+                }
+
+                ModelAnnounce announce = new ModelAnnounce(announcementId, uid, uName, email, titleEt.getText().toString(), descEt.getText().toString(), announcementId, uDp, fileUrl);
+                ref.child(announcementId).setValue(announce).addOnCompleteListener(task -> {
+                    progress.dismiss();
+                    if (task.isSuccessful()) {
+                        // Show a success message to the user
+                       // Toast.makeText(AddAnnouncementActivity.this, "Data uploaded successfully with file", Toast.LENGTH_SHORT).show();
+                    } else {
+                        // Handle unsuccessful upload
+                        Toast.makeText(AddAnnouncementActivity.this, "Failed to upload announcement data: " + task.getException().getMessage(), Toast.LENGTH_SHORT).show();
+                    }
+                });
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+                progress.dismiss();
+                Toast.makeText(AddAnnouncementActivity.this, "Failed to upload announcement data: " + error.getMessage(), Toast.LENGTH_SHORT).show();
+            }
+        });
+    }
+
 
 
 }
