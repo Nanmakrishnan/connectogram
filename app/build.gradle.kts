@@ -35,6 +35,8 @@ android {
 
 }
 
+
+
 dependencies {
 
     implementation(libs.appcompat)
@@ -56,7 +58,9 @@ dependencies {
     implementation(platform("com.google.firebase:firebase-bom:32.7.4"))
 
     implementation ("commons-io:commons-io:2.11.0")
-
+    //pdfview to
+    //show the pf
+    implementation("com.github.barteksc:android-pdf-viewer:3.2.0-beta.1")
 
     // Add the dependency for the Firebase Authentication library
     // When using the BoM, you don't specify versions in Firebase library dependencies
@@ -69,6 +73,8 @@ dependencies {
     implementation("com.google.android.gms:play-services-auth:21.0.0")
     implementation("androidx.cardview:cardview:1.0.0")
     implementation("com.mikhaellopez:circularimageview:4.3.1")
+    implementation ("com.github.chrisbanes:PhotoView:2.3.0")
+
     implementation("androidx.recyclerview:recyclerview:1.3.2")
     // For control over item selection of both touch and mouse driven selection
 
