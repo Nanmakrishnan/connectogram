@@ -49,9 +49,18 @@ public class Adapter_discover extends RecyclerView.Adapter<Adapter_discover.myho
         // Set the data to the views
         holder.nameIv.setText(model.getName());
         holder.emailIv.setText(model.getEmail());
-
         try {
-            Picasso.get().load(model.getImage()).placeholder(R.drawable.ic_person_blue).into(holder.avatarIv);
+        if(model.getImage().equals(""))
+        {
+            Picasso.get().load(R.drawable.ic_profile).placeholder(R.drawable.ic_profile).into(holder.avatarIv);
+        }
+        else {
+            Picasso.get().load(model.getImage()).placeholder(R.drawable.ic_profile).into(holder.avatarIv);
+
+        }
+
+
+
         }
         catch (Exception e)
         {

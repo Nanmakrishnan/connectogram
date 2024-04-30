@@ -121,18 +121,18 @@ public class AdapterPost extends  RecyclerView.Adapter<AdapterPost.Myholder> {
         {
             System.out.println(e);
         }
-        if(pImage.equals("noImage"))
-        {
-            holder.pImgageIv.setVisibility(View.GONE);
-        }
-        else {
-            holder.pImgageIv.setVisibility(View.VISIBLE);
-            try {
-                Picasso.get().load(pImage).into(holder.pImgageIv);
-            } catch (Exception e) {
-                System.out.println(e);
+
+            if (pImage.equals("noImage")) {
+                holder.pImgageIv.setVisibility(View.GONE);
+            } else {
+                holder.pImgageIv.setVisibility(View.VISIBLE);
+                try {
+                    Picasso.get().load(pImage).resize(1000, 1200).onlyScaleDown().centerCrop().into(holder.pImgageIv);
+                } catch (Exception e) {
+                    System.out.println(e);
+                }
             }
-        }
+
 
 
         holder.moreBtn.setOnClickListener(new View.OnClickListener() {

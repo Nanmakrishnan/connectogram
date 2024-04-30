@@ -25,6 +25,7 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 /**
@@ -137,6 +138,7 @@ setHasOptionsMenu(true);
                     modelAnnounceList.add(announcement);
                 }
                 // Create an instance of your AdapterAnnouncement class
+                Collections.reverse(modelAnnounceList);
                 adapterAnnouncement = new AdapterAnnouncement(getContext(), modelAnnounceList);
                 // Set the adapter to your RecyclerView
                 adapterAnnouncement.notifyDataSetChanged();

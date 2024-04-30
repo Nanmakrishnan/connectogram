@@ -548,11 +548,16 @@ if(chat.getReceiver().equals(myUid)&&chat.getSender().equals((hisUid)))
                     {
                         chatList.add(chat);
                     }
-                    adapterChat=new AdapterChat(ChatActivity.this,chatList,hisImage);
-                    adapterChat.notifyDataSetChanged();
-                    recyclerView.setAdapter(adapterChat);;
+
 
                 }
+                adapterChat=new AdapterChat(ChatActivity.this,chatList,hisImage);
+                adapterChat.notifyDataSetChanged();
+
+                recyclerView.setAdapter(adapterChat);;
+                if(adapterChat.getItemCount()>=1)
+                {
+                recyclerView.smoothScrollToPosition(adapterChat.getItemCount()-1);}
             }
 
 
