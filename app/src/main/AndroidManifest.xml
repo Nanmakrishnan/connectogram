@@ -23,6 +23,7 @@
         <activity
             android:name=".AddAnnouncementActivity"
             android:exported="false" />
+
         <activity
             android:name=".SettingsActivity"
             android:exported="false" />
@@ -41,6 +42,7 @@
         <activity
             android:name=".ChatActivity"
             android:exported="false"
+            android:windowSoftInputMode="adjustResize"
             android:theme="@style/AppThemeNo" />
         <activity
             android:name=".ProfileActivity"
@@ -58,6 +60,8 @@
         <activity
             android:name=".MainActivity"
             android:exported="true" />
+
+
 
         <service
             android:name=".notifications.FirebaseService"

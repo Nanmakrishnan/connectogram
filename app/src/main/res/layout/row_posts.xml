@@ -2,8 +2,7 @@
 <androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    app:cardCornerRadius="3dp"
-    app:cardElevation="3dp"
+    app:cardCornerRadius="20dp"
     app:cardUseCompatPadding="true"
     app:cardBackgroundColor="@color/white"
     app:contentPadding="5dp"
@@ -29,6 +28,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:orientation="vertical"
+                android:layout_marginLeft="10dp"
                 android:layout_weight="1">
                 <TextView
                     android:layout_width="wrap_content"
@@ -41,7 +41,7 @@
                     android:layout_height="wrap_content"
                     android:text="time"
                     android:id="@+id/pTimeTv"
-                    android:textSize="20dp"/>
+                    android:textSize="15dp"/>
             </LinearLayout>
             <ImageButton
                 android:layout_width="wrap_content"
@@ -51,58 +51,56 @@
                 android:src="@drawable/ic_more"/>
         </LinearLayout>
 
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:layout_marginTop="10dp"
+            android:background="#F5f0F0"
+            />
+
         <TextView
             android:layout_width="match_parent"
             android:id="@+id/pTitleTv"
             android:textSize="16sp"
             android:textStyle="bold"
+            android:padding="10dp"
             android:text="title"
+            android:layout_marginTop="10dp"
             android:autoLink="all"
             android:layout_height="wrap_content"/>
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content">
+            <com.github.chrisbanes.photoview.PhotoView
+                android:layout_width="wrap_content"
+                android:layout_height="300dp"
+                android:id="@+id/pImageIv"
+                android:background="@color/white"/>
+        </LinearLayout>
         <TextView
             android:layout_width="match_parent"
             android:id="@+id/pDescTv"
             android:textSize="16sp"
-            android:text="Descriptison"
+            android:text="Description"
             android:autoLink="all"
+            android:layout_marginTop="10dp"
             android:layout_height="wrap_content"/>
-        <com.github.chrisbanes.photoview.PhotoView
-            android:layout_width="match_parent"
-            android:id="@+id/pImageIv"
-            android:layout_height="200dp"
-            android:background="@color/white"/>
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="horizontal">
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:id="@+id/pLikeTv"
-                android:textColor="@color/black"
-                android:layout_weight="1"
-                android:text="1.3k likes"/>
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:id="@+id/pCommentTv"
-                android:textColor="@color/black"
-                android:layout_weight="1"
-                android:textAlignment="textEnd"
-                android:text="1.3k comments"/>
-
-        </LinearLayout>
-
 
         <View
-                android:layout_width="match_parent"
-                android:layout_height="1dp"
-                android:background="#F5f0F0"
-                />
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:layout_marginTop="10dp"
+            android:background="#F5f0F0"
+            />
+
+
+
+
         <LinearLayout
             android:layout_width="match_parent"
             android:orientation="horizontal"
+            android:layout_marginTop="5dp"
+
             android:layout_height="wrap_content">
 
             <Button
@@ -136,6 +134,32 @@
                 android:drawableLeft="@drawable/ic_share"
                 android:text=""/>
 
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+
+            android:orientation="horizontal">
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/pLikeTv"
+                android:textColor="@color/black"
+                android:layout_weight="1"
+                android:paddingLeft="10dp"
+                android:text="1.3k likes"/>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/pCommentTv"
+                android:textColor="@color/black"
+                android:layout_weight="1"
+                android:paddingLeft="200dp"
+                android:textAlignment="textEnd"
+                android:text="1.3k comments"/>
 
         </LinearLayout>
 

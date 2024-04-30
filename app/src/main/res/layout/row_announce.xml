@@ -1,118 +1,129 @@
-<?xml version="1.0" encoding="utf-8"?>
 <androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
-    android:layout_width="match_parent"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    xmlns:tools="http://schemas.android.com/tools"
     app:cardCornerRadius="3dp"
     app:cardElevation="3dp"
     app:cardUseCompatPadding="true"
     app:cardBackgroundColor="@color/white"
-    app:contentPadding="5dp"
-    android:layout_height="wrap_content">
+    app:contentPadding="5dp">
+
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="vertical">
+        android:orientation="vertical"
+        android:layout_margin="8dp">
 
+        <!-- User Profile Section -->
         <LinearLayout
-            android:layout_width="match_parent"
             android:id="@+id/profileLayout"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="horizontal"
             android:layout_gravity="center_vertical">
+
             <com.mikhaellopez.circularimageview.CircularImageView
-                android:layout_width="50dp"
                 android:id="@+id/uPictureIv"
-                android:src="@drawable/ic_profile"
+                android:layout_width="50dp"
+                android:layout_height="50dp"
                 android:scaleType="centerCrop"
-                android:layout_height="50dp"/>
+                android:src="@drawable/ic_profile" />
+
             <LinearLayout
-                android:layout_width="match_parent"
+                android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:orientation="vertical"
-                android:layout_weight="1">
+                android:layout_weight="1"
+                android:orientation="vertical">
+
                 <TextView
+                    android:id="@+id/uNameTv"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="name"
-                    android:id="@+id/uNameTv"
-                    android:textSize="20dp"/>
+                    android:textSize="20sp" />
+
                 <TextView
+                    android:id="@+id/pTimeTv"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="atimeTv"
-                    android:id="@+id/pTimeTv"
-                    android:textSize="20dp"/>
+                    android:text="time"
+                    android:textSize="20sp" />
+
             </LinearLayout>
+
             <ImageButton
+                android:id="@+id/moreBtn"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:background="@null"
-                android:id="@+id/moreBtn"
-                android:src="@drawable/ic_more"/>
+                android:src="@drawable/ic_more" />
+
         </LinearLayout>
 
+        <!-- Article Details -->
         <TextView
-            android:layout_width="match_parent"
             android:id="@+id/aTitleTv"
-            android:textSize="16sp"
-            android:textStyle="bold"
-            android:text="title"
-            android:autoLink="all"
-            android:layout_height="wrap_content"/>
-        <TextView
             android:layout_width="match_parent"
-            android:id="@+id/aDescTv"
+            android:layout_height="wrap_content"
+            android:text="title"
             android:textSize="16sp"
-            android:text="Descriptison"
-            android:autoLink="all"
-            android:layout_height="wrap_content"/>
+            android:textStyle="bold" />
 
-<com.github.chrisbanes.photoview.PhotoView
-    android:layout_width="match_parent"
-    android:layout_height="300dp"
-    android:id="@+id/sendImg"
-    android:visibility="gone"
-    />
+        <TextView
+            android:id="@+id/aDescTv"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Description"
+            android:textSize="16sp" />
+
+        <!-- Additional Views (Image, Video, etc.) -->
+        <com.github.chrisbanes.photoview.PhotoView
+            android:id="@+id/sendImg"
+            android:layout_width="match_parent"
+            android:layout_height="300dp"
+            android:visibility="gone" />
+
         <VideoView
+            android:id="@+id/sendVdo"
             android:layout_width="match_parent"
             android:layout_height="300dp"
             android:visibility="gone"
-            android:background="@color/pink"
-            android:id="@+id/sendVdo"
-            />
+            android:background="@color/pink" />
+
         <WebView
+            android:id="@+id/sendWeb"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:visibility="gone"
-            android:id="@+id/sendWeb"
             tools:ignore="WebViewLayout" />
+
         <TextView
+            android:id="@+id/sendTxt"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:id="@+id/sendTxt"
-            android:visibility="gone"/>
+            android:visibility="gone" />
 
+        <!--suppress AndroidUnresolvableTag -->
         <com.github.barteksc.pdfviewer.PDFView
             android:id="@+id/sendPdf"
             android:layout_width="match_parent"
+            android:layout_height="250dp"
             android:visibility="gone"
-            android:layout_height="250dp"/>
-<ImageView
-    android:layout_width="match_parent"
-    android:layout_height="100dp"
-    android:id="@+id/iconIv"
-    android:visibility="gone"
-    android:scaleType="center"
-    />
+            tools:ignore="MissingClass" />
 
+        <ImageView
+            android:id="@+id/iconIv"
+            android:layout_width="match_parent"
+            android:layout_height="100dp"
+            android:visibility="gone"
+            android:scaleType="center" />
+
+        <!-- Divider -->
         <View
             android:layout_width="match_parent"
             android:layout_height="1dp"
-            android:background="#F5f0F0"
-            />
-
-
+            android:background="#F5f0F0" />
 
     </LinearLayout>
 
