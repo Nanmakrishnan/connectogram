@@ -100,6 +100,8 @@ public class AdapterPost extends  RecyclerView.Adapter<AdapterPost.Myholder> {
 
  // set data;
       holder.uNameTV.setText(uName);;
+      if(uName.equals(""))
+          holder.uNameTV.setText("Default User");
         holder.pTimeTv.setText(pTime);
         holder.pTitleTv.setText(pTitle);
         holder.pDescTv.setText(pDesc);
