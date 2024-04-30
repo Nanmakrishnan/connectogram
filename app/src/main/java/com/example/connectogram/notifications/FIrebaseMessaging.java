@@ -46,7 +46,7 @@ public class FIrebaseMessaging extends FirebaseMessagingService {
         String savedCurrentUser=sp.getString("Current_USERID","None");
 
         String NotificationType=message.getData().get("notificationType");
-        if(NotificationType.equals("PostNotification"))
+        if(NotificationType!=null&&NotificationType.equals("PostNotification"))
         {
             String sender=message.getData().get("sender");
             String pId=message.getData().get("pId");
@@ -60,7 +60,7 @@ public class FIrebaseMessaging extends FirebaseMessagingService {
 
 
         }
-        else if(NotificationType.equals("ChatNotification"))
+        else if(NotificationType!=null&&NotificationType.equals("ChatNotification"))
         {
             String send=message.getData().get("send");
             String user=message.getData().get("user");

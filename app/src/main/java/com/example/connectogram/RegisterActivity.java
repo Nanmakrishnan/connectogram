@@ -27,7 +27,7 @@ import java.util.HashMap;
 
 public class RegisterActivity extends AppCompatActivity {
 
-    EditText email, password;
+    EditText email, password,confirm;
     Button register_btn;
     TextView haveAccount;
     private FirebaseAuth auth;
@@ -43,6 +43,7 @@ public class RegisterActivity extends AppCompatActivity {
         password = findViewById(R.id.password);
         register_btn = findViewById(R.id.register_btn);
         haveAccount=findViewById(R.id.have_account);
+        confirm=findViewById(R.id.cfrmpassword);
         // Initialize FirebaseAuth instance
         auth = FirebaseAuth.getInstance();
 
@@ -65,7 +66,12 @@ public class RegisterActivity extends AppCompatActivity {
                 } else if (pas.length() < 6) {
                     password.setError("At least 6 characters are needed");
                     password.setFocusable(true);
-                } else {
+                }
+                else if (!confirm.getText().toString().trim().equals(pas)) {
+                    confirm.setError("Password mismatch");
+                    confirm.setFocusable(true);
+                }
+                else {
                     registerUser(em, pas);
                 }
             }

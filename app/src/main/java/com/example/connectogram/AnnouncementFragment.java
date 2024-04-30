@@ -139,6 +139,7 @@ setHasOptionsMenu(true);
                 // Create an instance of your AdapterAnnouncement class
                 adapterAnnouncement = new AdapterAnnouncement(getContext(), modelAnnounceList);
                 // Set the adapter to your RecyclerView
+                adapterAnnouncement.notifyDataSetChanged();
                 recyclerView.setAdapter(adapterAnnouncement);
             }
 
