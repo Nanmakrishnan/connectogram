@@ -80,6 +80,11 @@ public class AdapterAnnouncement extends RecyclerView.Adapter
         String  pTime= DateFormat.format("dd/MM/yyyy hh:mm aa",cal).toString();
 
         holder.aTimeTv.setText(pTime);
+        holder.sendImage.setVisibility(View.GONE);
+        holder.sendVdo.setVisibility(View.GONE);
+        holder.sendpdf.setVisibility(View.GONE);
+        holder.sendTxt.setVisibility(View.GONE);
+        holder.sendWeb.setVisibility(View.GONE);
         String fileUrl = announcement.getaFile();
         if (!fileUrl.equals("null")) {
             Toast.makeText(context,fileUrl+" is the url",Toast.LENGTH_SHORT);
