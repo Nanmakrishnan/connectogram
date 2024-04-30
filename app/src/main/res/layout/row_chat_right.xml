@@ -1,10 +1,9 @@
-<?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/messageLayout"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:orientation="vertical"
-    android:id="@+id/messageLayout"
     android:padding="10dp">
 
     <RelativeLayout
@@ -14,27 +13,28 @@
 
         <TextView
             android:id="@+id/messageTv"
-            android:layout_width="300dp"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:textColor="@color/black"
-            android:padding="15dp"
             android:textSize="16sp"
-            android:text="my message"
+            android:text="My message"
+            android:padding="15dp"
             android:background="@drawable/bg_sender"
             android:layout_alignParentEnd="true"
-            android:layout_weight="1"/>
+            android:layout_marginStart="8dp"
+            android:layout_marginTop="8dp"
+            android:layout_marginEnd="8dp" />
+
         <com.github.chrisbanes.photoview.PhotoView
-            android:layout_width="200dp"
+            android:id="@+id/messageIv"
+            android:layout_width="wrap_content"
             android:layout_height="200dp"
             android:adjustViewBounds="true"
-            android:layout_alignParentEnd="true"
-      android:layout_marginTop="50dp"
-            android:padding="15dp"
-            android:id="@+id/messageIv"
             android:scaleType="fitCenter"
             android:src="@drawable/ic_image_black"
-            android:background="@drawable/bg_sender"/>
-
+            android:background="@drawable/bg_sender"
+            android:layout_alignParentEnd="true"
+            android:layout_margin="0dp" />
 
 
     </RelativeLayout>
@@ -43,21 +43,20 @@
         android:id="@+id/timeTv"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_gravity="right"
-        android:text="5:32 am"
+        android:layout_gravity="end"
+        android:text="5:32 AM"
         android:textColor="@color/black"
-        android:textSize="12sp" />
+        android:textSize="12sp"
+        android:layout_marginTop="8dp" />
 
     <TextView
-
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
         android:id="@+id/isSeenTv"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
         android:layout_gravity="end"
-        android:textAlignment="textEnd"
-
-        android:text="deliverd"
-        />
-
-
+        android:textAlignment="viewEnd"
+        android:text="Delivered"
+        android:textColor="@color/black"
+        android:textSize="12sp"
+        android:layout_marginTop="8dp" />
 </LinearLayout>

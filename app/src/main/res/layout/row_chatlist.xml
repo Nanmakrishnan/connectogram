@@ -1,50 +1,53 @@
 <?xml version="1.0" encoding="utf-8"?>
 <androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="match_parent"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    app:contentPadding="3dp"
-    android:layout_height="wrap_content">
+    app:contentPadding="2dp"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    >
+
     <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content">
-
+        android:layout_height="wrap_content"
+        android:background="@drawable/rounded_background" >
 
         <com.mikhaellopez.circularimageview.CircularImageView
-            android:layout_width="80dp"
             android:id="@+id/profileIv"
-            android:src="@drawable/ic_profile"
-            android:layout_height="80dp"/>
+            android:layout_width="80dp"
+            android:layout_height="80dp"
+            android:src="@drawable/ic_profile" />
+
         <com.mikhaellopez.circularimageview.CircularImageView
-            android:layout_width="25dp"
             android:id="@+id/onlineStatusIv"
-            android:layout_height="25dp"/>
+            android:layout_width="25dp"
+            android:layout_height="25dp"
+            android:layout_below="@id/profileIv"
+            android:layout_alignEnd="@id/profileIv" />
 
         <TextView
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
             android:id="@+id/nameTv"
-            android:text="his name"
-            android:layout_marginStart="4dp"
-            android:textColor="@color/black"
-            android:textSize="16sp"
-            android:layout_toEndOf="@id/profileIv"/>
-
-        <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="last message"
-            android:id="@+id/lastMessageTv"
-            android:maxLines="2"
+            android:layout_marginStart="4dp"
+            android:layout_marginTop="15dp"
+            android:layout_toEndOf="@id/profileIv"
+            android:text="Name"
             android:textColor="@color/black"
-            android:textSize="16sp"
-            android:layout_below="@+id/nameTv"
-            android:layout_toEndOf="@id/profileIv"/>
+            android:textSize="16sp" />
 
-
+        <TextView
+            android:id="@+id/lastMessageTv"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/nameTv"
+            android:layout_marginTop="4dp"
+            android:layout_toEndOf="@id/profileIv"
+            android:maxLines="2"
+            android:paddingStart="5dp"
+            android:text="Last Message"
+            android:textColor="@color/black"
+            android:textSize="16sp" />
 
     </RelativeLayout>
-
-
-
 
 </androidx.cardview.widget.CardView>

@@ -1,186 +1,253 @@
 <?xml version="1.0" encoding="utf-8"?>
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
-xmlns:app="http://schemas.android.com/apk/res-auto"
-xmlns:tools="http://schemas.android.com/tools"
-android:layout_width="match_parent"
-android:layout_height="match_parent"
-tools:context=".ProfileFragment"
-android:background="#ececec">
-<ScrollView
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
-    <LinearLayout
+    android:layout_height="match_parent"
+    tools:context=".ProfileFragment"
+    android:background="#ececec">
+    <ScrollView
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="vertical">
-
-        <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_height="match_parent">
+        <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="match_parent">
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
 
-            <ImageView
-                android:id="@+id/imageView"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:scaleType="fitXY"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent"
-                app:srcCompat="@drawable/top_background" />
-
-            <de.hdodenhof.circleimageview.CircleImageView
-                app:civ_border_width="4dp"
-                android:id="@+id/avatarTv"
-                android:layout_centerInParent="true"
-                app:civ_border_color="#FFFFFF"
-                android:layout_width="200dp"
-                android:layout_height="200dp"
-                app:layout_constraintBottom_toBottomOf="@+id/imageView"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="@+id/imageView"
-                app:layout_constraintTop_toBottomOf="@+id/imageView"
-                android:src="@drawable/ic_add_photo"/>
-
-
-
-            <TextView
-                android:id="@+id/nameTv"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="Name"
-                android:textColor="@color/black"
-                android:layout_marginTop="16dp"
-                android:textSize="25sp"
-                android:textStyle="bold"
-                app:layout_constraintEnd_toEndOf="@+id/avatarTv"
-                app:layout_constraintStart_toStartOf="@+id/avatarTv"
-                app:layout_constraintTop_toBottomOf="@+id/avatarTv" />
-
-            <TextView
-                android:id="@+id/emailTv"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="Email"
-                android:textColor="@color/black"
-                android:textSize="20sp"
-                app:layout_constraintEnd_toEndOf="@+id/nameTv"
-                app:layout_constraintStart_toStartOf="@+id/nameTv"
-                app:layout_constraintTop_toBottomOf="@+id/nameTv"/>
-
-            <LinearLayout
+            <androidx.constraintlayout.widget.ConstraintLayout
                 android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:orientation="vertical"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/emailTv">
+                android:layout_height="match_parent">
 
-                <androidx.appcompat.widget.AppCompatButton
-                    android:id="@+id/semTv"
-                    android:layout_width="match_parent"
-                    android:layout_height="60dp"
-                    android:layout_marginStart="32dp"
-                    android:layout_marginTop="10dp"
-                    android:layout_marginEnd="32dp"
-                    android:layout_marginBottom="10dp"
-                    android:background="@drawable/btn_background_1"
-                    android:drawablePadding="20dp"
-                    android:paddingStart="20dp"
-                    android:hint="Add your semester"
-                    android:textSize="18sp"
+                <ImageView
+                    android:id="@+id/imageView"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:scaleType="fitXY"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent"
+                    app:srcCompat="@drawable/top_background" />
+
+                <de.hdodenhof.circleimageview.CircleImageView
+                    app:civ_border_width="4dp"
+                    android:id="@+id/avatarTv"
+                    android:layout_centerInParent="true"
+                    app:civ_border_color="#FFFFFF"
+                    android:layout_width="200dp"
+                    android:layout_height="200dp"
+                    app:layout_constraintBottom_toBottomOf="@+id/imageView"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="@+id/imageView"
+                    app:layout_constraintTop_toBottomOf="@+id/imageView"
+                    android:src="@drawable/ic_add_photo"/>
+
+
+
+                <TextView
+                    android:id="@+id/nameTv"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Name"
+                    android:textColor="@color/black"
+                    android:layout_marginTop="16dp"
+                    android:textSize="25sp"
                     android:textStyle="bold"
-                    style="@android:style/Widget.Button"
-                    android:textAlignment="viewStart" />
-                <androidx.appcompat.widget.AppCompatButton
-                    android:id="@+id/yearTv"
+                    app:layout_constraintEnd_toEndOf="@+id/avatarTv"
+                    app:layout_constraintStart_toStartOf="@+id/avatarTv"
+                    app:layout_constraintTop_toBottomOf="@+id/avatarTv" />
+
+                <TextView
+                    android:id="@+id/emailTv"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Email"
+                    android:textColor="@color/black"
+                    android:textSize="20sp"
+                    app:layout_constraintEnd_toEndOf="@+id/nameTv"
+                    app:layout_constraintStart_toStartOf="@+id/nameTv"
+                    app:layout_constraintTop_toBottomOf="@+id/nameTv"/>
+
+                <LinearLayout
                     android:layout_width="match_parent"
-                    android:layout_height="60dp"
-                    android:layout_marginStart="32dp"
-                    android:layout_marginTop="10dp"
-                    android:layout_marginEnd="32dp"
-                    android:textSize="18sp"
-                    android:textStyle="bold"
-                    style="@android:style/Widget.Button"
-                    android:layout_marginBottom="10dp"
-                    android:background="@drawable/btn_background_1"
-                    android:drawablePadding="20dp"
-                    android:paddingStart="20dp"
-                    android:hint="Add your Year"
-                    android:textAlignment="viewStart" />
-                <androidx.appcompat.widget.AppCompatButton
-                    android:id="@+id/phoneTv"
-                    android:layout_width="match_parent"
-                    android:layout_height="60dp"
-                    android:layout_marginStart="32dp"
-                    android:layout_marginTop="10dp"
-                    android:layout_marginEnd="32dp"
-                    android:textSize="18sp"
-                    android:textStyle="bold"
-                    style="@android:style/Widget.Button"
-                    android:layout_marginBottom="10dp"
-                    android:background="@drawable/btn_background_1"
-                    android:drawablePadding="20dp"
-                    android:paddingStart="20dp"
-                    android:hint="Add your Phone Number"
-                    android:textAlignment="viewStart" />
-                <androidx.appcompat.widget.AppCompatButton
-                    android:id="@+id/bioTv"
-                    android:layout_width="match_parent"
-                    android:layout_height="60dp"
-                    android:layout_marginStart="32dp"
-                    android:layout_marginTop="10dp"
-                    android:textSize="18sp"
-                    android:textStyle="bold"
-                    style="@android:style/Widget.Button"
-                    android:layout_marginEnd="32dp"
-                    android:layout_marginBottom="10dp"
-                    android:background="@drawable/btn_background_1"
-                    android:drawablePadding="20dp"
-                    android:paddingStart="20dp"
-                    android:hint="Bio"
-                    android:textAlignment="viewStart" />
-            </LinearLayout>
-            <com.google.android.material.floatingactionbutton.FloatingActionButton
-                android:id="@+id/fab"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_alignParentEnd="true"
-                android:layout_alignParentBottom="true"
-                android:layout_marginTop="16dp"
-                android:layout_marginEnd="16dp"
-                android:backgroundTint="@color/slateGray"
-                android:contentDescription="Edit"
-                android:src="@drawable/ic_edit_white"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintTop_toTopOf="parent"
-                tools:ignore="MissingConstraints" />
+                    android:layout_height="match_parent"
+                    android:orientation="vertical"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/emailTv">
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent">
+                        <androidx.appcompat.widget.AppCompatButton
+                            android:layout_width="wrap_content"
+                            android:layout_height="60dp"
+                            android:layout_marginStart="30dp"
+                            android:layout_marginTop="10dp"
+                            android:layout_marginBottom="10dp"
+                            android:background="@drawable/btn_background_1"
+                            android:drawablePadding="20dp"
+                            android:paddingStart="20dp"
+                            android:paddingEnd="20dp"
+                            android:hint="Semester"
+                            android:textSize="18sp"
+                            android:textStyle="bold"
+                            style="@android:style/Widget.Button"
+                            android:textAlignment="viewStart" />
+
+                        <androidx.appcompat.widget.AppCompatButton
+                            android:id="@+id/semTv"
+                            android:layout_width="match_parent"
+                            android:layout_height="60dp"
+                            android:layout_marginStart="32dp"
+                            android:layout_marginTop="10dp"
+                            android:layout_marginEnd="32dp"
+                            android:layout_marginBottom="10dp"
+                            android:background="@drawable/btn_background_1"
+                            android:drawablePadding="20dp"
+                            android:paddingStart="20dp"
+                            android:hint="Add your semester"
+                            android:textSize="18sp"
+                            android:textStyle="bold"
+                            style="@android:style/Widget.Button"
+                            android:textAlignment="viewStart" />
+
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent">
+                        <androidx.appcompat.widget.AppCompatButton
+                            android:layout_width="wrap_content"
+                            android:layout_height="60dp"
+                            android:layout_marginStart="30dp"
+                            android:layout_marginTop="10dp"
+                            android:layout_marginBottom="10dp"
+                            android:background="@drawable/btn_background_1"
+                            android:drawablePadding="20dp"
+                            android:paddingStart="30dp"
+                            android:paddingEnd="50dp"
+                            android:hint="Year"
+                            android:textSize="18sp"
+                            android:textStyle="bold"
+                            style="@android:style/Widget.Button"
+                            android:textAlignment="viewStart" />
+
+                        <androidx.appcompat.widget.AppCompatButton
+                            android:id="@+id/yearTv"
+                            android:layout_width="match_parent"
+                            android:layout_height="60dp"
+                            android:layout_marginStart="32dp"
+                            android:layout_marginTop="10dp"
+                            android:layout_marginEnd="32dp"
+                            android:textSize="18sp"
+                            android:textStyle="bold"
+                            style="@android:style/Widget.Button"
+                            android:layout_marginBottom="10dp"
+                            android:background="@drawable/btn_background_1"
+                            android:drawablePadding="20dp"
+                            android:paddingStart="20dp"
+                            android:hint="Add your Year"
+                            android:textAlignment="viewStart" />
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent">
+
+                        <androidx.appcompat.widget.AppCompatButton
+                            android:layout_width="wrap_content"
+                            android:layout_height="60dp"
+                            android:layout_marginStart="30dp"
+                            android:layout_marginTop="10dp"
+                            android:layout_marginBottom="10dp"
+                            android:background="@drawable/btn_background_1"
+                            android:drawablePadding="20dp"
+                            android:paddingStart="30dp"
+                            android:hint="Phone "
+                            android:paddingEnd="30dp"
+                            android:textSize="18sp"
+                            android:textStyle="bold"
+                            style="@android:style/Widget.Button"
+                            android:textAlignment="viewStart" />
+
+
+                        <androidx.appcompat.widget.AppCompatButton
+                            android:id="@+id/phoneTv"
+                            android:layout_width="match_parent"
+                            android:layout_height="60dp"
+                            android:layout_marginStart="32dp"
+                            android:layout_marginTop="10dp"
+                            android:layout_marginEnd="32dp"
+                            android:textSize="18sp"
+                            android:textStyle="bold"
+                            style="@android:style/Widget.Button"
+                            android:layout_marginBottom="10dp"
+                            android:background="@drawable/btn_background_1"
+                            android:drawablePadding="20dp"
+                            android:paddingStart="20dp"
+                            android:hint="Add your Phone Number"
+                            android:textAlignment="viewStart" />
+                    </LinearLayout>
+
+
+                    <androidx.appcompat.widget.AppCompatButton
+                        android:id="@+id/bioTv"
+                        android:layout_width="match_parent"
+                        android:layout_height="60dp"
+                        android:layout_marginStart="32dp"
+                        android:layout_marginTop="10dp"
+                        android:textSize="18sp"
+                        android:textStyle="bold"
+                        style="@android:style/Widget.Button"
+                        android:layout_marginEnd="32dp"
+                        android:layout_marginBottom="10dp"
+                        android:background="@drawable/btn_background_1"
+                        android:drawablePadding="20dp"
+                        android:paddingStart="20dp"
+                        android:hint="Bio"
+                        android:textAlignment="viewStart" />
+                </LinearLayout>
+                <com.google.android.material.floatingactionbutton.FloatingActionButton
+                    android:id="@+id/fab"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentEnd="true"
+                    android:layout_alignParentBottom="true"
+                    android:layout_marginTop="16dp"
+                    android:layout_marginEnd="16dp"
+                    android:backgroundTint="@color/slateGray"
+                    android:contentDescription="Edit"
+                    android:src="@drawable/ic_edit_white"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintTop_toTopOf="parent"
+                    tools:ignore="MissingConstraints" />
             </androidx.constraintlayout.widget.ConstraintLayout>
 
 
-        <TextView
-            android:layout_width="match_parent"
-            android:layout_height="60dp"
-            android:layout_marginStart="32dp"
-            android:layout_marginTop="10dp"
-            android:layout_marginEnd="32dp"
-            android:layout_marginBottom="10dp"
-            android:background="@drawable/custombutton"
-            android:gravity="center"
-            android:text="Check out your Post"
-            android:drawablePadding="20dp"
-            android:paddingStart="20dp"
-            android:textSize="18sp"
-            android:textStyle="bold"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent" />
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="60dp"
+                android:layout_marginStart="32dp"
+                android:layout_marginTop="10dp"
+                android:layout_marginEnd="32dp"
+                android:layout_marginBottom="10dp"
+                android:background="@drawable/custombutton"
+                android:gravity="center"
+                android:text="Check out your Post"
+                android:drawablePadding="20dp"
+                android:paddingStart="20dp"
+                android:textSize="18sp"
+                android:textStyle="bold"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent" />
 
-        <androidx.recyclerview.widget.RecyclerView
-            android:layout_width="match_parent"
-            android:layout_below="@+id/linearLayout"
-            android:id="@+id/recycleview_posts"
-            android:layout_height="wrap_content"/>
+            <androidx.recyclerview.widget.RecyclerView
+                android:layout_width="match_parent"
+                android:layout_below="@+id/linearLayout"
+                android:id="@+id/recycleview_posts"
+                android:layout_height="wrap_content"/>
 
-            </LinearLayout>
-            </ScrollView>
-            </androidx.constraintlayout.widget.ConstraintLayout>
+        </LinearLayout>
+    </ScrollView>
+</androidx.constraintlayout.widget.ConstraintLayout>

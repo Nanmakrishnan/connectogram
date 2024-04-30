@@ -33,6 +33,7 @@ import androidx.core.view.WindowInsetsCompat;
 import  android.Manifest;
 import android.widget.LinearLayout;
 import android.widget.ProgressBar;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.android.volley.AuthFailureError;
@@ -61,7 +62,10 @@ import org.json.JSONObject;
 
 import java.io.ByteArrayOutputStream;
 import java.sql.SQLOutput;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.HashMap;
+import java.util.Locale;
 import java.util.Map;
 import java.util.Objects;
 
@@ -82,6 +86,7 @@ private  static  final  int   CAMERA_REQUEST_CODE=100;
     String [] storagePermissions;
     Uri imageuri=null;
     String name,email,dp,uid;
+    TextView uNameTv, pTimeTv;
 String editTitle,editDesc,editImage;
 FirebaseAuth firebaseAuth;
     @Override
@@ -98,12 +103,18 @@ FirebaseAuth firebaseAuth;
              actionBar.setDisplayHomeAsUpEnabled(true);
          }
         firebaseAuth=FirebaseAuth.getInstance();
-        checkUserStatus();;
+        checkUserStatus();
         titleEt=findViewById(R.id.pTitleEt);
         descEv=findViewById(R.id.pDescEt);
         pUploadBtn=findViewById(R.id.pUploadBtn);
         pImageIv=findViewById(R.id.pImageIv);
+        uNameTv = findViewById(R.id.uNameTv);
+        pTimeTv = findViewById(R.id.pTimeTv);
 
+        // Set user name and current time
+        uNameTv.setText(name);
+        String currentTime = getCurrentTime(); // Get current time
+        pTimeTv.setText(currentTime);
          Intent i=getIntent();
          String isUpdateKey=""+i.getStringExtra("key");
          String editPostId=""+i.getStringExtra("editPostId");
@@ -135,6 +146,8 @@ FirebaseAuth firebaseAuth;
                     name=""+ds.child("name").getValue();
                     email=""+ds.child("email").getValue();
                     dp=""+ds.child("image").getValue();
+
+                    uNameTv.setText(name);
                 }
             }
 
@@ -192,6 +205,11 @@ pUploadBtn.setOnClickListener(new View.OnClickListener() {
             v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom);
             return insets;
         });
+    }
+
+    private String getCurrentTime() {
+        SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy HH:mm:ss", Locale.getDefault());
+        return sdf.format(new Date());
     }
 
     private void beginUpdate(String title, String desc, String editPostId) {

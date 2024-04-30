@@ -77,54 +77,122 @@ android:background="#ececec">
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/emailTv">
 
-                <androidx.appcompat.widget.AppCompatButton
-                    android:id="@+id/semTv"
+                <LinearLayout
                     android:layout_width="match_parent"
-                    android:layout_height="60dp"
-                    android:layout_marginStart="32dp"
-                    android:layout_marginTop="10dp"
-                    android:layout_marginEnd="32dp"
-                    android:layout_marginBottom="10dp"
-                    android:background="@drawable/btn_background_1"
-                    android:drawablePadding="20dp"
-                    android:paddingStart="20dp"
-                    android:hint="Semester"
-                    android:textSize="18sp"
-                    android:textStyle="bold"
-                    style="@android:style/Widget.Button"
-                    android:textAlignment="viewStart" />
-                <androidx.appcompat.widget.AppCompatButton
-                    android:id="@+id/yearTv"
+                    android:layout_height="match_parent">
+
+                    <androidx.appcompat.widget.AppCompatButton
+                        android:layout_width="wrap_content"
+                        android:layout_height="60dp"
+                        android:layout_marginStart="30dp"
+                        android:layout_marginTop="10dp"
+                        android:layout_marginBottom="10dp"
+                        android:background="@drawable/btn_background_1"
+                        android:drawablePadding="20dp"
+                        android:paddingStart="20dp"
+                        android:paddingEnd="20dp"
+                        android:hint="Semester"
+                        android:textSize="18sp"
+                        android:textStyle="bold"
+                        style="@android:style/Widget.Button"
+                        android:textAlignment="viewStart" />
+
+                    <androidx.appcompat.widget.AppCompatButton
+                        android:id="@+id/semTv"
+                        android:layout_width="match_parent"
+                        android:layout_height="60dp"
+                        android:layout_marginStart="32dp"
+                        android:layout_marginTop="10dp"
+                        android:layout_marginEnd="32dp"
+                        android:layout_marginBottom="10dp"
+                        android:background="@drawable/btn_background_1"
+                        android:drawablePadding="20dp"
+                        android:paddingStart="20dp"
+                        android:hint="Semester"
+                        android:textSize="18sp"
+                        android:textStyle="bold"
+                        style="@android:style/Widget.Button"
+                        android:textAlignment="viewStart" />
+                </LinearLayout>
+
+                <LinearLayout
                     android:layout_width="match_parent"
-                    android:layout_height="60dp"
-                    android:layout_marginStart="32dp"
-                    android:layout_marginTop="10dp"
-                    android:layout_marginEnd="32dp"
-                    android:textSize="18sp"
-                    android:textStyle="bold"
-                    style="@android:style/Widget.Button"
-                    android:layout_marginBottom="10dp"
-                    android:background="@drawable/btn_background_1"
-                    android:drawablePadding="20dp"
-                    android:paddingStart="20dp"
-                    android:hint="Year"
-                    android:textAlignment="viewStart" />
-                <androidx.appcompat.widget.AppCompatButton
-                    android:id="@+id/phoneTv"
+                    android:layout_height="match_parent">
+
+                    <androidx.appcompat.widget.AppCompatButton
+                        android:layout_width="wrap_content"
+                        android:layout_height="60dp"
+                        android:layout_marginStart="30dp"
+                        android:layout_marginTop="10dp"
+                        android:layout_marginBottom="10dp"
+                        android:background="@drawable/btn_background_1"
+                        android:drawablePadding="20dp"
+                        android:paddingStart="30dp"
+                        android:paddingEnd="50dp"
+                        android:hint="Year"
+                        android:textSize="18sp"
+                        android:textStyle="bold"
+                        style="@android:style/Widget.Button"
+                        android:textAlignment="viewStart" />
+
+
+                    <androidx.appcompat.widget.AppCompatButton
+                        android:id="@+id/yearTv"
+                        android:layout_width="match_parent"
+                        android:layout_height="60dp"
+                        android:layout_marginStart="32dp"
+                        android:layout_marginTop="10dp"
+                        android:layout_marginEnd="32dp"
+                        android:textSize="18sp"
+                        android:textStyle="bold"
+                        style="@android:style/Widget.Button"
+                        android:layout_marginBottom="10dp"
+                        android:background="@drawable/btn_background_1"
+                        android:drawablePadding="20dp"
+                        android:paddingStart="20dp"
+                        android:hint="Year"
+                        android:textAlignment="viewStart" />
+                </LinearLayout>
+
+
+                <LinearLayout
                     android:layout_width="match_parent"
-                    android:layout_height="60dp"
-                    android:layout_marginStart="32dp"
-                    android:layout_marginTop="10dp"
-                    android:layout_marginEnd="32dp"
-                    android:textSize="18sp"
-                    android:textStyle="bold"
-                    style="@android:style/Widget.Button"
-                    android:layout_marginBottom="10dp"
-                    android:background="@drawable/btn_background_1"
-                    android:drawablePadding="20dp"
-                    android:paddingStart="20dp"
-                    android:hint="Phone Number"
-                    android:textAlignment="viewStart" />
+                    android:layout_height="match_parent">
+
+                    <androidx.appcompat.widget.AppCompatButton
+                        android:layout_width="wrap_content"
+                        android:layout_height="60dp"
+                        android:layout_marginStart="30dp"
+                        android:layout_marginTop="10dp"
+                        android:layout_marginBottom="10dp"
+                        android:background="@drawable/btn_background_1"
+                        android:drawablePadding="20dp"
+                        android:paddingStart="30dp"
+                        android:hint="Phone "
+                        android:paddingEnd="30dp"
+                        android:textSize="18sp"
+                        android:textStyle="bold"
+                        style="@android:style/Widget.Button"
+                        android:textAlignment="viewStart" />
+
+                    <androidx.appcompat.widget.AppCompatButton
+                        android:id="@+id/phoneTv"
+                        android:layout_width="match_parent"
+                        android:layout_height="60dp"
+                        android:layout_marginStart="32dp"
+                        android:layout_marginTop="10dp"
+                        android:layout_marginEnd="32dp"
+                        android:textSize="18sp"
+                        android:textStyle="bold"
+                        style="@android:style/Widget.Button"
+                        android:layout_marginBottom="10dp"
+                        android:background="@drawable/btn_background_1"
+                        android:drawablePadding="20dp"
+                        android:paddingStart="20dp"
+                        android:hint="Phone Number"
+                        android:textAlignment="viewStart" />
+                </LinearLayout>
+
                 <androidx.appcompat.widget.AppCompatButton
                     android:id="@+id/bioTv"
                     android:layout_width="match_parent"

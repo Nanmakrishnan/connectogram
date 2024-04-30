@@ -1,27 +1,33 @@
-<?xml version="1.0" encoding="utf-8"?>
 <FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".AnnouncementFragment">
 
-
-    <!-- TODO: Update blank fragment layout -->
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content">
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
+
+        <!-- Title TextView -->
         <TextView
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:textSize="40dp"
-            android:text="All annoucemntetns" />
+            android:layout_height="wrap_content"
+            android:textSize="34sp"
+            android:text="All  Announcements"
+            android:textStyle="bold"
+            android:padding="16dp"
+            android:fontFamily="@font/berkshire_swash"
+            android:textColor="@color/black"
+            android:gravity="center"/>
 
+        <!-- RecyclerView -->
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/recyclerView"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            android:padding="8dp"/>
     </LinearLayout>
-
-    <androidx.recyclerview.widget.RecyclerView
-        android:layout_width="match_parent"
-        android:id="@+id/recyclerView"
-        android:layout_marginTop="55dp"
-        android:layout_height="wrap_content"/>
 
 </FrameLayout>

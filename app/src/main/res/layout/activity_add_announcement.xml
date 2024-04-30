@@ -1,38 +1,63 @@
-<?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
-    android:id="@+id/main"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".AddAnnouncementActivity">
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:orientation="vertical"
-        android:gravity="center"
-        android:layout_height="wrap_content">
-<EditText
-    android:layout_width="match_parent"
-    android:layout_height="wrap_content"
-    android:id="@+id/titleEt"
-    android:hint="enter title"
-    />
-    <EditText
+    android:background="@drawable/announce"
+    android:id="@+id/main"
+    tools:context=".AnnouncementFragment">
+
+    <!-- CardView to cover the entire screen -->
+    <androidx.cardview.widget.CardView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:id="@+id/descEt"
-        android:hint="enter descriptions"
-        />
-        <Button
+        android:layout_gravity="center"
+        android:layout_margin="16dp"
+        android:elevation="4dp"
+        android:background="@drawable/rounded_corner_cardview">
+
+
+        <!-- LinearLayout to arrange elements vertically -->
+        <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:id="@+id/fileBtn"
-            android:text="upload file"/>
-<Button
-    android:layout_width="match_parent"
-    android:text="Publish "
-    android:id="@+id/publishBtn"
-    android:layout_height="wrap_content"/>
-    </LinearLayout>
+            android:layout_gravity="center"
+            android:orientation="vertical"
+            android:padding="16dp">
 
-</RelativeLayout>
+            <!-- Title EditText -->
+            <EditText
+                android:id="@+id/titleEt"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:fontFamily=""
+                android:hint="Enter Title"
+                android:textSize="20sp" />
+
+            <!-- Description EditText -->
+            <EditText
+                android:id="@+id/descEt"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="8dp"
+                android:hint="Enter Description"
+                android:textSize="16sp" />
+
+            <!-- Upload Button -->
+            <Button
+                android:id="@+id/fileBtn"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="16dp"
+                android:text="Upload" />
+
+            <!-- Publish Button -->
+            <Button
+                android:id="@+id/publishBtn"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="8dp"
+                android:text="Publish" />
+        </LinearLayout>
+    </androidx.cardview.widget.CardView>
+
+</FrameLayout>
