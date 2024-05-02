@@ -8,6 +8,7 @@ import android.graphics.Bitmap;
 import android.graphics.drawable.BitmapDrawable;
 import android.net.Uri;
 import android.text.format.DateFormat;
+import android.util.Log;
 import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.Menu;
@@ -23,9 +24,14 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
+import androidx.collection.ArraySet;
 import androidx.core.content.FileProvider;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.android.volley.AuthFailureError;
+import com.android.volley.RequestQueue;
+import com.android.volley.toolbox.JsonObjectRequest;
+import com.android.volley.toolbox.Volley;
 import com.example.connectogram.AddPostActivity;
 import com.example.connectogram.OthersProfileActivity;
 import com.example.connectogram.PostDetailsActivity;
@@ -42,14 +48,23 @@ import com.google.firebase.database.Query;
 import com.google.firebase.database.ValueEventListener;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
+import com.google.gson.Gson;
 import com.squareup.picasso.Picasso;
+import com.example.connectogram.notifications.Data;
+import com.example.connectogram.notifications.Sender;
+import com.example.connectogram.notifications.Token;
+
+import org.json.JSONException;
+import org.json.JSONObject;
 
 import java.io.File;
 import java.io.FileOutputStream;
 import java.text.Format.*;
 import java.util.Calendar;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Locale;
+import java.util.Map;
 
 public class AdapterPost extends  RecyclerView.Adapter<AdapterPost.Myholder> {
 
@@ -60,7 +75,7 @@ public class AdapterPost extends  RecyclerView.Adapter<AdapterPost.Myholder> {
     // view holder class
     Context context;
     List<ModelPost>postlist;
-    String  myUid;
+    String  myUid,myName;
     boolean mProcesLike=false;
     public AdapterPost(Context context, List<ModelPost> postlist) {
         this.context = context;
@@ -68,6 +83,24 @@ public class AdapterPost extends  RecyclerView.Adapter<AdapterPost.Myholder> {
         myUid= FirebaseAuth.getInstance().getCurrentUser().getUid();
         pLikesref=FirebaseDatabase.getInstance().getReference().child("Likes");
         postref=FirebaseDatabase.getInstance().getReference().child("Posts");
+
+        DatabaseReference usersRef = FirebaseDatabase.getInstance().getReference("Users");
+        usersRef.child(myUid).addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                if (dataSnapshot.exists()) {
+                    myName = dataSnapshot.child("name").getValue(String.class);
+                    // Now you have your name (myName), you can use it as needed
+
+                }
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError databaseError) {
+                // Handle onCancelled
+            }
+        });
+
 
 
     }
@@ -175,6 +208,9 @@ public class AdapterPost extends  RecyclerView.Adapter<AdapterPost.Myholder> {
                                 pLikesref.child(postid).child(myUid).setValue("Liked");
                                 mProcesLike=false;
 
+                                sendLikeNotification(uid,myName);
+
+
                             }
                             postlist.get(position).setpLikes(String.valueOf(pLikes + (snapshot.child(postid).hasChild(myUid) ? -1 : 1)));
                             notifyItemChanged(position);
@@ -244,6 +280,74 @@ public class AdapterPost extends  RecyclerView.Adapter<AdapterPost.Myholder> {
 
     }
 
+
+        private void sendLikeNotification(String postOwnerUid, String senderName) {
+            Toast.makeText(context,"Sending notificatoin TO "+postOwnerUid,Toast.LENGTH_SHORT).show();;
+            DatabaseReference tokensRef = FirebaseDatabase.getInstance().getReference("Tokens").child(postOwnerUid);
+            tokensRef.addListenerForSingleValueEvent(new ValueEventListener() {
+                @Override
+                public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                    if (dataSnapshot.exists()) {
+                        Token token = dataSnapshot.getValue(Token.class);
+                        if (token != null) {
+
+                            Data data = new Data(
+                                    "" + myUid,
+                                    "LikeNotification",
+                                    senderName + " liked your post.",
+                                    R.drawable.ic_liked,
+                                    "New Like",
+                                    postOwnerUid+""
+                            );
+                            Sender sender = new Sender(data, token.getToken());
+
+                            try {
+                                JSONObject senderJsonObj = new JSONObject(new Gson().toJson(sender));
+                                JsonObjectRequest jsonObjectRequest = new JsonObjectRequest(
+                                        "https://fcm.googleapis.com/fcm/send",
+                                        senderJsonObj,
+                                        response -> {
+                                            // Handle successful response
+                                            Log.d("JSON_RESPONSE", "onResponse: " + response.toString());
+                                            Toast.makeText(context, "Notification Sent Successfully", Toast.LENGTH_SHORT).show();
+                                        },
+                                        error -> {
+                                            // Handle error
+                                            Log.d("JSON_RESPONSE", "onError: " + error.toString());
+                                            Toast.makeText(context, "Failed to send notification", Toast.LENGTH_SHORT).show();
+                                        }
+                                ) {
+                                    @Override
+                                    public Map<String, String> getHeaders() throws AuthFailureError {
+                                        // Add headers required for the request, such as Content-Type and Authorization
+                                        Map<String, String> headers = new HashMap<>();
+                                        headers.put("Content-Type", "application/json");
+                                        headers.put("Authorization", "key=AAAAenyNnco:APA91bElB1Mr3OvgkWme4uMYLUrkPbllU0kle1z8lIQUQrXP0v_3x1_-DD6blJAc4pASjFvmI7GOvovcbIHMF8XeU40rxNdqd9RPCagQu61o-HnsXnzJBOlnnv8Kqz07mquPpNMjCpwM");
+                                        return headers;
+                                    }
+                                };
+
+                                // Add the request to the Volley request queue
+                                RequestQueue requestQueue= Volley.newRequestQueue(context);
+                                requestQueue.add(jsonObjectRequest);
+                            } catch (JSONException e) {
+                                e.printStackTrace();
+                            }
+
+
+                        }
+                    }
+                }
+
+                @Override
+                public void onCancelled(@NonNull DatabaseError databaseError) {
+                    // Handle onCancelled
+                }
+            });
+        }
+
+
+
     private void shareImageAndText(String pTitle, String pDesc, Bitmap bitmap) {
         String shareBody=pTitle+"\n"+pDesc;
         Uri uri=saveImageToShare(bitmap);
@@ -306,11 +410,11 @@ Toast.makeText(context,e.getMessage(),Toast.LENGTH_SHORT );
            if(snapshot.child(postkey).hasChild(myUid))
            {
                     holder.likeBtn.setCompoundDrawablesWithIntrinsicBounds(R.drawable.ic_liked,0,0,0);
-                    holder.likeBtn.setText("Liked");
+                   // holder.likeBtn.setText("Liked");
            }
            else {
                holder.likeBtn.setCompoundDrawablesWithIntrinsicBounds(R.drawable.ic_notliked,0,0,0);
-               holder.likeBtn.setText("Like");
+              // holder.likeBtn.setText("Like");
            }
        }
 

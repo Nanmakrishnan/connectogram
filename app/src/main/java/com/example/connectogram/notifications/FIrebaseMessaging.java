@@ -15,12 +15,14 @@ import android.media.RingtoneManager;
 import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.core.app.NotificationCompat;
 
 import com.example.connectogram.ChatActivity;
 import com.example.connectogram.PostDetailsActivity;
+import com.example.connectogram.ProfileActivity;
 import com.example.connectogram.R;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
@@ -48,7 +50,7 @@ public class FIrebaseMessaging extends FirebaseMessagingService {
         String NotificationType=message.getData().get("notificationType");
         if(NotificationType!=null&&NotificationType.equals("PostNotification"))
         {
-            String sender=message.getData().get("sender");
+            String sender=message.getData().get("send");
             String pId=message.getData().get("pId");
             String pTitle=message.getData().get("pTitle");
             String pDesc=message.getData().get("pDesc");
@@ -84,9 +86,122 @@ public class FIrebaseMessaging extends FirebaseMessagingService {
         }
 
 
-
+      else   if (NotificationType != null && NotificationType.equals("LikeNotification")) {
+            String to = message.getData().get("send");
+            String sender= message.getData().get("user");
+            String postTitle = message.getData().get("title");
+            String postDescription = message.getData().get("body");
+            if (to!=null&&to.equals(savedCurrentUser)) {
+                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+                    sendOreoAndAboveLikeNotification(postTitle, postDescription);
+                } else {
+                    sendNormalLikeNotification(postTitle, postDescription);
+                }
+            }
+        }
 
     }
+    private void sendNormalLikeNotification(String postTitle, String postDescription) {
+        NotificationManager notificationManager = (NotificationManager) getSystemService(Context.NOTIFICATION_SERVICE);
+        int notificationId = new Random().nextInt(3000);
+
+        Intent intent = new Intent(this, ProfileActivity.class);
+        intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+        PendingIntent pendingIntent = PendingIntent.getActivity(this, 0, intent, PendingIntent.FLAG_ONE_SHOT | PendingIntent.FLAG_IMMUTABLE);
+
+        Bitmap largeIcon = BitmapFactory.decodeResource(getResources(), R.drawable.ic_profile);
+        Uri notificationUri = RingtoneManager.getDefaultUri(RingtoneManager.TYPE_NOTIFICATION);
+
+        NotificationCompat.Builder notificationBuilder = new NotificationCompat.Builder(this)
+                .setSmallIcon(R.drawable.ic_liked)
+                .setLargeIcon(largeIcon)
+                .setContentTitle(postTitle)
+                .setContentText(postDescription)
+                .setSound(notificationUri)
+                .setContentIntent(pendingIntent)
+                .setAutoCancel(true);
+
+        notificationManager.notify(notificationId, notificationBuilder.build());
+    }
+
+    private void sendOreoAndAboveLikeNotification(String postTitle, String postDescription) {
+        NotificationManager notificationManager = (NotificationManager) getSystemService(Context.NOTIFICATION_SERVICE);
+        int notificationId = new Random().nextInt(3000);
+
+        // Setup notification channel for Android Oreo and above
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+            setupLikeNotificationChannel(notificationManager);
+        }
+
+        Intent intent = new Intent(this, ProfileActivity.class);
+        intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+        PendingIntent pendingIntent = PendingIntent.getActivity(this, 0, intent, PendingIntent.FLAG_ONE_SHOT | PendingIntent.FLAG_IMMUTABLE);
+
+        Bitmap largeIcon = BitmapFactory.decodeResource(getResources(), R.drawable.ic_profile);
+        Uri notificationUri = RingtoneManager.getDefaultUri(RingtoneManager.TYPE_NOTIFICATION);
+
+        Notification.Builder notificationBuilder = null;
+        if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.O) {
+            notificationBuilder = new Notification.Builder(this, ADMIN_CHANNEL_ID)
+                    .setSmallIcon(R.drawable.ic_liked)
+                    .setLargeIcon(largeIcon)
+                    .setContentTitle(postTitle)
+                    .setContentText(postDescription)
+                    .setSound(notificationUri)
+                    .setContentIntent(pendingIntent)
+                    .setAutoCancel(true);
+        }
+
+        notificationManager.notify(notificationId, notificationBuilder.build());
+    }
+
+    private void setupLikeNotificationChannel(NotificationManager notificationManager) {
+        CharSequence channelName = "New Like Notification";
+        String channelDescription = "Device to Device Like Notification";
+
+        if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.O) {
+            NotificationChannel adminChannel = new NotificationChannel(ADMIN_CHANNEL_ID, channelName, NotificationManager.IMPORTANCE_LOW);
+            adminChannel.setDescription(channelDescription);
+            adminChannel.enableLights(true);
+            adminChannel.setLightColor(Color.RED);
+            adminChannel.enableVibration(true);
+
+            if (notificationManager != null) {
+                notificationManager.createNotificationChannel(adminChannel);
+            }
+        }
+    }
+
+    private void showLikeNotification(String postTitle, String postDescription) {
+        NotificationManager notificationManager = (NotificationManager) getSystemService(Context.NOTIFICATION_SERVICE);
+        int notificationId = new Random().nextInt(3000);
+
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+            setupLikeNotificationChannel(notificationManager);
+        }
+
+        Intent intent = new Intent(this, ProfileActivity.class);
+
+        intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+        PendingIntent pendingIntent = PendingIntent.getActivity(this, 0, intent, PendingIntent.FLAG_ONE_SHOT | PendingIntent.FLAG_IMMUTABLE);
+
+        Bitmap largeIcon = BitmapFactory.decodeResource(getResources(), R.drawable.ic_profile);
+        Uri notificationUri = RingtoneManager.getDefaultUri(RingtoneManager.TYPE_NOTIFICATION);
+
+        NotificationCompat.Builder notificationBuilder = new NotificationCompat.Builder(this, ADMIN_CHANNEL_ID)
+                .setSmallIcon(R.drawable.ic_liked)
+                .setLargeIcon(largeIcon)
+                .setContentTitle(postTitle)
+                .setContentText(postDescription)
+                .setSound(notificationUri)
+                .setContentIntent(pendingIntent)
+                .setAutoCancel(true);
+
+        notificationManager.notify(notificationId, notificationBuilder.build());
+    }
+
+
+
 
     private void showPostNotificatoin(String pId, String pTitle, String pDesc) {
 
@@ -157,6 +272,8 @@ Uri defSoundUri= RingtoneManager.getDefaultUri(RingtoneManager.TYPE_NOTIFICATION
 
 
     }
+
+
 
     private void SendOAndAboveNotification(RemoteMessage message) {
 
