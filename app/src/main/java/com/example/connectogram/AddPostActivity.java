@@ -58,9 +58,11 @@ import com.google.firebase.storage.StorageReference;
 import com.google.firebase.storage.UploadTask;
 import com.squareup.picasso.Picasso;
 
+import org.apache.commons.io.IOUtils;
 import org.json.JSONObject;
 
 import java.io.ByteArrayOutputStream;
+import java.io.InputStream;
 import java.sql.SQLOutput;
 import java.text.SimpleDateFormat;
 import java.util.Date;
@@ -246,7 +248,7 @@ else {
             @Override
             public void onSuccess(Void unused) {
                 progreess.dismiss();;
-                Toast.makeText(AddPostActivity.this,"Upated post",Toast.LENGTH_SHORT).show();
+                Toast.makeText(AddPostActivity.this,"Updated post",Toast.LENGTH_SHORT).show();
             }
         }).addOnFailureListener(new OnFailureListener() {
             @Override
@@ -264,8 +266,11 @@ else {
         String filepahtname="Posts/"+"post_"+timestapm;
         Bitmap bitmap=((BitmapDrawable)pImageIv.getDrawable()).getBitmap();
         ByteArrayOutputStream baos=new ByteArrayOutputStream();
-        bitmap.compress(Bitmap.CompressFormat.PNG,100,baos);
+        bitmap.compress(Bitmap.CompressFormat.JPEG,70,baos);
         byte[] data=baos.toByteArray();
+
+
+
 
         StorageReference ref=FirebaseStorage.getInstance().getReference().child(filepahtname);
         ref.putBytes(data).addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
@@ -292,6 +297,7 @@ else {
                         public void onSuccess(Void unused) {
                             progreess.dismiss();;
                             Toast.makeText(AddPostActivity.this,"Upated post",Toast.LENGTH_SHORT).show();
+                            startActivity(new Intent(AddPostActivity.this,ProfileActivity.class));
                         }
                     }).addOnFailureListener(new OnFailureListener() {
                         @Override
@@ -324,7 +330,7 @@ else {
                 String filepahtname="Posts/"+"post_"+timestapm;
                 Bitmap bitmap=((BitmapDrawable)pImageIv.getDrawable()).getBitmap();
                 ByteArrayOutputStream baos=new ByteArrayOutputStream();
-                bitmap.compress(Bitmap.CompressFormat.PNG,100,baos);
+                bitmap.compress(Bitmap.CompressFormat.JPEG,70,baos);
                 byte[] data=baos.toByteArray();
 
                 StorageReference ref=FirebaseStorage.getInstance().getReference().child(filepahtname);
@@ -352,6 +358,7 @@ else {
                                               public void onSuccess(Void unused) {
                                                   progreess.dismiss();;
                                                   Toast.makeText(AddPostActivity.this,"Upated post",Toast.LENGTH_SHORT).show();
+                                                  startActivity(new Intent(AddPostActivity.this,ProfileActivity.class));
                                               }
                                           }).addOnFailureListener(new OnFailureListener() {
                                               @Override
@@ -428,11 +435,11 @@ else {
         String timestamp=String.valueOf(System.currentTimeMillis()) ;
         String filepath="Posts/"+"post_"+timestamp;
 
-        if(pImageIv.getDrawable()!=null)
+        if(imageuri!=null)
         {
             Bitmap bitmap=((BitmapDrawable)pImageIv.getDrawable()).getBitmap();
             ByteArrayOutputStream baos=new ByteArrayOutputStream();
-            bitmap.compress(Bitmap.CompressFormat.PNG,100,baos);
+            bitmap.compress(Bitmap.CompressFormat.JPEG,70,baos);
             byte[] data=baos.toByteArray();
 
                                 //post wth image
@@ -498,6 +505,7 @@ else {
             });
         }
         else {
+            Toast.makeText(this,"Adding Post Without Image",Toast.LENGTH_SHORT).show();;
             HashMap<Object,String >hm=new HashMap<>();
             hm.put("uid",uid);
             hm.put("uName",name);

@@ -48,7 +48,7 @@ BottomNavigationView bottomNavigationView;
         bottomNavigationView=findViewById(R.id.bottom_navigation_bar);
         setSupportActionBar(toolbar);
 
-        bottomNavigationView.setOnNavigationItemReselectedListener(selectedlistener);
+        bottomNavigationView.setOnNavigationItemSelectedListener(selectedlistener);
         HomeFragment hm=new HomeFragment();
         FragmentTransaction ft=getSupportFragmentManager().beginTransaction();
         ft.replace(R.id.container,hm," ");
@@ -114,9 +114,9 @@ checkUserStatus();;
     }
 
 
-private  BottomNavigationView.OnNavigationItemReselectedListener selectedlistener=new BottomNavigationView.OnNavigationItemReselectedListener() {
+private  BottomNavigationView.OnNavigationItemSelectedListener selectedlistener=new BottomNavigationView.OnNavigationItemSelectedListener() {
     @Override
-    public void onNavigationItemReselected(@NonNull MenuItem menuItem) {
+    public boolean onNavigationItemSelected(@NonNull MenuItem menuItem) {
         int itemid=menuItem.getItemId();
         System.out.println("clied item is"+itemid);
         if(itemid==R.id.nav_home) {
@@ -167,6 +167,7 @@ private  BottomNavigationView.OnNavigationItemReselectedListener selectedlistene
 
 
         }
+        return true;
     }
 };
     @Override

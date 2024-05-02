@@ -56,7 +56,7 @@ public class AdapterPost extends  RecyclerView.Adapter<AdapterPost.Myholder> {
 
     DatabaseReference pLikesref;
     DatabaseReference postref;
-
+    private int currentScrollPosition = RecyclerView.NO_POSITION;
     // view holder class
     Context context;
     List<ModelPost>postlist;
@@ -69,7 +69,11 @@ public class AdapterPost extends  RecyclerView.Adapter<AdapterPost.Myholder> {
         pLikesref=FirebaseDatabase.getInstance().getReference().child("Likes");
         postref=FirebaseDatabase.getInstance().getReference().child("Posts");
 
+
     }
+
+
+
     @NonNull
     @Override
     public Myholder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
@@ -100,8 +104,9 @@ public class AdapterPost extends  RecyclerView.Adapter<AdapterPost.Myholder> {
 
  // set data;
       holder.uNameTV.setText(uName);;
-      if(uName.equals(""))
-          holder.uNameTV.setText("Default User");
+      if(uName.equals("")) {
+          holder.uNameTV.setText("Unnamed User");
+      }
         holder.pTimeTv.setText(pTime);
         holder.pTitleTv.setText(pTitle);
         holder.pDescTv.setText(pDesc);
@@ -125,12 +130,14 @@ public class AdapterPost extends  RecyclerView.Adapter<AdapterPost.Myholder> {
             if (pImage.equals("noImage")) {
                 holder.pImgageIv.setVisibility(View.GONE);
             } else {
+                if(holder.pImgageIv.equals("")==false &&holder.pImgageIv!=null){
                 holder.pImgageIv.setVisibility(View.VISIBLE);
                 try {
-                    Picasso.get().load(pImage).resize(1000, 1200).onlyScaleDown().centerCrop().into(holder.pImgageIv);
+                    Picasso.get().load(pImage).placeholder(R.drawable.ic_photo).resize(1000, 1200).onlyScaleDown().centerCrop().into(holder.pImgageIv);
                 } catch (Exception e) {
                     System.out.println(e);
                 }
+            }
             }
 
 
@@ -142,8 +149,10 @@ public class AdapterPost extends  RecyclerView.Adapter<AdapterPost.Myholder> {
             }
         });
         holder.likeBtn.setOnClickListener(new View.OnClickListener() {
+
             @Override
             public void onClick(View v) {
+                currentScrollPosition = position;
                 int pLikes=Integer.parseInt(postlist.get(position).getpLikes());
                 mProcesLike=true;
                 //get id of the post clickde
@@ -167,6 +176,9 @@ public class AdapterPost extends  RecyclerView.Adapter<AdapterPost.Myholder> {
                                 mProcesLike=false;
 
                             }
+                            postlist.get(position).setpLikes(String.valueOf(pLikes + (snapshot.child(postid).hasChild(myUid) ? -1 : 1)));
+                            notifyItemChanged(position);
+
                         }
                     }
 

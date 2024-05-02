@@ -1,8 +1,16 @@
 package com.example.connectogram.adapters;
 
+import static androidx.core.content.ContextCompat.startActivity;
+
 import android.annotation.SuppressLint;
 import android.app.AlertDialog;
 import android.content.DialogInterface;
+import android.content.Intent;
+import android.graphics.Bitmap;
+import android.graphics.drawable.BitmapDrawable;
+import android.graphics.drawable.Drawable;
+import android.net.Uri;
+import android.provider.MediaStore;
 import android.text.format.DateFormat;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -97,12 +105,46 @@ else {
     holder.messageIv.setVisibility(View.VISIBLE);
 
     try {
-        Picasso.get().load(message).placeholder(R.drawable.ic_image_black).into(holder.messageIv);
+        //Picasso.get().load(message).placeholder(R.drawable.ic_image_black).into(holder.messageIv);
+        Picasso.get().load(message).placeholder(R.drawable.ic_image_black).resize(800, 1000).onlyScaleDown().centerCrop().into(holder.messageIv);
+        holder.messageIv.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                // Get the context from the ImageView's context
+                Context context = v.getContext();
+
+                // Get the URI of the image displayed in the ImageView
+                Drawable drawable = holder.messageIv.getDrawable();
+                if (drawable instanceof BitmapDrawable) {
+                    BitmapDrawable bitmapDrawable = (BitmapDrawable) drawable;
+                    Bitmap bitmap = bitmapDrawable.getBitmap();
+                    String path = MediaStore.Images.Media.insertImage(context.getContentResolver(), bitmap, "Image", null);
+                    Uri imageUri = Uri.parse(path);
+
+                    // Create an intent to view the image
+                    Intent viewImageIntent = new Intent();
+                    viewImageIntent.setAction(Intent.ACTION_VIEW);
+                    viewImageIntent.setDataAndType(imageUri, "image/*");
+
+                    // Check if there's an app to handle the intent
+                    if (viewImageIntent.resolveActivity(context.getPackageManager()) != null) {
+                        // Start the intent
+                        context.startActivity(viewImageIntent);
+                    } else {
+                        // Handle the case where no app is available to handle the intent
+                        Toast.makeText(context, "No app available to view image", Toast.LENGTH_SHORT).show();
+                    }
+                }
+                return ;
+            }
+        });
+
     }
     catch ( Exception e)
     {
 
     }
+
 
 }
         try{

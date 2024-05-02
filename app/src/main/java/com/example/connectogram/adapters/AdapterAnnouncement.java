@@ -141,7 +141,7 @@ public class AdapterAnnouncement extends RecyclerView.Adapter
                            // holder.sendpdf.setVisibility(View.VISIBLE);
                     holder.sendImage.setVisibility(View.GONE);
 
-                            Toast.makeText(context,"file is a pdf",Toast.LENGTH_SHORT).show();;
+                         //   Toast.makeText(context,"file is a pdf",Toast.LENGTH_SHORT).show();;
                             final long ONE_MEGABYTE = 1024 * 1024;
                             fileRef.getBytes(ONE_MEGABYTE).addOnSuccessListener(new OnSuccessListener<byte[]>() {
                                 @Override
