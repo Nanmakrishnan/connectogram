@@ -159,7 +159,7 @@ public class HomeFragment extends Fragment {
 
                 }
                 adapterPost=new AdapterPost(getActivity(),postList);
-
+adapterPost.notifyDataSetChanged();
                 recyclerView.setAdapter(adapterPost);
 
 

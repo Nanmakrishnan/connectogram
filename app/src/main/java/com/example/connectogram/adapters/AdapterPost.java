@@ -146,7 +146,6 @@ public class AdapterPost extends  RecyclerView.Adapter<AdapterPost.Myholder> {
         holder.pLikeTv.setText(pLikes+" Likes");
         holder.pCommentTv.setText(pComments+" comments");
 
-
         setLikes(holder,pId);
 
 
@@ -154,6 +153,9 @@ public class AdapterPost extends  RecyclerView.Adapter<AdapterPost.Myholder> {
             if(!uDp.equals(""))
             {
             Picasso.get().load(uDp).placeholder(R.drawable.ic_profile).into(holder.uPictureIv);}
+            else {
+                Picasso.get().load(R.drawable.ic_profile).placeholder(R.drawable.ic_profile).into(holder.uPictureIv);
+            }
         }
         catch ( Exception e)
         {
@@ -185,6 +187,7 @@ public class AdapterPost extends  RecyclerView.Adapter<AdapterPost.Myholder> {
 
             @Override
             public void onClick(View v) {
+
                 currentScrollPosition = position;
                 int pLikes=Integer.parseInt(postlist.get(position).getpLikes());
                 mProcesLike=true;

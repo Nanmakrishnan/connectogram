@@ -123,6 +123,7 @@
 
 
 
+
             </LinearLayout>
 
             <View
@@ -147,6 +148,7 @@
                     android:text="Post"
                     android:textAllCaps="false"
                     android:textColor="#FFFBF6" />
+
 
 
             </LinearLayout>

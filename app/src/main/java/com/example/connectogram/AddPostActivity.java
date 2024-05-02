@@ -1,6 +1,7 @@
 package com.example.connectogram;
 
 import android.app.ProgressDialog;
+import android.content.ActivityNotFoundException;
 import android.content.ContentValues;
 import android.content.DialogInterface;
 import android.content.Intent;
@@ -83,6 +84,7 @@ private  static  final  int   CAMERA_REQUEST_CODE=100;
     private static  final  int STORAGE_REQUEST_CODE=200;
     private  static  final  int IMAGE_PICK_CAMERA_CODE=300;
     private  static  final int IMAGE_PICK_GALLERY_CODE=400;
+    private static final int EDIT_IMAGE_REQUEST_CODE = 500;
 
     String [] cameraPermissions;
     String [] storagePermissions;
@@ -112,6 +114,7 @@ FirebaseAuth firebaseAuth;
         pImageIv=findViewById(R.id.pImageIv);
         uNameTv = findViewById(R.id.uNameTv);
         pTimeTv = findViewById(R.id.pTimeTv);
+
 
         // Set user name and current time
         uNameTv.setText(name);
@@ -795,6 +798,13 @@ Toast.makeText(AddPostActivity.this," error is"+volleyError.getMessage(),Toast.L
                 // Image picked from gallery, set imageuri to the selected image URI from data
                 imageuri = data.getData();
                 pImageIv.setImageURI(imageuri);
+            }
+            else if (requestCode == EDIT_IMAGE_REQUEST_CODE) {
+                // Image edited, get the edited image URI from the intent's data
+                imageuri = data.getData();
+                pImageIv.setImageURI(imageuri);
+                // Here, you can use the edited image URI (imageuri) as needed
+                // For example, you may want to display the edited image or upload it
             }
         }
     }

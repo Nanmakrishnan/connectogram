@@ -26,6 +26,8 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.connectogram.R;
 import com.example.connectogram.models.ModelChat;
+import com.google.android.gms.tasks.OnFailureListener;
+import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DataSnapshot;
@@ -34,6 +36,8 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.Query;
 import com.google.firebase.database.ValueEventListener;
+import com.google.firebase.storage.FirebaseStorage;
+import com.google.firebase.storage.StorageReference;
 import com.squareup.picasso.Picasso;
 
 import java.lang.reflect.InvocationTargetException;
@@ -138,6 +142,29 @@ else {
                 return ;
             }
         });
+        holder.messageIv.setOnLongClickListener(new View.OnLongClickListener() {
+            @Override
+            public boolean onLongClick(View v) {
+                AlertDialog.Builder builder = new AlertDialog.Builder(context);
+                builder.setTitle("Delete");
+                builder.setMessage("Are you sure to delete this image?");
+                builder.setPositiveButton("Delete", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        deleteImage(position,holder);
+                    }
+                });
+                builder.setNegativeButton("No", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        dialog.dismiss();
+                    }
+                });
+                builder.create().show();
+                return true;
+
+            }
+        });
 
     }
     catch ( Exception e)
@@ -186,6 +213,68 @@ else {
         }
         else
             holder.isSeenTv.setVisibility(View.GONE);
+
+
+
+    }
+    private void deleteImage(int position,myholder holder)
+    {
+
+        String myUid = FirebaseAuth.getInstance().getCurrentUser().getUid();
+        String timestamp = chatlist.get(position).getTimestamp();
+        DatabaseReference dbref = FirebaseDatabase.getInstance().getReference("Chats");
+        Query query = dbref.orderByChild("timestamp").equalTo(timestamp);
+        query.addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                for (DataSnapshot ds : snapshot.getChildren()) {
+                    if (ds.child("sender").getValue(String.class).equals(myUid)) {
+                        // Get the type of the message
+                        String type = ds.child("type").getValue(String.class);
+                        if (type != null && type.equals("image")) {
+                            // Get the URL of the image
+                            String imageUrl = ds.child("message").getValue(String.class);
+                            // Get a reference to the image in Firebase Storage
+                            StorageReference storageRef = FirebaseStorage.getInstance().getReferenceFromUrl(imageUrl);
+                            // Delete the image from Firebase Storage
+                            storageRef.delete().addOnSuccessListener(new OnSuccessListener<Void>() {
+                                @Override
+                                public void onSuccess(Void aVoid) {
+                                    // Image deleted successfully
+                                    Toast.makeText(context, "Image deleted", Toast.LENGTH_SHORT).show();
+
+                                    ds.child("message").getRef().setValue("This image is deleted");
+                                    // Update the type to text
+                                    ds.child("type").getRef().setValue("text");
+                                    // Remove the message from the database
+                               //     ds.getRef().removeValue();
+                                    // Remove the message from the list
+                                  //  chatlist.remove(position);
+                                    notifyItemRemoved(position);
+                                }
+                            }).addOnFailureListener(new OnFailureListener() {
+                                @Override
+                                public void onFailure(@NonNull Exception e) {
+                                    // Failed to delete image
+                                    Toast.makeText(context, "Failed to delete image", Toast.LENGTH_SHORT).show();
+                                }
+                            });
+                        } else {
+                            // This is not an image message
+                            Toast.makeText(context, "This is not an image message", Toast.LENGTH_SHORT).show();
+                        }
+                    } else {
+                        // User can only delete their own messages
+                        Toast.makeText(context, "You can't delete others' messages", Toast.LENGTH_SHORT).show();
+                    }
+                }
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+                Toast.makeText(context, "Error deleting message", Toast.LENGTH_SHORT).show();
+            }
+        });
 
 
 
