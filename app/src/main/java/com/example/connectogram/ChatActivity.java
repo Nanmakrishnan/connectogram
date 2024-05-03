@@ -12,6 +12,7 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
+import android.graphics.Rect;
 import android.net.Uri;
 import android.os.Bundle;
 import android.provider.MediaStore;
@@ -23,6 +24,8 @@ import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.view.ViewTreeObserver;
+import android.view.WindowManager;
 import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.ImageView;
@@ -118,7 +121,44 @@ private RequestQueue requestQueue;
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         EdgeToEdge.enable(this);
+        getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_ADJUST_RESIZE);
         setContentView(R.layout.activity_chat);
+
+
+
+//code to make the typing text visible when typing "
+
+        final View rootView = findViewById(android.R.id.content);
+        rootView.getViewTreeObserver().addOnGlobalLayoutListener(new ViewTreeObserver.OnGlobalLayoutListener() {
+            @Override
+            public void onGlobalLayout() {
+                Rect r = new Rect();
+                rootView.getWindowVisibleDisplayFrame(r);
+                int screenHeight = rootView.getHeight();
+                int keypadHeight = screenHeight - r.bottom;
+
+                // If the keypad height is more than 0, it means the soft keyboard is shown
+                if (keypadHeight > screenHeight * 0.15) {
+                    // Set padding to the bottom of the parent layout to push it up
+                    rootView.setPadding(0, 0, 0, keypadHeight);
+                } else {
+                    // Set padding to 0 when the soft keyboard is hidden
+                    rootView.setPadding(0, 0, 0, 0);
+                }
+            }
+        });
+
+
+
+
+
+
+
+
+
+
+
+
 
         toolbar=findViewById(R.id.toolbar_chat);
         setSupportActionBar(toolbar);

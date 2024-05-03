@@ -128,13 +128,15 @@ AdapterChatlist adapterChatlist;
                         break;
                     }
                 }
-        adapterChatlist=new AdapterChatlist(getContext(),userlist);
+
+            }
+                adapterChatlist=new AdapterChatlist(getContext(),userlist);
                 recyclerView.setAdapter(adapterChatlist);
                 for(int i=0;i< userlist.size();i++)
                 {
                     lastMessage(userlist.get(i).getUid());
                 }
-            }
+
             }
 
             @Override
