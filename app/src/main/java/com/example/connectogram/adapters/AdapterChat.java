@@ -175,7 +175,7 @@ else {
 
 }
         try{
-            Picasso.get().load(imageUrl).placeholder(R.drawable.ic_person_blue).into(holder.profileIv);
+            Picasso.get().load(imageUrl).placeholder(R.drawable.ic_profile).into(holder.profileIv);
         }
         catch ( Exception e)
         {

@@ -412,7 +412,7 @@ seenMessage();
         String fileNamePath="ChatImages/"+"post_"+timestamp;
         Bitmap bitmap=MediaStore.Images.Media.getBitmap(this.getContentResolver(),imageuri);
         ByteArrayOutputStream baos=new ByteArrayOutputStream();
-        bitmap.compress(Bitmap.CompressFormat.PNG,100,baos);
+        bitmap.compress(Bitmap.CompressFormat.JPEG,70,baos);
         byte[]data=baos.toByteArray();
         StorageReference ref= FirebaseStorage.getInstance().getReference().child(fileNamePath);
         ref.putBytes(data).addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
