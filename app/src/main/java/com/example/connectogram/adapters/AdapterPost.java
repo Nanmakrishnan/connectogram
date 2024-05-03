@@ -313,7 +313,7 @@ public class AdapterPost extends  RecyclerView.Adapter<AdapterPost.Myholder> {
 
 
         private void sendLikeNotification(String postOwnerUid, String senderName) {
-            Toast.makeText(context,"Sending notificatoin TO "+postOwnerUid,Toast.LENGTH_SHORT).show();;
+
             DatabaseReference tokensRef = FirebaseDatabase.getInstance().getReference("Tokens").child(postOwnerUid);
             tokensRef.addListenerForSingleValueEvent(new ValueEventListener() {
                 @Override
@@ -340,7 +340,7 @@ public class AdapterPost extends  RecyclerView.Adapter<AdapterPost.Myholder> {
                                         response -> {
                                             // Handle successful response
                                             Log.d("JSON_RESPONSE", "onResponse: " + response.toString());
-                                            Toast.makeText(context, "Notification Sent Successfully", Toast.LENGTH_SHORT).show();
+
                                         },
                                         error -> {
                                             // Handle error

@@ -72,6 +72,8 @@ import java.util.Locale;
 import java.util.Map;
 import java.util.Objects;
 
+import ja.burhanrashid52.photoeditor.PhotoEditorView;
+
 public class AddPostActivity extends AppCompatActivity {
 ActionBar actionBar;
 EditText titleEt,descEv;
@@ -91,6 +93,7 @@ private  static  final  int   CAMERA_REQUEST_CODE=100;
     Uri imageuri=null;
     String name,email,dp,uid;
     TextView uNameTv, pTimeTv;
+    PhotoEditorView photoEditorView;
 String editTitle,editDesc,editImage;
 FirebaseAuth firebaseAuth;
     @Override
@@ -114,6 +117,14 @@ FirebaseAuth firebaseAuth;
         pImageIv=findViewById(R.id.pImageIv);
         uNameTv = findViewById(R.id.uNameTv);
         pTimeTv = findViewById(R.id.pTimeTv);
+        photoEditorView=findViewById(R.id.photoEditorView);
+
+photoEditorView.setSaveEnabled(true);;
+
+
+
+
+
 
 
         // Set user name and current time
@@ -798,6 +809,7 @@ Toast.makeText(AddPostActivity.this," error is"+volleyError.getMessage(),Toast.L
                 // Image picked from gallery, set imageuri to the selected image URI from data
                 imageuri = data.getData();
                 pImageIv.setImageURI(imageuri);
+
             }
             else if (requestCode == EDIT_IMAGE_REQUEST_CODE) {
                 // Image edited, get the edited image URI from the intent's data
@@ -808,5 +820,7 @@ Toast.makeText(AddPostActivity.this," error is"+volleyError.getMessage(),Toast.L
             }
         }
     }
+
+
 
 }
