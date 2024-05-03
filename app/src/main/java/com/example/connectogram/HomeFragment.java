@@ -124,11 +124,8 @@ public class HomeFragment extends Fragment {
                         postList.add(modelPost);
 
 
-
-
                 }
                 adapterPost=new AdapterPost(getActivity(),postList);
-
                 recyclerView.setAdapter(adapterPost);
 
             }
@@ -155,12 +152,12 @@ public class HomeFragment extends Fragment {
                     if(modelPost.getpTitle().toLowerCase().contains(searchQuery.toLowerCase())||modelPost.getpDesc().toLowerCase().contains(searchQuery.toLowerCase()))
                     { postList.add(modelPost);}
 
+                    adapterPost=new AdapterPost(getActivity(),postList);
+                    //adapterPost.notifyDataSetChanged();
+                    recyclerView.setAdapter(adapterPost);
 
 
                 }
-                adapterPost=new AdapterPost(getActivity(),postList);
-adapterPost.notifyDataSetChanged();
-                recyclerView.setAdapter(adapterPost);
 
 
             }

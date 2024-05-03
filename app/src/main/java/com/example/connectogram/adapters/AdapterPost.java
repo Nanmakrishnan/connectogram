@@ -44,7 +44,9 @@ import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.MutableData;
 import com.google.firebase.database.Query;
+import com.google.firebase.database.Transaction;
 import com.google.firebase.database.ValueEventListener;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
@@ -184,51 +186,77 @@ public class AdapterPost extends  RecyclerView.Adapter<AdapterPost.Myholder> {
             }
         });
         holder.likeBtn.setOnClickListener(new View.OnClickListener() {
-
             @Override
             public void onClick(View v) {
+                currentScrollPosition = position; // Store the current position
+                int pLikes = Integer.parseInt(postlist.get(position).getpLikes());
+                mProcesLike = true; // Flag to process the like action
 
-                currentScrollPosition = position;
-                int pLikes=Integer.parseInt(postlist.get(position).getpLikes());
-                mProcesLike=true;
-                //get id of the post clickde
-
-                String postid=postlist.get(position).getpId();
+                // Get the ID of the post clicked
+                String postid = postlist.get(position).getpId();
                 pLikesref.addValueEventListener(new ValueEventListener() {
                     @Override
                     public void onDataChange(@NonNull DataSnapshot snapshot) {
-                        if(mProcesLike)
-                        {
-                            if(snapshot.child(postid).hasChild(myUid))
-                            {
-                                postref.child(postid).child("pLikes").setValue(""+(pLikes-1));
+                        if (mProcesLike) {
+                            if (snapshot.child(postid).hasChild(myUid)) {
+                                // User has already liked the post, so we remove the like
+                                postref.child(postid).child("pLikes").runTransaction(new Transaction.Handler() {
+                                    @Override
+                                    public Transaction.Result doTransaction(MutableData mutableData) {
+                                        Object value = mutableData.getValue();
+                                        if (value instanceof Number) {
+                                            mutableData.setValue(((Number) value).intValue() - 1);
+                                        }
+                                        return Transaction.success(mutableData);
+                                    }
+
+                                    @Override
+                                    public void onComplete(DatabaseError databaseError, boolean committed, DataSnapshot currentData) {
+                                        // Transaction completed
+                                        // Optionally, you can add code here to handle post-transaction logic
+                                    }
+                                });
                                 pLikesref.child(postid).child(myUid).removeValue();
-                                mProcesLike=false;
-                            }
-                            else {
-                                // not liked
-                                postref.child(postid).child("pLikes").setValue(""+(pLikes+1));
+                                mProcesLike = false;
+                            } else {
+                                // User has not liked the post, so we add the like
+                                postref.child(postid).child("pLikes").runTransaction(new Transaction.Handler() {
+                                    @Override
+                                    public Transaction.Result doTransaction(MutableData mutableData) {
+                                        Object value = mutableData.getValue();
+                                        if (value instanceof Number) {
+                                            mutableData.setValue(((Number) value).intValue() + 1);
+                                        }
+                                        return Transaction.success(mutableData);
+                                    }
+
+                                    @Override
+                                    public void onComplete(DatabaseError databaseError, boolean committed, DataSnapshot currentData) {
+                                        // Transaction completed
+                                        // Optionally, you can add code here to handle post-transaction logic
+                                    }
+                                });
                                 pLikesref.child(postid).child(myUid).setValue("Liked");
-                                mProcesLike=false;
+                                mProcesLike = false;
 
-                                sendLikeNotification(uid,myName);
-
-
+                                // Optionally, send a notification if the user is not the owner of the post
+                                if (!postlist.get(position).getUid().equals(myUid)) {
+                                    sendLikeNotification(uid, myName);
+                                }
                             }
-                            postlist.get(position).setpLikes(String.valueOf(pLikes + (snapshot.child(postid).hasChild(myUid) ? -1 : 1)));
-                            notifyItemChanged(position);
-
+                            postlist.get(position).setpLikes(String.valueOf(pLikes + (snapshot.child(postid).hasChild(myUid)? -1 : 1)));
+                            notifyItemChanged(position); // Notify the adapter about the change
                         }
                     }
 
                     @Override
                     public void onCancelled(@NonNull DatabaseError error) {
-
+                        // Handle error
                     }
                 });
-
             }
         });
+
 
         holder.commentBtn.setOnClickListener(new View.OnClickListener() {
             @Override

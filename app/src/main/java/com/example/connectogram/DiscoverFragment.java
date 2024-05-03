@@ -116,8 +116,8 @@ public class DiscoverFragment extends Fragment {
                 for (DataSnapshot dataSnapshot : snapshot.getChildren()) {
                   Model_discover modelDiscover=dataSnapshot.getValue(Model_discover.class);
                     System.out.println(modelDiscover.getUid());
-                    System.out.println(fuser);;
-                  if(!modelDiscover.getUid().equals(fuser.getUid()))
+                    //System.out.println(fuser);;
+                  if(modelDiscover.getUid()!=null&&!modelDiscover.getUid().equals(fuser.getUid()))
                       userlist.add(modelDiscover);
 
 

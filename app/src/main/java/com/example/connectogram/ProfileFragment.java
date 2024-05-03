@@ -220,12 +220,13 @@ FirebaseAuth auth;
                     ModelPost modelPost=ds.getValue(ModelPost.class);
                     postList.add(modelPost);
 
-                    adapterPost=new AdapterPost(getActivity(),postList);
 
-                    postrecycleview.setAdapter(adapterPost);
 
 
                 }
+                adapterPost=new AdapterPost(getActivity(),postList);
+
+                postrecycleview.setAdapter(adapterPost);
 
             }
 
