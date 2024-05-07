@@ -220,7 +220,7 @@ public class FIrebaseMessaging extends FirebaseMessagingService {
         Bitmap largeicon= BitmapFactory.decodeResource(getResources(), R.drawable.ic_profile);
 
         Uri notificatoinUri=RingtoneManager.getDefaultUri(RingtoneManager.TYPE_NOTIFICATION);
-        NotificationCompat.Builder notificatoinbuilder=new NotificationCompat.Builder(this,""+ADMIN_CHANNEL_ID).setSmallIcon(R.drawable.ic_profile).setContentTitle(pTitle).setContentText(pDesc).setSound(notificatoinUri).setContentIntent(pi);
+        NotificationCompat.Builder notificatoinbuilder=new NotificationCompat.Builder(this,""+ADMIN_CHANNEL_ID).setSmallIcon(R.drawable.ic_photo).setContentTitle(pTitle).setContentText(pDesc).setSound(notificatoinUri).setContentIntent(pi);
 
         notificationManager.notify(notficatoinId,notificatoinbuilder.build());
 

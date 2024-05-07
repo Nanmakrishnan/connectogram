@@ -170,7 +170,7 @@ public class AdapterPost extends  RecyclerView.Adapter<AdapterPost.Myholder> {
                 if(holder.pImgageIv.equals("")==false &&holder.pImgageIv!=null){
                 holder.pImgageIv.setVisibility(View.VISIBLE);
                 try {
-                    Picasso.get().load(pImage).placeholder(R.drawable.ic_photo).resize(1000, 1200).onlyScaleDown().centerCrop().into(holder.pImgageIv);
+                    Picasso.get().load(pImage).placeholder(R.drawable.ic_photo).resize(1000, 1200).centerCrop().into(holder.pImgageIv);
                 } catch (Exception e) {
                     System.out.println(e);
                 }

@@ -236,7 +236,7 @@ public class DiscoverFragment extends Fragment {
         }
         if(id==R.id.action_settings)
         {
-            startActivity(new Intent(getActivity(),SettingsActivity.class));
+            startActivity(new Intent(getActivity(),SettingsMainActivity.class));
 
 
         }

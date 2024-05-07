@@ -100,6 +100,7 @@ AdapterChatlist adapterChatlist;
 
                 }
                 loadChats();
+
             }
 
             @Override
@@ -108,6 +109,102 @@ AdapterChatlist adapterChatlist;
             }
         });
         return  view    ;
+    }
+
+    private void sortChats(List<ModelChatlist> chatlistList) {
+        DatabaseReference databaseReference = FirebaseDatabase.getInstance().getReference("Chats");
+        List<ModelChat> chat=new ArrayList<>();
+
+        List<String> alluid=new ArrayList<>();
+        List<ModelChat>allChats=new ArrayList<>();
+        HashMap<String,String>hm=new HashMap<>();
+        for(ModelChatlist cl:chatlistList)
+        {
+           alluid.add(cl.getId().toString().trim());
+        }
+        databaseReference.addValueEventListener(new ValueEventListener() {
+
+
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                for (DataSnapshot ds : snapshot.getChildren()) {
+                    ModelChat chat = ds.getValue(ModelChat.class);
+
+                    if (chat!= null) {
+                        allChats.add(chat);
+                    }
+                }
+                for(String otherUser:alluid)
+                {
+                    for(ModelChat chat1:allChats)
+                    {
+                        if(chat1.getSender().equals(otherUser)||chat1.getReceiver().equals(otherUser))
+                        {
+                            hm.putIfAbsent(otherUser,"0");
+                            if(converToTimestamp(chat1.getTimestamp())>converToTimestamp(hm.get(otherUser)))
+                            {
+                                hm.put(otherUser,chat1.getTimestamp());
+                            }
+
+                        }
+
+                    }
+                }
+
+                // sort the chatlistlist based on on  which id has the high timestamp value in the hashmap
+                Collections.sort(userlist, new Comparator<Model_discover>() {
+                    @Override
+                    public int compare(Model_discover o1, Model_discover o2) {
+
+                        if (hm.get(o1.getUid()) != null && hm.get(o2.getUid()) != null) {
+
+                            if(converToTimestamp(hm.get(o1.getUid()))>converToTimestamp(hm.get(o2.getUid())))
+                                return  1;
+                            else if(converToTimestamp(hm.get(o1.getUid()))<converToTimestamp(hm.get(o2.getUid())))
+                                return  -1;
+
+                            else
+                                return  0;
+
+                        }
+
+                        return  0;
+
+                    }
+                });
+                System.out.println("first user is" +userlist.get(0).getName());
+                Collections.reverse(userlist);
+                System.out.println("size of hm "+hm.size()  );
+                for(Model_discover md:userlist)
+                {
+                    System.out.println("entry is "+md.getName()+" "+ hm.get(md.getUid()));
+                }
+                Collections.reverse(userlist);
+                adapterChatlist.notifyDataSetChanged();;
+            }
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+                // Handle error
+                System.out.println("Error fetching chat details: " + error.getMessage());
+                return;
+            }
+        });
+
+
+
+    }
+    public  Long converToTimestamp(String time)
+    {
+        try {
+            return  Long.parseLong(time);
+        }
+        catch (Exception e)
+        {
+            return new Long(0);
+        }
+
+
+
     }
 
     private void loadChats() {
@@ -130,12 +227,16 @@ AdapterChatlist adapterChatlist;
                 }
 
             }
+
                 adapterChatlist=new AdapterChatlist(getContext(),userlist);
                 recyclerView.setAdapter(adapterChatlist);
+
                 for(int i=0;i< userlist.size();i++)
                 {
                     lastMessage(userlist.get(i).getUid());
                 }
+                sortChats(chatlistList);
+
 
             }
 
@@ -232,7 +333,7 @@ theLastmessage=chat.getMessage();
         }
         if(id==R.id.action_settings)
         {
-            startActivity(new Intent(getActivity(),SettingsActivity.class));
+            startActivity(new Intent(getActivity(),SettingsMainActivity.class));
 
 
         }
