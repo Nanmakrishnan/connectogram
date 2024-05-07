@@ -1,19 +1,20 @@
-<androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.cardview.widget.CardView
+    xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    xmlns:tools="http://schemas.android.com/tools"
-    app:cardCornerRadius="3dp"
-    app:cardElevation="3dp"
+    app:cardCornerRadius="8dp"
+    app:cardElevation="4dp"
     app:cardUseCompatPadding="true"
     app:cardBackgroundColor="@color/white"
-    app:contentPadding="5dp">
+    app:contentPadding="16dp">
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="vertical"
-        android:layout_margin="8dp">
+        tools:ignore="WebViewLayout">
 
         <!-- User Profile Section -->
         <LinearLayout
@@ -21,69 +22,91 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="horizontal"
-            android:layout_gravity="center_vertical">
+            android:gravity="center_vertical"
 
+            android:layout_marginBottom="12dp">
+
+            <!-- Circular Image View for Profile Picture -->
             <com.mikhaellopez.circularimageview.CircularImageView
                 android:id="@+id/uPictureIv"
-                android:layout_width="50dp"
-                android:layout_height="50dp"
+                android:layout_width="60dp"
+                android:layout_height="60dp"
+                android:src="@drawable/ic_profile"
                 android:scaleType="centerCrop"
-                android:src="@drawable/ic_profile" />
+                />
 
+            <!-- Layout for User Name and Time -->
             <LinearLayout
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
-                android:orientation="vertical">
+                android:orientation="vertical"
+                android:layout_marginStart="12dp">
 
+                <!-- User Name TextView -->
                 <TextView
                     android:id="@+id/uNameTv"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="name"
-                    android:textSize="20sp" />
+                    android:text="User Name"
+                    android:textSize="18sp"
+                    android:textStyle="bold"
+                    android:textColor="@color/black" />
 
+                <!-- Time TextView -->
                 <TextView
                     android:id="@+id/pTimeTv"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="time"
-                    android:textSize="20sp" />
+                    android:text="Time"
+                    android:textSize="14sp"
+                    android:textColor="@color/darkGray" />
 
             </LinearLayout>
 
+            <!-- ImageButton for More Options -->
             <ImageButton
                 android:id="@+id/moreBtn"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:background="@null"
-                android:src="@drawable/ic_more" />
+                android:src="@drawable/ic_more"
+                android:background="?attr/selectableItemBackgroundBorderless" />
 
         </LinearLayout>
 
         <!-- Article Details -->
+        <!-- Title TextView -->
         <TextView
             android:id="@+id/aTitleTv"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="title"
-            android:textSize="16sp"
-            android:textStyle="bold" />
+            android:text="Title"
+            android:paddingStart="12dp"
+            android:textSize="20sp"
+            android:textStyle="bold"
+            android:textColor="@color/black"
+            android:layout_marginBottom="8dp" />
 
+        <!-- Description TextView -->
         <TextView
             android:id="@+id/aDescTv"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="Description"
-            android:textSize="16sp" />
+            android:paddingStart="12dp"
+            android:textSize="16sp"
+            android:textColor="@color/darkGray"
+            android:layout_marginBottom="8dp" />
 
         <!-- Additional Views (Image, Video, etc.) -->
+        <!-- PhotoView for Image -->
         <com.github.chrisbanes.photoview.PhotoView
             android:id="@+id/sendImg"
             android:layout_width="match_parent"
             android:layout_height="300dp"
             android:visibility="gone" />
 
+        <!-- VideoView for Video -->
         <VideoView
             android:id="@+id/sendVdo"
             android:layout_width="match_parent"
@@ -91,6 +114,7 @@
             android:visibility="gone"
             android:background="@color/pink" />
 
+        <!-- WebView for Web Content -->
         <WebView
             android:id="@+id/sendWeb"
             android:layout_width="match_parent"
@@ -98,13 +122,14 @@
             android:visibility="gone"
             tools:ignore="WebViewLayout" />
 
+        <!-- TextView for Text Content -->
         <TextView
             android:id="@+id/sendTxt"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:visibility="gone" />
 
-        <!--suppress AndroidUnresolvableTag -->
+        <!-- PDFView for PDF Content -->
         <com.github.barteksc.pdfviewer.PDFView
             android:id="@+id/sendPdf"
             android:layout_width="match_parent"
@@ -112,6 +137,7 @@
             android:visibility="gone"
             tools:ignore="MissingClass" />
 
+        <!-- ImageView for Icon -->
         <ImageView
             android:id="@+id/iconIv"
             android:layout_width="match_parent"
@@ -123,7 +149,8 @@
         <View
             android:layout_width="match_parent"
             android:layout_height="1dp"
-            android:background="#F5f0F0" />
+            android:background="#F5f0F0"
+            android:layout_marginTop="16dp" />
 
     </LinearLayout>
 

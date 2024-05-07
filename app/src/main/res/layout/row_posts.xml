@@ -1,165 +1,162 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="match_parent"
+<androidx.cardview.widget.CardView
+    xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    app:cardCornerRadius="20dp"
-    app:cardUseCompatPadding="true"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_marginTop="10dp"
+    app:cardCornerRadius="30dp"
     app:cardBackgroundColor="@color/white"
-    app:contentPadding="5dp"
-    android:layout_height="wrap_content">
+    app:cardElevation="4dp">
+
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="vertical">
+        android:orientation="vertical"
+        android:padding="16dp">
 
+        <!-- Profile Section -->
         <LinearLayout
-            android:layout_width="match_parent"
             android:id="@+id/profileLayout"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="horizontal"
-            android:layout_gravity="center_vertical">
+            android:gravity="start"
+            android:orientation="horizontal">
+
             <com.mikhaellopez.circularimageview.CircularImageView
-                android:layout_width="50dp"
                 android:id="@+id/uPictureIv"
+                android:layout_width="50dp"
+                android:layout_height="50dp"
                 android:src="@drawable/ic_profile"
                 android:scaleType="centerCrop"
-                android:layout_height="50dp"/>
+                android:layout_marginEnd="16dp"/>
+
             <LinearLayout
-                android:layout_width="match_parent"
+                android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:orientation="vertical"
-                android:layout_marginLeft="10dp"
-                android:layout_weight="1">
+                android:layout_weight="1"
+                android:orientation="vertical">
+
                 <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="name"
                     android:id="@+id/uNameTv"
-                    android:textSize="20dp"/>
-                <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="time"
+                    android:text="John Doe"
+                    android:textSize="18sp"
+                    android:textStyle="bold"/>
+
+                <TextView
                     android:id="@+id/pTimeTv"
-                    android:textSize="15dp"/>
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="2 hours ago"
+                    android:textSize="14sp"
+                    android:textColor="@color/black"/>
+
             </LinearLayout>
+
+
+
             <ImageButton
+                android:id="@+id/moreBtn"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:background="@null"
-                android:id="@+id/moreBtn"
+                android:background="@android:color/transparent"
                 android:src="@drawable/ic_more"/>
+
         </LinearLayout>
 
-        <View
-            android:layout_width="match_parent"
-            android:layout_height="1dp"
-            android:layout_marginTop="10dp"
-            android:background="#F5f0F0"
-            />
-
         <TextView
-            android:layout_width="match_parent"
             android:id="@+id/pTitleTv"
-            android:textSize="16sp"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Title"
+            android:textSize="20sp"
             android:textStyle="bold"
-            android:padding="10dp"
-            android:text="title"
-            android:layout_marginTop="10dp"
-            android:autoLink="all"
-            android:layout_height="wrap_content"/>
+            android:layout_marginTop="16dp"/>
+
+        <!-- Image -->
         <LinearLayout
-            android:layout_width="wrap_content"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content">
             <com.github.chrisbanes.photoview.PhotoView
-                android:layout_width="wrap_content"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:id="@+id/pImageIv"
                 android:background="@color/white"/>
         </LinearLayout>
+
+        <!-- Description -->
         <TextView
-            android:layout_width="match_parent"
             android:id="@+id/pDescTv"
-            android:textSize="16sp"
-            android:text="Description"
-            android:autoLink="all"
-            android:layout_marginTop="10dp"
-            android:layout_height="wrap_content"/>
-
-        <View
             android:layout_width="match_parent"
-            android:layout_height="1dp"
-            android:layout_marginTop="10dp"
-            android:background="#F5f0F0"
-            />
+            android:layout_height="wrap_content"
+            android:text="Description"
+            android:textSize="16sp"
+            android:textColor="@color/black"
+            android:layout_marginTop="16dp"/>
 
-
-
-
+        <!-- Action Buttons -->
         <LinearLayout
             android:layout_width="match_parent"
+            android:layout_height="wrap_content"
             android:orientation="horizontal"
-            android:layout_marginTop="5dp"
-
-            android:layout_height="wrap_content">
+            android:layout_marginTop="16dp"
+            android:gravity="center">
 
             <Button
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
                 android:id="@+id/likeBtn"
-                android:backgroundTint="@android:color/white"
-                android:textColor="@color/black"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
                 android:drawableLeft="@drawable/ic_notliked"
-                android:text=""/>
+                android:text="Like"
+                android:textColor="@color/black"
+                android:backgroundTint="@android:color/white"/>
+
             <Button
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
                 android:id="@+id/commentBtn"
-                android:drawableLeft="@drawable/ic_comment"
-                android:backgroundTint="@android:color/white"
-                android:textColor="@color/black"
-                android:textAlignment="center"
-
-                android:text=""/>
-
-            <Button
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:id="@+id/shareBtn"
-                android:backgroundTint="@android:color/white"
+                android:drawableLeft="@drawable/ic_comment"
+                android:text="Comment"
                 android:textColor="@color/black"
-                android:drawableLeft="@drawable/ic_share"
-                android:text=""/>
+                android:backgroundTint="@android:color/white"/>
 
+            <Button
+                android:id="@+id/shareBtn"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:drawableLeft="@drawable/ic_share"
+                android:text="Share"
+                android:textColor="@color/black"
+                android:backgroundTint="@android:color/white"/>
 
         </LinearLayout>
 
+        <!-- Like and Comment Counts -->
         <LinearLayout
-            android:layout_width="wrap_content"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:gravity="end"
+            android:layout_marginTop="8dp">
 
-            android:orientation="horizontal">
             <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
                 android:id="@+id/pLikeTv"
-                android:textColor="@color/black"
-                android:layout_weight="1"
-                android:paddingLeft="10dp"
-                android:text="1.3k likes"/>
-
-            <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:id="@+id/pCommentTv"
+                android:text="1.3k likes"
+                android:textSize="14sp"
                 android:textColor="@color/black"
-                android:layout_weight="1"
-                android:paddingLeft="200dp"
-                android:textAlignment="textEnd"
-                android:text="1.3k comments"/>
+                android:paddingEnd="8dp"/>
+
+            <TextView
+                android:id="@+id/pCommentTv"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="1.3k comments"
+                android:textSize="14sp"
+                android:textColor="@color/black"/>
 
         </LinearLayout>
 

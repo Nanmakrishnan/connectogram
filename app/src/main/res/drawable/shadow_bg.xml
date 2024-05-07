@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8"?>
+<selector xmlns:android="http://schemas.android.com/apk/res/android">
+    <layer-list xmlns:android="http://schemas.android.com/apk/res/android">
+        <!-- Shadow -->
+        <item>
+            <shape android:shape="rectangle">
+                <solid android:color="#80000000" /> <!-- Adjust opacity as needed -->
+                <corners android:radius="8dp" /> <!-- Adjust radius as needed -->
+            </shape>
+        </item>
+        <!-- Background -->
+        <item
+            android:bottom="8dp"
+            android:left="8dp"
+            android:right="8dp">
+            <shape android:shape="rectangle">
+                <solid android:color="#5E855BD9" /> <!-- Your original background color -->
+                <corners android:radius="8dp" /> <!-- Adjust radius as needed -->
+            </shape>
+        </item>
+    </layer-list>
+
+</selector>

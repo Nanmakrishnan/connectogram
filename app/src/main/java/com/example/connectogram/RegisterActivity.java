@@ -1,5 +1,6 @@
 package com.example.connectogram;
 
+import android.annotation.SuppressLint;
 import android.app.ProgressDialog;
 import android.content.Intent;
 import android.os.Bundle;
@@ -27,12 +28,13 @@ import java.util.HashMap;
 
 public class RegisterActivity extends AppCompatActivity {
 
-    EditText email, password,confirm;
+    EditText email,usn, password,confirm;
     Button register_btn;
     TextView haveAccount;
     private FirebaseAuth auth;
     ProgressDialog progress; // Renamed progess to progress
 
+    @SuppressLint("MissingInflatedId")
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -40,6 +42,7 @@ public class RegisterActivity extends AppCompatActivity {
 
         // Initialize views after inflating the layout
         email = findViewById(R.id.emailID);
+        usn = findViewById(R.id.usn);
         password = findViewById(R.id.password);
         register_btn = findViewById(R.id.register_btn);
         haveAccount=findViewById(R.id.have_account);
@@ -48,17 +51,18 @@ public class RegisterActivity extends AppCompatActivity {
         auth = FirebaseAuth.getInstance();
 
 
-            haveAccount.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    startActivity(new Intent(RegisterActivity.this,LoginActivity.class));
-                }
-            });
+        haveAccount.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                startActivity(new Intent(RegisterActivity.this,LoginActivity.class));
+            }
+        });
         // Set click listener for register button
         register_btn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 String em = email.getText().toString().trim();
+                String un = usn.getText().toString().trim();
                 String pas = password.getText().toString().trim();
                 if (!Patterns.EMAIL_ADDRESS.matcher(em).matches()) {
                     email.setError("Invalid email");
@@ -70,6 +74,10 @@ public class RegisterActivity extends AppCompatActivity {
                 else if (!confirm.getText().toString().trim().equals(pas)) {
                     confirm.setError("Password mismatch");
                     confirm.setFocusable(true);
+                }
+                else if (!un.startsWith("4kv")) { // Check if USN starts with "4KV"
+                    usn.setError("USN must start with '4KV'");
+                    usn.setFocusable(true);
                 }
                 else {
                     registerUser(em, pas);

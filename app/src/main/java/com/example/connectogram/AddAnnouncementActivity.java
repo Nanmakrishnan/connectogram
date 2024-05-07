@@ -8,6 +8,7 @@ import android.text.TextUtils;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageButton;
 import android.widget.Toast;
 import org.apache.commons.io.FileUtils;
 
@@ -37,7 +38,8 @@ import java.io.InputStream;
 
 public class AddAnnouncementActivity extends AppCompatActivity {
     private static final int PICK_FILE_REQUEST_CODE =300 ;
-    Button publish,file;
+    ImageButton publish,file;
+
 EditText titleEt,descEt;
     Uri fileuri=null;
     String uName;
