@@ -6,15 +6,37 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".SettingsActivity">
+
     <androidx.cardview.widget.CardView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         app:contentPadding="10dp">
+
+        <!-- Post Notification Switch -->
         <Switch
-            android:layout_width="match_parent"
-            android:text="Post Notification"
             android:id="@+id/postSwitch"
-            android:layout_height="wrap_content"/>
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="32dp"
+            android:layout_marginTop="10dp"
+            android:layout_marginEnd="32dp"
+            android:layout_marginBottom="10dp"
+
+            android:text="Post Notification"
+            android:textSize="18sp"
+            android:textStyle="bold"
+            android:textAlignment="viewStart" />
+
+        <!-- Your desired LinearLayout with other buttons -->
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:layout_below="@id/postSwitch">
+
+            <!-- Add other buttons here -->
+
+        </LinearLayout>
 
     </androidx.cardview.widget.CardView>
 

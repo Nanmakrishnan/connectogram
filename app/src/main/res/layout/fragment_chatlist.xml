@@ -1,22 +1,32 @@
 <?xml version="1.0" encoding="utf-8"?>
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="#FFFFFFFF"
-    tools:context=".ChatlistFragment">
+    android:background="#34865BDA">
 
-    <!-- TODO: Update blank fragment layout -->
+    <!-- Background image -->
+    <ImageView
+        android:id="@+id/background_image"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:alpha="0.6"
+        android:scaleType="centerCrop"
+        android:background="?android:attr/windowBackground" />
+
+    <!-- Chat list RecyclerView with rounded corners -->
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/recyclerView"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:background="#FCF6FD"
+        android:layout_height="match_parent"
+        android:layout_margin="16dp"
+        android:background="@drawable/rounded_corners_bg"
+        android:clipToPadding="false"
         app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
         app:reverseLayout="true"
         app:stackFromEnd="true"
         tools:listitem="@layout/row_chatlist" />
 
 
-</FrameLayout>
+</RelativeLayout>

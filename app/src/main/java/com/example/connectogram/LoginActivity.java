@@ -59,7 +59,7 @@ public class LoginActivity extends AppCompatActivity {
         pd=new ProgressDialog(this);
         pd.setMessage("Loggin In");
         forgot=findViewById(R.id.forot_password);
-      //  googleSignIn=findViewById(R.id.google_singIn);
+        //  googleSignIn=findViewById(R.id.google_singIn);
 
         auth=FirebaseAuth.getInstance();
         no_account.setOnClickListener(new View.OnClickListener() {
@@ -102,30 +102,30 @@ public class LoginActivity extends AppCompatActivity {
 //
 //            }
 //        });
-            forgot.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    showRecoverDialog();
-                }
-            });
-    login.setOnClickListener(new View.OnClickListener() {
-        @Override
-        public void onClick(View v) {
-
-
-            String em=email.getText().toString().trim();
-            String pas=password.getText().toString().trim();
-            if (!Patterns.EMAIL_ADDRESS.matcher(em).matches()) {
-                email.setError("Invalid email");
-                email.setFocusable(true);
-            } else if (pas.length() < 6) {
-                password.setError("At least 6 characters are needed");
-                password.setFocusable(true);
-            } else {
-                loginUser(em, pas);
+        forgot.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                showRecoverDialog();
             }
-        }
-    });
+        });
+        login.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+
+                String em=email.getText().toString().trim();
+                String pas=password.getText().toString().trim();
+                if (!Patterns.EMAIL_ADDRESS.matcher(em).matches()) {
+                    email.setError("Invalid email");
+                    email.setFocusable(true);
+                } else if (pas.length() < 6) {
+                    password.setError("At least 6 characters are needed");
+                    password.setFocusable(true);
+                } else {
+                    loginUser(em, pas);
+                }
+            }
+        });
 
     }
     public void loginUser(String email,String password)
@@ -179,18 +179,18 @@ public class LoginActivity extends AppCompatActivity {
         builder.setPositiveButton("RECOVER", new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialog, int which) {
-            String email=e.getText().toString().trim();
-            beginRecovery(email);
+                String email=e.getText().toString().trim();
+                beginRecovery(email);
             }
         });
 
         builder.setNegativeButton("CANCEL", new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialog, int which) {
-            dialog.dismiss();;
+                dialog.dismiss();;
             }
         });
-    builder.create().show();
+        builder.create().show();
 
     }
     public void beginRecovery(String email)

@@ -119,7 +119,7 @@ FirebaseAuth firebaseAuth;
         pTimeTv = findViewById(R.id.pTimeTv);
         photoEditorView=findViewById(R.id.photoEditorView);
 
-photoEditorView.setSaveEnabled(true);;
+        photoEditorView.setSaveEnabled(true);;
 
 
 

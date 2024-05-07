@@ -1,8 +1,9 @@
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<?xml version="1.0" encoding="utf-8"?>
+ <FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@drawable/announce"
+    android:background="@drawable/announcements"
     android:id="@+id/main"
     tools:context=".AnnouncementFragment">
 
@@ -15,48 +16,79 @@
         android:elevation="4dp"
         android:background="@drawable/rounded_corner_cardview">
 
-
         <!-- LinearLayout to arrange elements vertically -->
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_gravity="center"
             android:orientation="vertical"
             android:padding="16dp">
 
-            <!-- Title EditText -->
             <EditText
                 android:id="@+id/titleEt"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:background="@drawable/rounded_corner_cardview"
                 android:fontFamily=""
                 android:hint="Enter Title"
+                android:minHeight="48dp"
+                android:textColorHint="@android:color/darker_gray"
                 android:textSize="20sp" />
 
-            <!-- Description EditText -->
             <EditText
                 android:id="@+id/descEt"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="8dp"
+                android:layout_marginTop="18dp"
+                android:background="@drawable/rounded_corner_cardview"
                 android:hint="Enter Description"
+                android:minHeight="48dp"
+                android:textColorHint="@android:color/darker_gray"
                 android:textSize="16sp" />
 
-            <!-- Upload Button -->
-            <Button
-                android:id="@+id/fileBtn"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="16dp"
-                android:text="Upload" />
 
-            <!-- Publish Button -->
-            <Button
-                android:id="@+id/publishBtn"
-                android:layout_width="wrap_content"
+
+            <!-- Buttons LinearLayout -->
+            <LinearLayout
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="8dp"
-                android:text="Publish" />
+                android:orientation="horizontal"
+                android:layout_marginTop="16dp">
+
+                <!-- Upload Button -->
+                <ImageButton
+                    android:id="@+id/fileBtn"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:adjustViewBounds="true"
+                    android:background="?android:attr/selectableItemBackground"
+                    android:maxWidth="30dp"
+                    android:maxHeight="30dp"
+                    android:scaleType="fitCenter"
+                    android:src="@drawable/folder"
+                    android:text="Upload"
+                    tools:ignore="TouchTargetSizeCheck" />
+
+                <!-- Spacer -->
+                <View
+                    android:layout_width="0dp"
+                    android:layout_height="0dp"
+                    android:layout_weight="1"/>
+
+                <!-- Publish Button -->
+                <ImageButton
+                    android:id="@+id/publishBtn"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="end"
+                    android:adjustViewBounds="true"
+                    android:background="?android:attr/selectableItemBackground"
+                    android:maxWidth="30dp"
+                    android:maxHeight="30dp"
+                    android:scaleType="fitCenter"
+                    android:src="@drawable/publish"
+                    android:text="Publish"
+                    tools:ignore="TouchTargetSizeCheck" />
+            </LinearLayout>
         </LinearLayout>
     </androidx.cardview.widget.CardView>
 

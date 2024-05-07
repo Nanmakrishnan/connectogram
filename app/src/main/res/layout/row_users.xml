@@ -1,27 +1,30 @@
-<?xml version="1.0" encoding="utf-8"?>
-<androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.cardview.widget.CardView
+    xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
-    android:layout_height="wrap_content">
+    android:layout_height="wrap_content"
+    android:layout_margin="8dp"
+    app:cardCornerRadius="12dp"
+    app:cardElevation="8dp">
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
-        android:textAlignment="center"
         android:padding="16dp">
 
         <com.mikhaellopez.circularimageview.CircularImageView
             android:id="@+id/avatarIv"
-            android:layout_width="70dp"
-            android:layout_height="70dp"
-            android:src="@drawable/ic_person_blue" />
+            android:layout_width="100dp"
+            android:layout_height="100dp"
+            android:src="@drawable/ic_person_blue"
+            app:civ_border_color="@color/white"
+            app:civ_border_width="2dp" />
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="vertical"
-            android:layout_marginTop="10dp"
             android:layout_marginStart="16dp">
 
             <TextView
@@ -29,16 +32,18 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:text="User Name"
-                android:textSize="18dp"
-                android:textStyle="bold"/>
+                android:layout_marginTop="20dp"
+                android:textSize="20sp"
+                android:textStyle="bold"
+                android:textColor="@color/black"/>
 
             <TextView
                 android:id="@+id/emailIv"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="User Email"
-                android:textSize="12sp"
-                android:textColor="@color/black"
+                android:text="user@example.com"
+                android:textSize="14sp"
+                android:textColor="@color/darkGray"
                 android:layout_marginTop="4dp" />
 
         </LinearLayout>

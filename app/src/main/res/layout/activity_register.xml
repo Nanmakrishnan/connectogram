@@ -1,33 +1,58 @@
 <?xml version="1.0" encoding="utf-8"?>
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
-xmlns:app="http://schemas.android.com/apk/res-auto"
-xmlns:tools="http://schemas.android.com/tools"
-android:layout_width="match_parent"
-android:id="@+id/main"
-android:layout_height="match_parent"
-android:background="@drawable/reg"
-tools:context=".RegisterActivity">
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/main"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#4D865BDA"
+    tools:context=".RegisterActivity">
 
+    <!-- Background Image View -->
+    <ImageView
+        android:id="@+id/backgroundImageView"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:scaleType="fitXY"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:srcCompat="@drawable/top_background" />
+
+    <!-- Text View -->
+
+
+    <!-- Linear Layout with other content -->
+
+    <TextView
+        android:layout_width="444dp"
+        android:layout_height="122dp"
+        android:layout_marginTop="36dp"
+        android:fontFamily="@font/berkshire_swash"
+        android:gravity="center"
+        android:maxLines="3"
+        android:text="Connect\nwith\nConnectogram"
+        android:textColor="#ffffff"
+        android:textSize="30dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.515"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
 
     <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:layout_marginEnd="16dp"
-        android:background="#3fff"
+        android:layout_width="319dp"
+        android:layout_height="390dp"
+        android:layout_marginEnd="24dp"
+        android:background="#5E855BD9"
         android:gravity="center"
         android:orientation="vertical"
         android:padding="20dp"
+        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        tools:layout_editor_absoluteY="-56dp">
-
-        <TextView
-            android:layout_width="444dp"
-            android:layout_height="92dp"
-            android:fontFamily="@font/berkshire_swash"
-            android:gravity="center"
-            android:text="Connect with Connectogram"
-            android:textColor="#ffffff"
-            android:textSize="25dp" />
+        app:layout_constraintHorizontal_bias="0.676"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/backgroundImageView"
+        app:layout_constraintVertical_bias="0.503">
 
         <EditText
             android:id="@+id/emailID"
@@ -38,8 +63,15 @@ tools:context=".RegisterActivity">
             android:gravity="center"
             android:hint="Email"
             android:textColorHint="#FFFBF6" />
-
-
+        <EditText
+            android:id="@+id/usn"
+            android:layout_width="250dp"
+            android:layout_height="40dp"
+            android:layout_marginTop="15dp"
+            android:background="@drawable/custombutton"
+            android:gravity="center"
+            android:hint="USN"
+            android:textColorHint="#FFFBF6" />
 
         <EditText
             android:id="@+id/password"
@@ -47,9 +79,10 @@ tools:context=".RegisterActivity">
             android:layout_height="40dp"
             android:layout_marginTop="15dp"
             android:background="@drawable/custombutton"
-            android:inputType="textPassword"
             android:gravity="center"
+            android:drawableStart="@drawable/ic_password"
             android:hint="Password"
+            android:inputType="textPassword"
             android:textColorHint="#FFFBF6" />
 
         <EditText
@@ -58,19 +91,18 @@ tools:context=".RegisterActivity">
             android:layout_height="40dp"
             android:layout_marginTop="15dp"
             android:background="@drawable/custombutton"
-            android:inputType="textPassword"
+            android:drawableStart="@drawable/ic_password"
             android:gravity="center"
-            android:hint="Password"
+            android:hint="Confirm Password"
+            android:inputType="textPassword"
             android:textColorHint="#FFFBF6" />
-
-
 
         <Button
             android:id="@+id/register_btn"
             android:layout_width="150dp"
             android:layout_height="40dp"
             android:layout_marginTop="50dp"
-            android:background="@drawable/custombutton2"
+            android:background="@color/mediumPurple"
             android:text="SignUp"
             android:textAllCaps="false"
             android:textColor="#FFFBF6" />
@@ -81,19 +113,14 @@ tools:context=".RegisterActivity">
             android:layout_marginTop="15dp"
             android:background="#3fff" />
 
-
         <TextView
             android:id="@+id/have_account"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="Already have an account?Login"
             android:textAlignment="center"
-            android:textColor="@color/white"
+            android:textColor="#ffffff"
             tools:ignore="MissingConstraints" />
 
-
-
     </LinearLayout>
-
-
 </androidx.constraintlayout.widget.ConstraintLayout>

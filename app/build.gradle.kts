@@ -54,6 +54,7 @@ dependencies {
     implementation("de.hdodenhof:circleimageview:3.1.0")
 
     implementation("com.squareup.picasso:picasso:2.8")
+   // implementation("ja.burhanrashid52.photoeditor:photoeditor")
 
 
     // Import the BoM for the Firebase platform
