@@ -194,6 +194,7 @@ public class AdapterPost extends  RecyclerView.Adapter<AdapterPost.Myholder> {
 
                 // Get the ID of the post clicked
                 String postid = postlist.get(position).getpId();
+                holder.likeBtn.setEnabled(false);
                 pLikesref.addValueEventListener(new ValueEventListener() {
                     @Override
                     public void onDataChange(@NonNull DataSnapshot snapshot) {
@@ -204,9 +205,16 @@ public class AdapterPost extends  RecyclerView.Adapter<AdapterPost.Myholder> {
                                     @Override
                                     public Transaction.Result doTransaction(MutableData mutableData) {
                                         Object value = mutableData.getValue();
-                                        if (value instanceof Number) {
-                                            mutableData.setValue(((Number) value).intValue() - 1);
-                                        }
+
+                                        String likesCountStr = mutableData.getValue(String.class);
+                                        int likesCount = Integer.parseInt(likesCountStr);
+                                        // Increment likesCount by 1
+                                        likesCount--;
+                                        // Store the updated likes count as a string
+
+                                        mutableData.setValue(String.valueOf(likesCount));
+
+
                                         return Transaction.success(mutableData);
                                     }
 
@@ -214,6 +222,7 @@ public class AdapterPost extends  RecyclerView.Adapter<AdapterPost.Myholder> {
                                     public void onComplete(DatabaseError databaseError, boolean committed, DataSnapshot currentData) {
                                         // Transaction completed
                                         // Optionally, you can add code here to handle post-transaction logic
+
                                     }
                                 });
                                 pLikesref.child(postid).child(myUid).removeValue();
@@ -223,10 +232,12 @@ public class AdapterPost extends  RecyclerView.Adapter<AdapterPost.Myholder> {
                                 postref.child(postid).child("pLikes").runTransaction(new Transaction.Handler() {
                                     @Override
                                     public Transaction.Result doTransaction(MutableData mutableData) {
-                                        Object value = mutableData.getValue();
-                                        if (value instanceof Number) {
-                                            mutableData.setValue(((Number) value).intValue() + 1);
-                                        }
+                                        String likesCountStr = mutableData.getValue(String.class);
+                                        int likesCount = Integer.parseInt(likesCountStr);
+                                        // Increment likesCount by 1
+                                        likesCount++;
+                                        // Store the updated likes count as a string
+                                        mutableData.setValue(String.valueOf(likesCount));
                                         return Transaction.success(mutableData);
                                     }
 
@@ -245,7 +256,8 @@ public class AdapterPost extends  RecyclerView.Adapter<AdapterPost.Myholder> {
                                 }
                             }
                             postlist.get(position).setpLikes(String.valueOf(pLikes + (snapshot.child(postid).hasChild(myUid)? -1 : 1)));
-                            notifyItemChanged(position); // Notify the adapter about the change
+                            notifyItemChanged(position);
+                            holder.likeBtn.setEnabled(true);// Notify the adapter about the change
                         }
                     }
 

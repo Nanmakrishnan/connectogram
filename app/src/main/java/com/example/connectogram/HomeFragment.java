@@ -114,7 +114,7 @@ public class HomeFragment extends Fragment {
 
     private void loadPost() {
         DatabaseReference ref= FirebaseDatabase.getInstance().getReference("Posts");
-        ref.addValueEventListener(new ValueEventListener() {
+        ref.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
                 postList.clear();;
