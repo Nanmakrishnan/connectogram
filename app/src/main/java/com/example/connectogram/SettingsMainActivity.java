@@ -48,6 +48,13 @@ public class SettingsMainActivity extends AppCompatActivity {
                 startActivity(new Intent(SettingsMainActivity.this,SettingsActivity.class));
             }
         });
+
+        accnt.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                startActivity(new Intent(SettingsMainActivity.this,AccountSettingsActivity.class));
+            }
+        });
         ViewCompat.setOnApplyWindowInsetsListener(findViewById(R.id.main), (v, insets) -> {
             Insets systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars());
             v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom);

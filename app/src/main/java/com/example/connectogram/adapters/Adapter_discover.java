@@ -48,6 +48,8 @@ public class Adapter_discover extends RecyclerView.Adapter<Adapter_discover.myho
 
         // Set the data to the views
         holder.nameIv.setText(model.getName());
+        if(model.getName()==null||model.getName().equals(""))
+            holder.nameIv.setText("Unnamed User");
         holder.emailIv.setText(model.getEmail());
         try {
         if(model.getImage().equals(""))

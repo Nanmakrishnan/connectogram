@@ -139,7 +139,7 @@ public class AdapterPost extends  RecyclerView.Adapter<AdapterPost.Myholder> {
 
  // set data;
       holder.uNameTV.setText(uName);;
-      if(uName.equals("")) {
+      if(uName!=null&&uName.equals("")) {
           holder.uNameTV.setText("Unnamed User");
       }
         holder.pTimeTv.setText(pTime);

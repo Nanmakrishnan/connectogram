@@ -13,28 +13,55 @@
         app:contentPadding="10dp">
 
         <!-- Post Notification Switch -->
-        <Switch
-            android:id="@+id/postSwitch"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="32dp"
-            android:layout_marginTop="10dp"
-            android:layout_marginEnd="32dp"
-            android:layout_marginBottom="10dp"
 
-            android:text="Post Notification"
-            android:textSize="18sp"
-            android:textStyle="bold"
-            android:textAlignment="viewStart" />
 
         <!-- Your desired LinearLayout with other buttons -->
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="vertical"
-            android:layout_below="@id/postSwitch">
 
-            <!-- Add other buttons here -->
+           >
+
+            <Switch
+                android:id="@+id/postSwitch"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="32dp"
+                android:layout_marginTop="10dp"
+                android:layout_marginEnd="32dp"
+                android:layout_marginBottom="10dp"
+
+                android:text="Post Notification"
+                android:textSize="18sp"
+                android:textStyle="bold"
+                android:textAlignment="viewStart" />
+            <Switch
+                android:id="@+id/CommentSwitch"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="32dp"
+                android:layout_marginTop="10dp"
+                android:layout_marginEnd="32dp"
+                android:layout_marginBottom="10dp"
+                android:text="Comment Notification"
+                android:textSize="18sp"
+                android:textStyle="bold"
+                android:textAlignment="viewStart" />
+            <Switch
+                android:id="@+id/killSwitch"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="32dp"
+                android:layout_marginTop="10dp"
+                android:layout_marginEnd="32dp"
+                android:layout_marginBottom="10dp"
+
+                android:text="Mute All Notifications"
+                android:textSize="18sp"
+                android:textStyle="bold"
+                android:textAlignment="viewStart" />
+
 
         </LinearLayout>
 

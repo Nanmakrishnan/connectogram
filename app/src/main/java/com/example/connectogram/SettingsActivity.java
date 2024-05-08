@@ -1,7 +1,12 @@
 package com.example.connectogram;
 
+import android.app.NotificationChannel;
+import android.app.NotificationManager;
+import android.content.Context;
 import android.content.SharedPreferences;
+import android.os.Build;
 import android.os.Bundle;
+import android.view.View;
 import android.widget.CompoundButton;
 import android.widget.Switch;
 import android.widget.Toast;
@@ -21,9 +26,10 @@ import com.google.firebase.messaging.FirebaseMessaging;
 
 public class SettingsActivity extends AppCompatActivity {
 
-    Switch postSwitch;
+    Switch postSwitch,killSwitch;
     SharedPreferences sp;
     SharedPreferences.Editor editor;
+
 
     private static final String TOPIC_POST_NOTIFICATION = "POST";
 
@@ -35,6 +41,7 @@ public class SettingsActivity extends AppCompatActivity {
         setContentView(R.layout.activity_settings);
 
         postSwitch = findViewById(R.id.postSwitch);
+        killSwitch=findViewById(R.id.killSwitch);
         sp = getSharedPreferences("Notification_SP", MODE_PRIVATE);
         boolean isPostEnabled = sp.getBoolean("" + TOPIC_POST_NOTIFICATION, false);
         if (isPostEnabled) {
@@ -62,6 +69,15 @@ public class SettingsActivity extends AppCompatActivity {
 
             }
         });
+
+        killSwitch.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+                // Call the method to toggle notifications based on the state of the switch
+                toggleNotificationsForChannel("admin_channel", isChecked);
+            }
+        });
+
         ViewCompat.setOnApplyWindowInsetsListener(findViewById(R.id.main), (v, insets) -> {
             Insets systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars());
             v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom);
@@ -79,6 +95,28 @@ public class SettingsActivity extends AppCompatActivity {
                 Toast.makeText(SettingsActivity.this, msg, Toast.LENGTH_SHORT).show();
             }
         });
+    }
+    private void toggleNotificationsForChannel(String channelId, boolean enableNotifications) {
+        // Get the NotificationManager service
+        NotificationManager notificationManager = (NotificationManager) getSystemService(Context.NOTIFICATION_SERVICE);
+
+        // Check if the device is running Android Oreo or higher
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+            // If enableNotifications is true, create the notification channel
+            if (enableNotifications) {
+                // Create the notification channel with desired settings
+                NotificationChannel channel = new NotificationChannel(channelId, "All Notification", NotificationManager.IMPORTANCE_DEFAULT);
+                // Add additional settings if needed
+                // channel.setDescription("Channel Description");
+                // channel.set... // Other settings
+
+                // Register the notification channel with the system
+                notificationManager.createNotificationChannel(channel);
+            } else {
+                // Disable notifications by deleting the notification channel
+                notificationManager.deleteNotificationChannel(channelId);
+            }
+        }
     }
 
     private void subscribePostNotification() {

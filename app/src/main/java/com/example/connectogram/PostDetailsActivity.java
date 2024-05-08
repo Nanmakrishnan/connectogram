@@ -8,6 +8,7 @@ import android.net.Uri;
 import android.os.Bundle;
 import android.text.TextUtils;
 import android.text.format.DateFormat;
+import android.util.Log;
 import android.view.Gravity;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -35,9 +36,17 @@ import androidx.core.view.WindowInsetsCompat;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.android.volley.AuthFailureError;
+import com.android.volley.RequestQueue;
+import com.android.volley.toolbox.JsonObjectRequest;
+import com.android.volley.toolbox.Volley;
 import com.example.connectogram.adapters.AdapterComment;
 import com.example.connectogram.adapters.AdapterPost;
 import com.example.connectogram.models.ModelComment;
+import com.example.connectogram.notifications.Data;
+import com.example.connectogram.notifications.Sender;
+import com.example.connectogram.notifications.Token;
+import com.github.chrisbanes.photoview.PhotoView;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.auth.FirebaseAuth;
@@ -50,7 +59,11 @@ import com.google.firebase.database.Query;
 import com.google.firebase.database.ValueEventListener;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
+import com.google.gson.Gson;
 import com.squareup.picasso.Picasso;
+
+import org.json.JSONException;
+import org.json.JSONObject;
 
 import java.util.Calendar;
 import java.util.HashMap;
@@ -61,7 +74,8 @@ public class PostDetailsActivity extends AppCompatActivity {
     EditText commentEt;
     ImageButton sendBtn,moreBtn;
 
-    ImageView uPictueTv,pImageIv, pPictureIv;
+    ImageView uPictueTv, pPictureIv;
+    PhotoView pImageIv;
     TextView nameTv,pTimeTv,pTitleTv,pDescTv,pLikesTv,pCommentsTv;
     Button likeBtn,shareBtn;
     LinearLayout profileLayout;
@@ -420,6 +434,8 @@ String timestamp=String.valueOf(System.currentTimeMillis());
                Toast.makeText(PostDetailsActivity.this,"comment Added",Toast
                        .LENGTH_SHORT).show();;
                        commentEt.setText("");
+                       //GIVE A NOTIFICATION TO USER
+               sendCommentNotification(hisUid,myName);
                        updateCommentCount();
 
            }
@@ -434,6 +450,71 @@ String timestamp=String.valueOf(System.currentTimeMillis());
 
 
 
+    }
+
+    private void sendCommentNotification(String postOwnerUid, String senderName) {
+
+        DatabaseReference tokensRef = FirebaseDatabase.getInstance().getReference("Tokens").child(postOwnerUid);
+        tokensRef.addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                if (dataSnapshot.exists()) {
+                    Token token = dataSnapshot.getValue(Token.class);
+                    if (token != null) {
+
+                        Data data = new Data(
+                                "" + myUid,
+                                "CommentNotification",
+                                senderName + " commented on  your post.",
+                                R.drawable.ic_comment,
+                                ""+postId,
+                                postOwnerUid+""
+                        );
+                        Sender sender = new Sender(data, token.getToken());
+
+                        try {
+                            JSONObject senderJsonObj = new JSONObject(new Gson().toJson(sender));
+                            JsonObjectRequest jsonObjectRequest = new JsonObjectRequest(
+                                    "https://fcm.googleapis.com/fcm/send",
+                                    senderJsonObj,
+                                    response -> {
+                                        // Handle successful response
+                                        Log.d("JSON_RESPONSE", "onResponse: " + response.toString());
+
+                                    },
+                                    error -> {
+                                        // Handle error
+                                        Log.d("JSON_RESPONSE", "onError: " + error.toString());
+                                        Toast.makeText(PostDetailsActivity.this, "Failed to send notification", Toast.LENGTH_SHORT).show();
+                                    }
+                            ) {
+                                @Override
+                                public Map<String, String> getHeaders() throws AuthFailureError {
+                                    // Add headers required for the request, such as Content-Type and Authorization
+                                    Map<String, String> headers = new HashMap<>();
+                                    headers.put("Content-Type", "application/json");
+                                    headers.put("Authorization", "key=AAAAenyNnco:APA91bElB1Mr3OvgkWme4uMYLUrkPbllU0kle1z8lIQUQrXP0v_3x1_-DD6blJAc4pASjFvmI7GOvovcbIHMF8XeU40rxNdqd9RPCagQu61o-HnsXnzJBOlnnv8Kqz07mquPpNMjCpwM");
+                                    return headers;
+                                }
+                            };
+
+                            // Add the request to the Volley request queue
+                            RequestQueue requestQueue= Volley.newRequestQueue(PostDetailsActivity.this);
+                            requestQueue.add(jsonObjectRequest);
+                        } catch (JSONException e) {
+                            e.printStackTrace();
+                        }
+
+
+                    }
+                }
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError databaseError) {
+                // Handle onCancelled
+            }
+        });
     }
     private void setLikes() {
         DatabaseReference pLikesref=FirebaseDatabase.getInstance().getReference().child("Likes");
@@ -494,7 +575,7 @@ r.addValueEventListener(new ValueEventListener() {
                 myDp=""+ds.child("image").getValue();
 
                 try {
-                        Picasso .get().load(myDp).placeholder(R.drawable.ic_profile).into(uPictueTv);
+                        Picasso .get().load(myDp).placeholder(R.drawable.ic_profile).resize(1000, 1200).centerCrop().into(uPictueTv);
                 }
                 catch (Exception e)
                 {

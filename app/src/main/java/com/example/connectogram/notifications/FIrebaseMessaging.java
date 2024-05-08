@@ -43,63 +43,61 @@ public class FIrebaseMessaging extends FirebaseMessagingService {
         super.onMessageReceived(message);
 
 
+        SharedPreferences sp = getSharedPreferences("SP_USER", MODE_PRIVATE);
+        String savedCurrentUser = sp.getString("Current_USERID", "None");
 
-        SharedPreferences sp=getSharedPreferences("SP_USER",MODE_PRIVATE);
-        String savedCurrentUser=sp.getString("Current_USERID","None");
-
-        String NotificationType=message.getData().get("notificationType");
-        if(NotificationType!=null&&NotificationType.equals("PostNotification"))
-        {
-            String sender=message.getData().get("send");
-            String pId=message.getData().get("pId");
-            String pTitle=message.getData().get("pTitle");
-            String pDesc=message.getData().get("pDesc");
-            if(!sender.equals(savedCurrentUser))
-
-            {
-                showPostNotificatoin(""+pId,""+pTitle,""+pDesc);
+        String NotificationType = message.getData().get("notificationType");
+        if (NotificationType != null && NotificationType.equals("PostNotification")) {
+            String sender = message.getData().get("send");
+            String pId = message.getData().get("pId");
+            String pTitle = message.getData().get("pTitle");
+            String pDesc = message.getData().get("pDesc");
+            if (!sender.equals(savedCurrentUser)) {
+                showPostNotificatoin("" + pId, "" + pTitle, "" + pDesc);
             }
 
 
-        }
-        else if(NotificationType!=null&&NotificationType.equals("ChatNotification"))
-        {
-            String send=message.getData().get("send");
-            String user=message.getData().get("user");
-            FirebaseUser Fuser= FirebaseAuth.getInstance().getCurrentUser();
-            if(Fuser!=null && send.equals(Fuser.getUid()))
-
-            {
-                if(!savedCurrentUser.equals(user))
-                {
-                    if(Build.VERSION.SDK_INT>=Build.VERSION_CODES.O)
-                    {
+        } else if (NotificationType != null && NotificationType.equals("ChatNotification")) {
+            String send = message.getData().get("send");
+            String user = message.getData().get("user");
+            FirebaseUser Fuser = FirebaseAuth.getInstance().getCurrentUser();
+            if (Fuser != null && send.equals(Fuser.getUid())) {
+                if (!savedCurrentUser.equals(user)) {
+                    if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
                         SendOAndAboveNotification(message);
 
-                    }
-                    else {
+                    } else {
                         sendNormalNotification(message);
                     }
                 }
             }
 
-        }
-
-
-      else   if (NotificationType != null && NotificationType.equals("LikeNotification")) {
+        } else if (NotificationType != null && NotificationType.equals("LikeNotification")) {
             String to = message.getData().get("send");
-            String sender= message.getData().get("user");
+            String sender = message.getData().get("user");
             String postTitle = message.getData().get("title");
             String postDescription = message.getData().get("body");
-            if (to!=null&&to.equals(savedCurrentUser)) {
+            if (to != null && to.equals(savedCurrentUser)) {
                 if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
                     sendOreoAndAboveLikeNotification(postTitle, postDescription);
                 } else {
                     sendNormalLikeNotification(postTitle, postDescription);
                 }
             }
-        }
+        } else if (NotificationType.equals("CommentNotification")) {
+            String to = message.getData().get("send");
+            String sender = message.getData().get("user");
+            String postId = message.getData().get("title");
+            String commentDescription = message.getData().get("body");
+            if (to != null && to.equals(savedCurrentUser)) {
+                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+                    sendOreoAndAboveCommentNotification(postId, commentDescription);
+                } else {
+                    sendNormalCommentNotification(postId, commentDescription);
+                }
+            }
 
+        }
     }
     private void sendNormalLikeNotification(String postTitle, String postDescription) {
         NotificationManager notificationManager = (NotificationManager) getSystemService(Context.NOTIFICATION_SERVICE);
@@ -171,6 +169,90 @@ public class FIrebaseMessaging extends FirebaseMessagingService {
             }
         }
     }
+
+
+    private void sendNormalCommentNotification(String postId, String commentDescription) {
+        NotificationManager notificationManager = (NotificationManager) getSystemService(Context.NOTIFICATION_SERVICE);
+        int notificationId = new Random().nextInt(3000);
+
+        Intent intent = new Intent(this, PostDetailsActivity.class);
+        intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+        intent.putExtra("postId",postId);
+        PendingIntent pendingIntent = PendingIntent.getActivity(this, 0, intent, PendingIntent.FLAG_ONE_SHOT | PendingIntent.FLAG_IMMUTABLE);
+
+        Bitmap largeIcon = BitmapFactory.decodeResource(getResources(), R.drawable.ic_profile);
+        Uri notificationUri = RingtoneManager.getDefaultUri(RingtoneManager.TYPE_NOTIFICATION);
+
+        NotificationCompat.Builder notificationBuilder = new NotificationCompat.Builder(this)
+                .setSmallIcon(R.drawable.ic_comment)
+                .setLargeIcon(largeIcon)
+                .setContentTitle("New Comment")
+                .setContentText(commentDescription)
+                .setSound(notificationUri)
+                .setContentIntent(pendingIntent)
+                .setAutoCancel(true);
+
+        notificationManager.notify(notificationId, notificationBuilder.build());
+    }
+
+    private void sendOreoAndAboveCommentNotification(String postid, String commentDescription) {
+        NotificationManager notificationManager = (NotificationManager) getSystemService(Context.NOTIFICATION_SERVICE);
+        int notificationId = new Random().nextInt(3000);
+
+        // Setup notification channel for Android Oreo and above
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+            setupCommentNotificationChannel(notificationManager);
+        }
+
+        Intent intent = new Intent(this, PostDetailsActivity.class);
+        intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+        intent.putExtra("postId",postid);
+        PendingIntent pendingIntent = PendingIntent.getActivity(this, 0, intent, PendingIntent.FLAG_ONE_SHOT | PendingIntent.FLAG_IMMUTABLE);
+
+        Bitmap largeIcon = BitmapFactory.decodeResource(getResources(), R.drawable.ic_profile);
+        Uri notificationUri = RingtoneManager.getDefaultUri(RingtoneManager.TYPE_NOTIFICATION);
+
+        Notification.Builder notificationBuilder = null;
+        if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.O) {
+            notificationBuilder = new Notification.Builder(this, ADMIN_CHANNEL_ID)
+                    .setSmallIcon(R.drawable.ic_comment)
+                    .setLargeIcon(largeIcon)
+                    .setContentTitle("new Comment")
+                    .setContentText(commentDescription)
+                    .setSound(notificationUri)
+                    .setContentIntent(pendingIntent)
+                    .setAutoCancel(true);
+        }
+
+        notificationManager.notify(notificationId, notificationBuilder.build());
+    }
+
+    private void setupCommentNotificationChannel(NotificationManager notificationManager) {
+        CharSequence channelName = "New Comment Notification";
+        String channelDescription = "Device to Device Comment Notification";
+
+        if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.O) {
+            NotificationChannel adminChannel = new NotificationChannel(ADMIN_CHANNEL_ID, channelName, NotificationManager.IMPORTANCE_LOW);
+            adminChannel.setDescription(channelDescription);
+            adminChannel.enableLights(true);
+            adminChannel.setLightColor(Color.RED);
+            adminChannel.enableVibration(true);
+
+            if (notificationManager != null) {
+                notificationManager.createNotificationChannel(adminChannel);
+            }
+        }
+    }
+
+
+
+
+
+
+
+
+
+
 
     private void showLikeNotification(String postTitle, String postDescription) {
         NotificationManager notificationManager = (NotificationManager) getSystemService(Context.NOTIFICATION_SERVICE);
