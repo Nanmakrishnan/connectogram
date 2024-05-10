@@ -63,15 +63,7 @@
             android:gravity="center"
             android:hint="Email"
             android:textColorHint="#FFFBF6" />
-        <EditText
-            android:id="@+id/usn"
-            android:layout_width="250dp"
-            android:layout_height="40dp"
-            android:layout_marginTop="15dp"
-            android:background="@drawable/custombutton"
-            android:gravity="center"
-            android:hint="USN"
-            android:textColorHint="#FFFBF6" />
+
 
         <EditText
             android:id="@+id/password"

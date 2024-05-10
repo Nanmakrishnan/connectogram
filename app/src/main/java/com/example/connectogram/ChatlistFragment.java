@@ -172,7 +172,7 @@ AdapterChatlist adapterChatlist;
 
                     }
                 });
-                System.out.println("first user is" +userlist.get(0).getName());
+              //  System.out.println("first user is" +userlist.get(0).getName());
                 Collections.reverse(userlist);
                 System.out.println("size of hm "+hm.size()  );
                 for(Model_discover md:userlist)

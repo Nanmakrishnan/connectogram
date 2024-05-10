@@ -54,17 +54,20 @@
 
         <EditText
             android:id="@+id/emailID"
-            android:layout_width="250dp"
+            android:layout_width="match_parent"
             android:layout_height="40dp"
             android:layout_marginTop="15dp"
             android:background="@drawable/custombutton"
             android:gravity="center"
             android:hint="Email"
+            android:maxLines="1"
+            android:ellipsize="end"
             android:textColorHint="#FFFBF6" />
+
 
         <EditText
             android:id="@+id/password"
-            android:layout_width="250dp"
+            android:layout_width="match_parent"
             android:layout_height="40dp"
             android:layout_marginTop="15dp"
             android:background="@drawable/custombutton"
