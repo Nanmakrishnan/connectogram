@@ -202,7 +202,7 @@ pUploadBtn.setOnClickListener(new View.OnClickListener() {
             Toast.makeText(AddPostActivity.this,"Enter Description",Toast.LENGTH_SHORT).show();
             return;
         }
-        System.out.println("Image url is"+imageuri);
+
 
         if(isUpdateKey.equals("editPost"))
         {
@@ -621,12 +621,12 @@ else {
     }
 
     private void pickFromCamera() {
-        System.out.println("pirck From Camera Executed");
+
         ContentValues values = new ContentValues();
         values.put(MediaStore.Images.Media.TITLE, "Temp Pic");
         values.put(MediaStore.Images.Media.DESCRIPTION, "Temp Description");
         imageuri = getContentResolver().insert(MediaStore.Images.Media.EXTERNAL_CONTENT_URI, values);
-        System.out.println("picked is"+imageuri);
+
         // setting by default
         pImageIv.setImageURI(imageuri);
         Intent cameraIntent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);

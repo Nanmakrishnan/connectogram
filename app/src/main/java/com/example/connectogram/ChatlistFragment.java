@@ -172,13 +172,10 @@ AdapterChatlist adapterChatlist;
 
                     }
                 });
-              //  System.out.println("first user is" +userlist.get(0).getName());
+
                 Collections.reverse(userlist);
-                System.out.println("size of hm "+hm.size()  );
-                for(Model_discover md:userlist)
-                {
-                    System.out.println("entry is "+md.getName()+" "+ hm.get(md.getUid()));
-                }
+
+
                 Collections.reverse(userlist);
                 adapterChatlist.notifyDataSetChanged();;
             }

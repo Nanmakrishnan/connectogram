@@ -356,12 +356,12 @@ seenMessage();
     }
 
     private void pickFromCamera() {
-        System.out.println("pirck From Camera Executed");
+
         ContentValues values = new ContentValues();
         values.put(MediaStore.Images.Media.TITLE, "Temp Pic");
         values.put(MediaStore.Images.Media.DESCRIPTION, "Temp Description");
         imageuri = getContentResolver().insert(MediaStore.Images.Media.EXTERNAL_CONTENT_URI, values);
-        System.out.println("picked is"+imageuri);
+
         // setting by default
        // pImageIv.setImageURI(imageuri);
         Intent cameraIntent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
@@ -378,7 +378,7 @@ seenMessage();
             {
                 // imageuri=data.getData();
 
-                System.out.println("cliede image is"+imageuri);
+
                 try {
                     sendImageMessage(imageuri);
                 } catch (IOException e) {
@@ -389,7 +389,7 @@ seenMessage();
             else   if(requestCode==IMAGE_PICK_GALLERY_CODE)
             {
                 imageuri=data.getData();
-                System.out.println("pOCIED FROM GALLERY URL IS"+imageuri);
+
                 try {
                     sendImageMessage(imageuri);
                 } catch (IOException e) {
@@ -732,12 +732,12 @@ chatRef1.addValueEventListener(new ValueEventListener() {
                                 response -> {
                                     // Handle successful response
                                     Log.d("JSON_RESPONSE","onResponse: "+response.toString());
-                                    System.out.println("send noti propey");
+
                                 },
                                 error -> {
                                     // Handle error
                                     Log.d("JSON_RESPONSE","onError: "+error.toString());
-                                    System.out.println("cant send notification");
+
                                 }
                         ) {
                             @Override

@@ -118,7 +118,7 @@ private  BottomNavigationView.OnNavigationItemSelectedListener selectedlistener=
     @Override
     public boolean onNavigationItemSelected(@NonNull MenuItem menuItem) {
         int itemid=menuItem.getItemId();
-        System.out.println("clied item is"+itemid);
+
         if(itemid==R.id.nav_home) {
 
                 HomeFragment hm = new HomeFragment();

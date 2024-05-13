@@ -11,7 +11,7 @@ import android.os.Bundle;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
-import androidx.appcompat.widget.DecorToolbar;
+
 import androidx.appcompat.widget.SearchView;
 import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
@@ -31,7 +31,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.EditText;
 import android.widget.ImageView;
-import android.widget.LinearLayout;
+
 import android.widget.TextView;
 import  android.Manifest;
 import android.widget.Toast;
@@ -76,8 +76,8 @@ public class ProfileFragment extends Fragment {
     private static  final  int IMAGE_PICK_CAMERA_REQUEST_CODE=400;
     private static  final  int IMAGE_PICK_GALLERY_REQUEST_CODE=300;
 
-    String camerPermissions[];
-    String storagePermissions[];
+    String[] camerPermissions;
+    String[] storagePermissions;
     Uri imageuri;
     RecyclerView postrecycleview;
 List<ModelPost> postList;
@@ -86,8 +86,7 @@ String uid;
 
 
     // TODO: Rename and change types of parameters
-    private String mParam1;
-    private String mParam2;
+
     ImageView avatarTv;
     TextView nameTv,emailTv,phoneTv,yearTv,semTv,bioTv;
     ProgressDialog pd;
@@ -120,10 +119,7 @@ FirebaseAuth auth;
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        if (getArguments() != null) {
-            mParam1 = getArguments().getString(ARG_PARAM1);
-            mParam2 = getArguments().getString(ARG_PARAM2);
-        }
+
 
 
     }
@@ -262,7 +258,7 @@ FirebaseAuth auth;
                 for(DataSnapshot ds:snapshot.getChildren())
                 {
                     ModelPost modelPost=ds.getValue(ModelPost.class);
-                    if(modelPost.getpTitle().toLowerCase().contains(searchquery.toLowerCase())||modelPost.getpDesc().toLowerCase().contains(searchquery.toLowerCase())) {
+                    if(modelPost!=null&&modelPost.getpTitle().toLowerCase().contains(searchquery.toLowerCase())||modelPost!=null&&modelPost.getpDesc().toLowerCase().contains(searchquery.toLowerCase())) {
                         postList.add(modelPost);
                     }
 
@@ -321,7 +317,7 @@ FirebaseAuth auth;
 
                 if(which==0){
                     pd.setMessage("Changing image");
-                    System.out.println("changing image");
+
                    editImage();
                 }
                 else if (which==1) {    pd.setMessage("changing name");   editName();                        }
@@ -496,7 +492,7 @@ FirebaseAuth auth;
                     nameTv.setText(newName);
 
                     DatabaseReference ref=FirebaseDatabase.getInstance().getReference("Posts");
-                    System.out.println("uid during name chaingin "+uid);
+
                     Query q=ref.orderByChild("uid").equalTo(uid);
                     q.addValueEventListener(new ValueEventListener() {
                         @Override
@@ -506,10 +502,10 @@ FirebaseAuth auth;
                                 String postId = ds.getKey(); // Get the key of the post
                                 String postUid = ds.child("uid").getValue(String.class); // Get the UID of the post's author
 
-                               System.out.println(""+postId+"  "+postUid);
+
 
                                 String child=ds.getKey();
-                                System.out.println(" th name is"+ds.child("uName").getValue(String.class));
+
                                 ds.getRef().child("uName").setValue(newName);
                             }
                         }

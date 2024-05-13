@@ -62,7 +62,7 @@ FirebaseAuth firebaseAuth;
         semTv=findViewById(R.id.semTv);
         bioTv=findViewById(R.id.bioTv);
         postList=new ArrayList<>();
-        System.out.println("Recived uid is "+uid);
+
         Query query=reference.orderByChild("uid").equalTo(uid);
         query.addValueEventListener(new ValueEventListener() {
             @Override

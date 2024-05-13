@@ -93,7 +93,7 @@ FirebaseUser fuser;
         cal.setTimeInMillis(Long.parseLong(timestamp));
 
         String datetime= DateFormat.format("dd/MM/yyyy hh:mm aa",cal).toString();
-        System.out.println(holder);
+
        // holder.messageTv.setText(message);
         holder.timeTv.setText(datetime);
        //holder.isSeenTv.setText("");
