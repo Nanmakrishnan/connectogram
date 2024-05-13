@@ -3,6 +3,10 @@ package com.example.connectogram.adapters;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.graphics.Bitmap;
+import android.graphics.Matrix;
+import android.graphics.drawable.BitmapDrawable;
+import android.media.ExifInterface;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -14,12 +18,15 @@ import androidx.annotation.NonNull;
 import androidx.appcompat.app.AlertDialog;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.bumptech.glide.Glide;
 import com.example.connectogram.ChatActivity;
 import com.example.connectogram.OthersProfileActivity;
 import com.example.connectogram.R;
 import com.example.connectogram.models.Model_discover;
+import com.squareup.picasso.Callback;
 import com.squareup.picasso.Picasso;
 
+import java.io.IOException;
 import java.util.List;
 
 public class Adapter_discover extends RecyclerView.Adapter<Adapter_discover.myholder> {
@@ -57,7 +64,11 @@ public class Adapter_discover extends RecyclerView.Adapter<Adapter_discover.myho
             Picasso.get().load(R.drawable.ic_profile).placeholder(R.drawable.ic_profile).into(holder.avatarIv);
         }
         else {
-            Picasso.get().load(model.getImage()).placeholder(R.drawable.ic_profile).into(holder.avatarIv);
+            Glide.with(context)
+                    .load(model.getImage())
+                    .placeholder(R.drawable.ic_profile)
+                    .into(holder.avatarIv);
+        //    Picasso.get().load(model.getImage()).placeholder(R.drawable.ic_profile).fit().centerCrop().into(holder.avatarIv);
 
         }
 
@@ -102,7 +113,23 @@ public class Adapter_discover extends RecyclerView.Adapter<Adapter_discover.myho
             }
         });
     }
-
+    private Bitmap rotateBitmap(Bitmap bitmap, int orientation) {
+        Matrix matrix = new Matrix();
+        switch (orientation) {
+            case ExifInterface.ORIENTATION_ROTATE_90:
+                matrix.postRotate(90);
+                break;
+            case ExifInterface.ORIENTATION_ROTATE_180:
+                matrix.postRotate(180);
+                break;
+            case ExifInterface.ORIENTATION_ROTATE_270:
+                matrix.postRotate(270);
+                break;
+            default:
+                return bitmap;
+        }
+        return Bitmap.createBitmap(bitmap, 0, 0, bitmap.getWidth(), bitmap.getHeight(), matrix, true);
+    }
     @Override
     public int getItemCount() {
         return userlist.size();

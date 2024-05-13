@@ -20,6 +20,7 @@ import androidx.core.view.WindowInsetsCompat;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.bumptech.glide.Glide;
 import com.example.connectogram.adapters.AdapterPost;
 import com.example.connectogram.models.ModelPost;
 import com.google.firebase.auth.FirebaseAuth;
@@ -86,7 +87,11 @@ FirebaseAuth firebaseAuth;
                     bioTv.setText(bio);
 
                     try {
-                        Picasso.get().load(image).into(avatarTv);
+                       // Picasso.get().load(image).into(avatarTv);
+                        Glide.with(OthersProfileActivity.this)
+                                .load(image)
+                                .placeholder(R.drawable.ic_profile)
+                                .into(avatarTv);
 
                     }
                     catch (Exception e){
