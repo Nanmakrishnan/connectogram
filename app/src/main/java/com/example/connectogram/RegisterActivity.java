@@ -3,7 +3,10 @@ package com.example.connectogram;
 import android.annotation.SuppressLint;
 import android.app.ProgressDialog;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.preference.PreferenceManager;
+import android.util.Log;
 import android.util.Patterns;
 import android.view.MenuItem;
 import android.view.View;
@@ -28,7 +31,7 @@ import java.util.HashMap;
 
 public class RegisterActivity extends AppCompatActivity {
 
-    EditText email,usn, password,confirm;
+    EditText email, password,confirm;
     Button register_btn;
     TextView haveAccount;
     private FirebaseAuth auth;
@@ -42,7 +45,7 @@ public class RegisterActivity extends AppCompatActivity {
 
         // Initialize views after inflating the layout
         email = findViewById(R.id.emailID);
-        usn = findViewById(R.id.usn);
+
         password = findViewById(R.id.password);
         register_btn = findViewById(R.id.register_btn);
         haveAccount=findViewById(R.id.have_account);
@@ -62,7 +65,7 @@ public class RegisterActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 String em = email.getText().toString().trim();
-                String un = usn.getText().toString().trim();
+
                 String pas = password.getText().toString().trim();
                 if (!Patterns.EMAIL_ADDRESS.matcher(em).matches()) {
                     email.setError("Invalid email");
@@ -70,18 +73,14 @@ public class RegisterActivity extends AppCompatActivity {
                 } else if (pas.length() < 6) {
                     password.setError("At least 6 characters are needed");
                     password.setFocusable(true);
-                }
-                else if (!confirm.getText().toString().trim().equals(pas)) {
+                } else if (!confirm.getText().toString().trim().equals(pas)) {
                     confirm.setError("Password mismatch");
                     confirm.setFocusable(true);
-                }
-                else if (!un.startsWith("4kv")) { // Check if USN starts with "4KV"
-                    usn.setError("USN must start with '4KV'");
-                    usn.setFocusable(true);
-                }
-                else {
+                }else {
                     registerUser(em, pas);
                 }
+
+
             }
         });
 
@@ -109,10 +108,15 @@ public class RegisterActivity extends AppCompatActivity {
 
     // Method to register the user with Firebase Authentication
     public void registerUser(String email, String password) {
+
+
+
         progress.show();
+
         auth.createUserWithEmailAndPassword(email, password)
                 .addOnCompleteListener(task -> {
                     if (task.isSuccessful()) {
+
                         // Sign up success, update UI accordingly
                         FirebaseUser user = auth.getCurrentUser();
                         String em=user.getEmail();
@@ -120,6 +124,7 @@ public class RegisterActivity extends AppCompatActivity {
                         HashMap<Object, String> hashmap=new HashMap<>();
                         hashmap.put("email",em);
                         hashmap.put("uid",uid);
+
                         hashmap.put("name","");
                         hashmap.put("phone"," ");
                         hashmap.put("bio","");
@@ -131,6 +136,8 @@ public class RegisterActivity extends AppCompatActivity {
                         FirebaseDatabase database=FirebaseDatabase.getInstance();
                         DatabaseReference reference=database.getReference("Users");
                         reference.child(uid).setValue(hashmap);
+
+
                         if (user != null) {
                             progress.dismiss();
                             Toast.makeText(RegisterActivity.this, "Registered \n" + user.getEmail(), Toast.LENGTH_SHORT).show();

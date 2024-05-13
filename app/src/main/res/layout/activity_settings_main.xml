@@ -60,6 +60,7 @@
             android:textStyle="bold"
             style="@android:style/Widget.Button"
             android:layout_marginBottom="10dp"
+            android:visibility="gone"
             android:background="@drawable/btn_background_1"
 
             android:paddingStart="20dp"
@@ -80,6 +81,7 @@
 
             android:paddingStart="20dp"
             android:text="Help &amp; Support"
+            android:visibility="gone"
             android:textAlignment="viewStart" />
         <androidx.appcompat.widget.AppCompatButton
             android:id="@+id/logoutBtn"

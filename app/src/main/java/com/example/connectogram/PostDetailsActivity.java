@@ -598,7 +598,7 @@ r.addValueEventListener(new ValueEventListener() {
                 myDp=""+ds.child("image").getValue();
 
                 try {
-                        Picasso .get().load(myDp).placeholder(R.drawable.ic_profile).resize(1000, 1200).centerCrop().into(uPictueTv);
+                        Picasso .get().load(myDp).placeholder(R.drawable.ic_profile).centerCrop().into(uPictueTv);
                 }
                 catch (Exception e)
                 {
@@ -658,7 +658,7 @@ r.addValueEventListener(new ValueEventListener() {
                     else {
                         pImageIv.setVisibility(View.VISIBLE);
                         try {
-                            Picasso.get().load(pImage).into(pImageIv);
+                            Picasso.get().load(pImage).resize(1000,1200).centerCrop().onlyScaleDown().into(pImageIv);
                             Picasso.get().load(hisDp).into(pPictureIv);;
                         } catch (Exception e) {
                             System.out.println(e);

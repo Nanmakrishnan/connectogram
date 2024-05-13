@@ -18,6 +18,8 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.connectogram.adapters.AdapterAnnouncement;
 import com.example.connectogram.models.ModelAnnounce;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
@@ -109,7 +111,7 @@ setHasOptionsMenu(true);
         super.onCreateOptionsMenu(menu, inflater);
 
    menu.findItem(R.id.action_search).setVisible(false);
-      menu.findItem(R.id.action_settings).setVisible(false);
+      menu.findItem(R.id.action_settings).setVisible(true);
 
     }
 
@@ -123,7 +125,23 @@ setHasOptionsMenu(true);
             //MOVE TO ADDDANOUCEMNT
             startActivity(new Intent(getContext(),AddAnnouncementActivity.class));
         }
-
+        else if(id==R.id.action_logout)
+        {
+            FirebaseAuth.getInstance().signOut();
+            FirebaseUser user= FirebaseAuth.getInstance().getCurrentUser();
+            if(user!=null)
+            {
+                //email.setText(user.getEmail());
+            }
+            else {
+                startActivity(new Intent(getActivity(),MainActivity.class));
+                getActivity().finish();
+            }
+        }
+        else if (id==R.id.action_settings)
+        {
+            startActivity(new Intent(getContext(), SettingsMainActivity.class));
+}
         return super.onOptionsItemSelected(item);
     }
     private void retrieveAnnouncementsFromFirebase() {

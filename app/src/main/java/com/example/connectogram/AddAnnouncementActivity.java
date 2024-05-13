@@ -2,9 +2,12 @@ package com.example.connectogram;
 
 import android.app.ProgressDialog;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.net.Uri;
 import android.os.Bundle;
+import android.preference.PreferenceManager;
 import android.text.TextUtils;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -40,7 +43,7 @@ public class AddAnnouncementActivity extends AppCompatActivity {
     private static final int PICK_FILE_REQUEST_CODE =300 ;
     ImageButton publish,file;
 
-EditText titleEt,descEt;
+    EditText titleEt,descEt;
     Uri fileuri=null;
     String uName;
     String uDp;
@@ -49,6 +52,7 @@ EditText titleEt,descEt;
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         EdgeToEdge.enable(this);
+
         setContentView(R.layout.activity_add_announcement);
         titleEt=findViewById(R.id.titleEt);
         descEt=findViewById(R.id.descEt);
@@ -103,6 +107,9 @@ EditText titleEt,descEt;
             Toast.makeText(this, "File selected: " + fileUri.toString(), Toast.LENGTH_SHORT).show();
         }
     }
+    
+
+
     private void validateAndUploadData() {
         // Get title and description from EditText fields
         String title = titleEt.getText().toString().trim();
@@ -120,17 +127,28 @@ EditText titleEt,descEt;
             return;
         }
 
+
+
+
+// Check if the user's USN is valid
+
+
         // If validation successful, proceed to upload data to Firebase
         // Implement uploadDataToFirebase() method to upload title, description, and file path (if available)
-        uploadDataToFirebase(title, desc,fileuri );
+        uploadDataToFirebase(title, desc, fileuri);
     }
+    // Method to fetch the user's USN
+
+
+
+    // Method to check if the user's USN is valid
 
     private void uploadDataToFirebase(String title, String desc, Uri filePath) {
 
         if(filePath!=null)
         {
-           uploadWithFile();
-           
+            uploadWithFile();
+
 
         }
         else {
@@ -151,13 +169,13 @@ EditText titleEt,descEt;
         // For example:
         DatabaseReference ref = FirebaseDatabase.getInstance().getReference("Announcements");
         String announcementId = String.valueOf(timestamp); // Set announcement ID as current timestamp
-       String uid= FirebaseAuth.getInstance().getCurrentUser().getUid();
-       String email=FirebaseAuth.getInstance().getCurrentUser().getEmail();
+        String uid= FirebaseAuth.getInstance().getCurrentUser().getUid();
+        String email=FirebaseAuth.getInstance().getCurrentUser().getEmail();
 
 
-     DatabaseReference   userDb=FirebaseDatabase.getInstance().getReference("Users");
+        DatabaseReference   userDb=FirebaseDatabase.getInstance().getReference("Users");
         Query q=userDb.orderByChild("email").equalTo(email);
-     ProgressDialog   progreess=new ProgressDialog(this);
+        ProgressDialog   progreess=new ProgressDialog(this);
         q.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
@@ -190,13 +208,13 @@ EditText titleEt,descEt;
         int fsize=0;
         try {
             InputStream inputStream = getContentResolver().openInputStream(fileuri);
-             fsize = inputStream.available();
-          //  Toast.makeText(this, "File siz"+fsize, Toast.LENGTH_SHORT).show();
+            fsize = inputStream.available();
+            //  Toast.makeText(this, "File siz"+fsize, Toast.LENGTH_SHORT).show();
         }
-            catch(Exception e)
-            {
-                return;
-            }
+        catch(Exception e)
+        {
+            return;
+        }
 
 
         if (fileuri != null &&fsize <= (5 * 1024 * 1024)&&fsize>0) {
@@ -266,7 +284,7 @@ EditText titleEt,descEt;
                     progress.dismiss();
                     if (task.isSuccessful()) {
                         // Show a success message to the user
-                       // Toast.makeText(AddAnnouncementActivity.this, "Data uploaded successfully with file", Toast.LENGTH_SHORT).show();
+                        // Toast.makeText(AddAnnouncementActivity.this, "Data uploaded successfully with file", Toast.LENGTH_SHORT).show();
                     } else {
                         // Handle unsuccessful upload
                         Toast.makeText(AddAnnouncementActivity.this, "Failed to upload announcement data: " + task.getException().getMessage(), Toast.LENGTH_SHORT).show();
