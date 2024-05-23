@@ -88,7 +88,7 @@ String uid;
     // TODO: Rename and change types of parameters
 
     ImageView avatarTv;
-    TextView nameTv,emailTv,phoneTv,yearTv,semTv,bioTv;
+    TextView nameTv,emailTv,phoneTv,yearTv,semTv,bioTv,usnTV;
     ProgressDialog pd;
     FloatingActionButton fab;
 FirebaseDatabase db;
@@ -142,6 +142,7 @@ FirebaseAuth auth;
         fab=view.findViewById(R.id.fab);
         bioTv=view.findViewById(R.id.bioTv);
         pd=new ProgressDialog(getActivity());
+        usnTV=view.findViewById(R.id.usnTv);
         postrecycleview=view.findViewById(R.id.recycleview_posts);
         postList=new ArrayList<>();
         camerPermissions=new String[]{Manifest.permission.CAMERA,Manifest.permission.WRITE_EXTERNAL_STORAGE};
@@ -160,7 +161,7 @@ FirebaseAuth auth;
                     String  sem=""+ds.child("sem").getValue();
                     String image=""+ds.child("image").getValue();
                     String bio=""+ds.child("bio").getValue();
-
+                    String usn=""+ds.child("usn").getValue();
 
                     nameTv.setText(name);
                     emailTv.setText(email);
@@ -168,6 +169,9 @@ FirebaseAuth auth;
                     yearTv.setText(year);
                     semTv.setText(sem);
                     bioTv.setText(bio);
+                    if(usn!=null &&!usn.equals("null")) {
+                        usnTV.setText(usn);
+                    }
 
                     try {
                         Picasso.get().load(image).into(avatarTv);
@@ -308,7 +312,7 @@ FirebaseAuth auth;
     }
     private  void showDialogBox()
     {
-        String options[]={"Edit image","Edit Name","Edit Phone","Edit Sem","Edit year", "Edit bio"};
+        String options[]={"Edit image","Edit Name","Edit Phone","Edit Sem","Edit year", "Edit bio","Edit Usn"};
         AlertDialog.Builder builder=new AlertDialog.Builder(getActivity());
         builder.setTitle("Edit");
         builder.setItems(options, new DialogInterface.OnClickListener() {
@@ -328,9 +332,47 @@ FirebaseAuth auth;
 
                 else if (which==4) { pd.setMessage("changing  year"); edityear();}
                 else if (which==5) {pd.setMessage("changing bio"); editBio();}
+                else if (which==6){pd.setMessage("Changing Usn"); editUsn();}
             }
         });
         builder.create().show();
+    }
+
+    private void editUsn() {
+
+        AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
+        builder.setTitle("Edit Usn");
+
+        // Set up the input
+        final EditText input = new EditText(getActivity());
+        input.setInputType(InputType.TYPE_CLASS_TEXT);
+        input.setHint(usnTV.getText().toString()); // Set current year as hint
+        builder.setView(input);
+
+        // Set up the buttons
+        builder.setPositiveButton("OK", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                String newusn = input.getText().toString().trim();
+                if (!TextUtils.isEmpty(newusn)&&newusn.startsWith("4kv")) {
+                    DatabaseReference userRef = db.getReference("Users").child(user.getUid());
+                    userRef.child("usn").setValue(newusn);
+                    yearTv.setText(newusn);
+                } else {
+                    Toast.makeText(getActivity(), "Invalid USN", Toast.LENGTH_SHORT).show();
+                }
+            }
+        });
+        builder.setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                dialog.cancel();
+            }
+        });
+
+        builder.show();
+
+
     }
 
     private void edityear() {

@@ -1,12 +1,12 @@
 package com.example.connectogram;
 
+import android.annotation.SuppressLint;
 import android.app.NotificationChannel;
 import android.app.NotificationManager;
 import android.content.Context;
 import android.content.SharedPreferences;
 import android.os.Build;
 import android.os.Bundle;
-import android.view.View;
 import android.widget.CompoundButton;
 import android.widget.Switch;
 import android.widget.Toast;
@@ -18,13 +18,13 @@ import androidx.core.graphics.Insets;
 import androidx.core.view.ViewCompat;
 import androidx.core.view.WindowInsetsCompat;
 
-import com.example.connectogram.notifications.FIrebaseMessaging;
 import com.google.android.gms.tasks.OnCompleteListener;
-import com.google.android.gms.tasks.OnSuccessListener;
+
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.messaging.FirebaseMessaging;
 
 public class SettingsActivity extends AppCompatActivity {
+
 
     Switch postSwitch,killSwitch;
     SharedPreferences sp;
@@ -43,19 +43,14 @@ public class SettingsActivity extends AppCompatActivity {
         postSwitch = findViewById(R.id.postSwitch);
         killSwitch=findViewById(R.id.killSwitch);
         sp = getSharedPreferences("Notification_SP", MODE_PRIVATE);
-        boolean isPostEnabled = sp.getBoolean("" + TOPIC_POST_NOTIFICATION, false);
-        if (isPostEnabled) {
-            postSwitch.setChecked(true);
-
-        } else {
-            postSwitch.setChecked(false);
-        }
+        boolean isPostEnabled = sp.getBoolean( TOPIC_POST_NOTIFICATION, false);
+        postSwitch.setChecked(isPostEnabled);
 
         postSwitch.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
                 editor = sp.edit();
-                editor.putBoolean("" + TOPIC_POST_NOTIFICATION, isChecked);
+                editor.putBoolean( TOPIC_POST_NOTIFICATION, isChecked);
                 editor.apply();
                 ;
 

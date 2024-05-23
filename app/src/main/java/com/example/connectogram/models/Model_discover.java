@@ -11,8 +11,9 @@ public class Model_discover {
     String name;
     String uid;
     String onlineStatus,typingTo;
+    String usn;
 
-    public Model_discover(String email, String year, String bio, String phone, String sem, String image, String search, String name, String uid, String onlineStatus, String typingTo) {
+    public Model_discover(String email, String year, String bio, String phone, String sem, String image, String search, String name, String uid, String onlineStatus, String typingTo, String usn) {
         this.email = email;
         this.year = year;
         this.bio = bio;
@@ -24,6 +25,7 @@ public class Model_discover {
         this.uid = uid;
         this.onlineStatus = onlineStatus;
         this.typingTo = typingTo;
+        this.usn = usn;
     }
 
     public String getEmail() {
@@ -112,6 +114,14 @@ public class Model_discover {
 
     public void setTypingTo(String typingTo) {
         this.typingTo = typingTo;
+    }
+
+    public String getUsn() {
+        return usn;
+    }
+
+    public void setUsn(String usn) {
+        this.usn = usn;
     }
 
     public Model_discover() {

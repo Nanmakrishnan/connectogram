@@ -6,6 +6,7 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
+import android.text.TextUtils;
 import android.util.Log;
 import android.util.Patterns;
 import android.view.MenuItem;
@@ -24,14 +25,17 @@ import androidx.core.view.WindowInsetsCompat;
 
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 
 import java.util.HashMap;
 
 public class RegisterActivity extends AppCompatActivity {
 
-    EditText email, password,confirm;
+    EditText email, password,confirm,usn;
     Button register_btn;
     TextView haveAccount;
     private FirebaseAuth auth;
@@ -50,6 +54,7 @@ public class RegisterActivity extends AppCompatActivity {
         register_btn = findViewById(R.id.register_btn);
         haveAccount=findViewById(R.id.have_account);
         confirm=findViewById(R.id.cfrmpassword);
+        usn=findViewById(R.id.usn);
         // Initialize FirebaseAuth instance
         auth = FirebaseAuth.getInstance();
 
@@ -76,8 +81,17 @@ public class RegisterActivity extends AppCompatActivity {
                 } else if (!confirm.getText().toString().trim().equals(pas)) {
                     confirm.setError("Password mismatch");
                     confirm.setFocusable(true);
-                }else {
+                }
+                else if(TextUtils.isEmpty(usn.getText().toString())|| !usn.getText().toString().toLowerCase().startsWith("4kv"))
+                {
+                    usn.setError("Invalid Usn");
+                    usn.setFocusable(true);
+
+                }
+                else {
                     registerUser(em, pas);
+                    // if you want email to be fileter call checkEmailAndRegister(String email, String password) instead of registerUser
+
                 }
 
 
@@ -106,6 +120,41 @@ public class RegisterActivity extends AppCompatActivity {
         });
     }
 
+    // code if email filtering has to be done ............
+    private void checkEmailAndRegister(String email, String password) {
+        progress.show();
+        DatabaseReference allowedEmailsRef = FirebaseDatabase.getInstance().getReference("AllowedEmails");
+
+        allowedEmailsRef.addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+                boolean isEmailAllowed = false;
+                for (DataSnapshot snapshot : dataSnapshot.getChildren()) {
+                    String allowedEmail = snapshot.getValue(String.class);
+                    if (allowedEmail != null && allowedEmail.equals(email)) {
+                        isEmailAllowed = true;
+                        break;
+                    }
+                }
+                if (isEmailAllowed) {
+                    registerUser(email, password);
+                } else {
+                    progress.dismiss();
+                    Toast.makeText(RegisterActivity.this, "Email is not allowed", Toast.LENGTH_SHORT).show();
+                }
+            }
+
+            @Override
+            public void onCancelled(
+                    DatabaseError databaseError) {
+                progress.dismiss();
+                Toast.makeText(RegisterActivity.this, "Database error: " + databaseError.getMessage(), Toast.LENGTH_SHORT).show();
+            }
+        });
+    }
+
+
+
     // Method to register the user with Firebase Authentication
     public void registerUser(String email, String password) {
 
@@ -131,6 +180,7 @@ public class RegisterActivity extends AppCompatActivity {
                         hashmap.put("image","");
                         hashmap.put("year","");
                         hashmap.put("sem", "");
+                        hashmap.put("usn",usn.getText().toString());
                         hashmap.put("onlineStatus","online");
                         hashmap.put("typingTo","noOne");
                         FirebaseDatabase database=FirebaseDatabase.getInstance();
